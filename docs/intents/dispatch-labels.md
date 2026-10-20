@@ -11,7 +11,7 @@ Every Agent call in an n-mode run opens its `description` with the model and eff
 ## Surfaces
 
 - The operator, who reads the CLI spawn lines.
-- `skills/n-mode/SKILL.md`, through `overlay/patches/80-dispatch-labels.patch`.
+- `skills/n-mode/SKILL.md`, through `overlay/patches/080-dispatch-labels.patch`.
 
 ## Out of scope
 

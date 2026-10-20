@@ -87,11 +87,11 @@
     },
     {
       "upstream": "upstream/mattpocock/skills/engineering/domain-modeling/",
-      "by": "overlay/patches/60-pocock-routing.patch"
+      "by": "overlay/patches/060-pocock-routing.patch"
     },
     {
       "upstream": "upstream/mattpocock/skills/engineering/diagnosing-bugs/",
-      "by": "overlay/patches/65-diagnosis-loop.patch"
+      "by": "overlay/patches/065-diagnosis-loop.patch"
     }
   ]
 }

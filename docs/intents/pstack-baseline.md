@@ -40,5 +40,5 @@ Made for them:
 
 - The Spec build playbook goes with the pipeline. Multi-ticket work matches pstack's Multi-phase or multi-PR plan.
 - Review before a PR runs `interrogate` with the intent file as its intent, in place of Pocock's `code-review`.
-- Bug fix step 2 runs `diagnosing-bugs` phases 1 to 4 across steps 1 and 2, in its own patch, `65-diagnosis-loop`.
+- Bug fix step 2 runs `diagnosing-bugs` phases 1 to 4 across steps 1 and 2, in its own patch, `065-diagnosis-loop`.
 - This intent supersedes the Pocock groups decision in `n-stack.md`.
