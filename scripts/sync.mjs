@@ -3,7 +3,7 @@
 // Refreshes upstream/<name>/ from upstream.json, rewrites UPSTREAM.lock, rebuilds dist/, and prints what needs a human.
 
 import { execFileSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, readJson, run } from "./lib.mjs";
 
@@ -76,4 +76,22 @@ if (unseen.length) {
   for (const s of unseen) console.log(`  ${s}`);
 }
 
-execFileSync(process.execPath, [join(ROOT, "scripts", "build.mjs")], { stdio: "inherit" });
+const listed = (spec) => {
+  try {
+    return run("git", ["-C", ROOT, "ls-tree", "--name-only", spec]).split("\n").filter(Boolean);
+  } catch {
+    return [];
+  }
+};
+const before = new Set(listed("HEAD:upstream/pstack/skills"));
+const now = new Set(readdirSync(join(ROOT, "upstream", "pstack", "skills")));
+const added = [...now].filter((s) => before.size && !before.has(s));
+const removed = [...before].filter((s) => !now.has(s));
+if (added.length) console.log(`new pstack skills, included automatically: ${added.join(", ")}`);
+if (removed.length) console.log(`pstack skills removed upstream: ${removed.join(", ")}`);
+
+try {
+  execFileSync(process.execPath, [join(ROOT, "scripts", "build.mjs")], { stdio: "inherit" });
+} catch {
+  process.exit(1);
+}

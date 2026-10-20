@@ -42,7 +42,12 @@ for (const name of ["pstack", "mattpocock"]) {
   cpSync(join(UP, name, "LICENSE"), join(OUT, "licenses", `${name}.LICENSE`));
 }
 
+const failed = [];
 for (const [from, to] of Object.entries(renames.paths)) {
+  if (!existsSync(join(OUT, from))) {
+    failed.push(`overlay/renames.json: upstream has no ${from} to rename to ${to}`);
+    continue;
+  }
   mkdirSync(dirname(join(OUT, to)), { recursive: true });
   renameSync(join(OUT, from), join(OUT, to));
 }
@@ -79,7 +84,6 @@ if (existsSync(files)) {
 
 const patchDir = join(OVERLAY, "patches");
 const patches = existsSync(patchDir) ? readdirSync(patchDir).filter((f) => f.endsWith(".patch")).sort() : [];
-const failed = [];
 for (const patch of patches) {
   if (patch === `${skipPatch}.patch`) continue;
   try {
@@ -88,7 +92,7 @@ for (const patch of patches) {
       stdio: ["ignore", "ignore", "pipe"],
     });
   } catch (err) {
-    failed.push(`${patch}\n${String(err.stderr).trim().replace(/^/gm, "    ")}`);
+    failed.push(`overlay/patches/${patch} no longer applies\n${String(err.stderr).trim().replace(/^/gm, "    ")}`);
   }
 }
 
@@ -96,7 +100,7 @@ mkdirSync(join(OUT, ".claude-plugin"), { recursive: true });
 cpSync(join(OVERLAY, "plugin.json"), join(OUT, ".claude-plugin", "plugin.json"));
 
 if (failed.length) {
-  console.error(`patches that no longer apply (${failed.length}):`);
+  console.error(`overlay items that need a human (${failed.length}):`);
   for (const f of failed) console.error(`  ${f}`);
   process.exit(1);
 }
