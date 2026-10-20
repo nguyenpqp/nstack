@@ -11,7 +11,7 @@ The upstream text is never edited by hand. A script pulls both upstreams, applie
 ## Install
 
 ```bash
-/plugin marketplace add <owner>/n-stack
+/plugin marketplace add nguyenpqp/n-stack
 /plugin install n-stack@n-stack
 ```
 
