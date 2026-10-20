@@ -28,14 +28,14 @@ Remaining triggers:
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
 - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
 - A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook.
-- Domain terms, a glossary, or an architecture decision worth recording → the **domain-modeling** skill. A module's interface, depth, or seams → the **codebase-design** skill. Hunting refactor opportunities in existing code → the **improve-codebase-architecture** skill.
+- Domain terms, a glossary, or an architecture decision worth recording → the **domain-modeling** skill.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
 - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
 - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
 - Before commit → Claude Code's built-in `/simplify` over the diff, as the adapter maps `/deslop`.
-- Before review → the **no-comments** skill (`/no-comments`), then the **code-review** skill against the intent file.
+- Before review → the **no-comments** skill (`/no-comments`), then the **interrogate** skill with the intent file as its intent.
 - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, the **create-verification-skill** skill makes it, for any language, engine, or platform. Until it exists, drive the surface through the project's own runner and say which. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
 - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
 - Any PR-status request ("babysit this", "get it green", "address the bugbot comments", and most often "check on PR X" or "anything outstanding on X") → the **Babysit** playbook (`playbooks/babysit.md`), not Cursor's built-in babysit skill, whose description matches the same words. Never triggered by merely opening a PR. Declare its mode before polling. The playbook's step 1 owns the request-to-mode mapping. Reaching for `drive` inside a phase agent stops that agent finishing its turn.
@@ -103,7 +103,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **`EnterWorktree` and `ExitWorktree` own the session's directory.** A shell `cd` does not move the session, so call `EnterWorktree` with `path` at the worktree you created. Pass `path`, never `name`, because `name` opens its own worktree under `.claude/worktrees/` and breaks the `./.worktrees/<branch>` convention. When the repo sits outside the session's launch directory, `EnterWorktree` refuses it. Then address the worktree with absolute paths and `git -C <worktree>`, and say so once in the reply.
 
-**Who skips it.** Read-only playbooks, Babysit, Pause safely, Worktree cleanup, Prototype (its sketch lives in a scratch dir), Eval, and Shipping. Session pickup adopts the prior worktree instead of opening one. Coordinators that only write briefs (Orchestrate, Autopilot-full, Autopilot-stack, Multi-phase plan) skip it, and their workers carry `isolation: "worktree"`. Spec build opens one for the spec branch.
+**Who skips it.** Read-only playbooks, Babysit, Pause safely, Worktree cleanup, Prototype (its sketch lives in a scratch dir), Eval, and Shipping. Session pickup adopts the prior worktree instead of opening one. Coordinators that only write briefs (Orchestrate, Autopilot-full, Autopilot-stack, Multi-phase plan) skip it, and their workers carry `isolation: "worktree"`.
 
 **Outside a git repository, skip this section.** If `git rev-parse --is-inside-work-tree` fails, edit in place and do not run `git init`. Run delegates that could write the same files one at a time.
 
@@ -163,7 +163,6 @@ A large or cross-cutting effort (a migration across many call sites, an ambitiou
 - **Runtime forensics.** Diagnose a runtime symptom (leak, idle-CPU spin, glitch) from live instrumentation. The deliverable is a diagnosis, not a fix.
 - **Trace forensics.** Diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot) handed to you after the fact. The deliverable is a diagnosis, not a fix.
 - **Feature.** New or changed behavior, built from a named data shape.
-- **Spec build.** One spec split into tickets with blocking edges, built in one session through the **to-spec**, **to-tickets**, and **implement-spec** skills. Every ticket lands on one spec branch, which gets one review and one PR. Distinct from Feature, one coupled change, and from the Autopilots, where every unit ships its own PR.
 - **Refactoring.** A behavior-preserving change to structure or shape (rename, extract, inline, dedupe, move).
 - **Prototype.** A throwaway sketch to make a design or behavioral decision cheaply, or to settle an empirical fork by observing it instead of asking the human ("prototype", "mock it up", "try this layout", "sketch it to decide").
 - **Visual parity.** Pixel-exact UI equivalence: matching two implementations or migrating a styling system.

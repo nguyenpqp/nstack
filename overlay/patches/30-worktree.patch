@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index c8e638e..1e5f6e8 100644
+index 1206c8d..1510297 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -95,6 +95,26 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
@@ -12,7 +12,7 @@ index c8e638e..1e5f6e8 100644
 +
 +**`EnterWorktree` and `ExitWorktree` own the session's directory.** A shell `cd` does not move the session, so call `EnterWorktree` with `path` at the worktree you created. Pass `path`, never `name`, because `name` opens its own worktree under `.claude/worktrees/` and breaks the `./.worktrees/<branch>` convention. When the repo sits outside the session's launch directory, `EnterWorktree` refuses it. Then address the worktree with absolute paths and `git -C <worktree>`, and say so once in the reply.
 +
-+**Who skips it.** Read-only playbooks, Babysit, Pause safely, Worktree cleanup, Prototype (its sketch lives in a scratch dir), Eval, and Shipping. Session pickup adopts the prior worktree instead of opening one. Coordinators that only write briefs (Orchestrate, Autopilot-full, Autopilot-stack, Multi-phase plan) skip it, and their workers carry `isolation: "worktree"`. Spec build opens one for the spec branch.
++**Who skips it.** Read-only playbooks, Babysit, Pause safely, Worktree cleanup, Prototype (its sketch lives in a scratch dir), Eval, and Shipping. Session pickup adopts the prior worktree instead of opening one. Coordinators that only write briefs (Orchestrate, Autopilot-full, Autopilot-stack, Multi-phase plan) skip it, and their workers carry `isolation: "worktree"`.
 +
 +**Outside a git repository, skip this section.** If `git rev-parse --is-inside-work-tree` fails, edit in place and do not run `git init`. Run delegates that could write the same files one at a time.
 +
