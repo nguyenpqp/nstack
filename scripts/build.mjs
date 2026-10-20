@@ -26,14 +26,14 @@ const renames = readJson(join(OVERLAY, "renames.json"));
 rmSync(OUT, { recursive: true, force: true, maxRetries: 5 });
 mkdirSync(OUT, { recursive: true });
 
-// A rename under dist/ fails now and then on Windows, likely a short-lived lock, so retry before failing.
-const renameRetrying = (from, to) => {
+// Windows briefly locks files just written under dist/ (EPERM on rename, UNKNOWN on open), so retry before failing.
+const retrying = (label, fn) => {
   for (let attempt = 1; ; attempt++) {
     try {
-      return renameSync(from, to);
+      return fn();
     } catch (err) {
-      if (attempt === 10 || !["EPERM", "EACCES", "EBUSY"].includes(err.code)) throw err;
-      console.error(`rename ${rel(OUT, from)} failed with ${err.code}, retrying`);
+      if (attempt === 10 || !["EPERM", "EACCES", "EBUSY", "UNKNOWN"].includes(err.code)) throw err;
+      console.error(`${label} failed with ${err.code}, retrying`);
       Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 100 * attempt);
     }
   }
@@ -78,13 +78,13 @@ for (const [from, to] of Object.entries(renames.paths)) {
     continue;
   }
   mkdirSync(dirname(join(OUT, to)), { recursive: true });
-  renameRetrying(join(OUT, from), join(OUT, to));
+  retrying(`rename ${from}`, () => renameSync(join(OUT, from), join(OUT, to)));
 }
 for (const file of walk(OUT)) {
   if (!isText(file) || file.startsWith(join(OUT, "licenses"))) continue;
   const before = readFileSync(file, "utf8");
   const after = outsideUrls(before, (part) => renames.text.reduce((s, [from, to]) => s.split(from).join(to), part));
-  if (after !== before) writeFileSync(file, after);
+  if (after !== before) retrying(`write ${rel(OUT, file)}`, () => writeFileSync(file, after));
 }
 
 const files = join(OVERLAY, "files");
