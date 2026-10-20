@@ -56,6 +56,8 @@ The script fetches both upstreams, rewrites `upstream/` and `UPSTREAM.lock`, reb
 
 Review `git diff upstream/` for what upstream changed, then commit. To pin an upstream, pass its SHA, as in `node scripts/sync.mjs pstack=<sha>`.
 
+To hand the whole loop to an agent, point it at `.claude/skills/maintain-nstack/SKILL.md`. In Claude Code, run `/maintain-nstack` from this repo. The skill holds the judgment calls: the keep rule for Pocock skills, what to re-read, and when to ask you.
+
 ## Change nstack
 
 1. Run `node scripts/mkpatch.mjs start <nnn-name>`. It builds `dist/` with every patch that sorts before `<nnn-name>`, then applies `<nnn-name>` itself if it exists.
