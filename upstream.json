@@ -1,0 +1,14 @@
+{
+  "pstack": {
+    "repo": "https://github.com/cursor/plugins",
+    "ref": "main",
+    "path": "harness/pstack/claude-code",
+    "keep": ["skills", "agents", "docs", "LICENSE", ".claude-plugin"]
+  },
+  "mattpocock": {
+    "repo": "https://github.com/mattpocock/skills",
+    "ref": "main",
+    "path": ".",
+    "keep": ["skills", "LICENSE", ".claude-plugin"]
+  }
+}

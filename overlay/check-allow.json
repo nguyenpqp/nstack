@@ -1,0 +1,4 @@
+{
+  "skills/domain-modeling/GLOSSARY-FORMAT.md": ["./src/ordering/GLOSSARY.md", "./src/billing/GLOSSARY.md", "./src/fulfillment/GLOSSARY.md"],
+  "skills/why/references/synthesizer-prompt.md": ["url"]
+}
