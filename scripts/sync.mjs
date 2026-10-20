@@ -5,7 +5,7 @@
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { ROOT, readJson, run } from "./lib.mjs";
+import { ROOT, listPatches, patchTargets, readJson, run, upstreamOf } from "./lib.mjs";
 
 const sources = readJson(join(ROOT, "upstream.json"));
 const lockPath = join(ROOT, "UPSTREAM.lock");
@@ -45,13 +45,23 @@ for (const [name, src] of Object.entries(sources)) {
 }
 writeFileSync(lockPath, JSON.stringify(newLock, null, 2) + "\n");
 
-const changed = run("git", ["-C", ROOT, "status", "--porcelain", "--untracked-files=all", "--", "upstream"])
-  .split("\n")
+const changed = execFileSync("git", ["-C", ROOT, "status", "--porcelain", "-z", "--untracked-files=all", "--", "upstream"], {
+  encoding: "utf8",
+})
+  .split("\0")
   .filter(Boolean)
-  .map((l) => l.slice(3).replace(/^"|"$/g, ""));
+  .map((entry) => entry.slice(3));
 
 const selection = readJson(join(ROOT, "overlay", "selection.json"));
+const renames = readJson(join(ROOT, "overlay", "renames.json"));
 const touched = (dir) => changed.some((p) => p.startsWith(dir));
+
+const watched = [
+  ...listPatches().flatMap((patch) =>
+    patchTargets(patch).map((target) => ({ path: upstreamOf(target, selection, renames), by: `overlay/patches/${patch}` })),
+  ),
+  ...selection.wraps.map((w) => ({ path: w.upstream, by: w.by })),
+].filter((w) => touched(w.path));
 
 const review = selection.overlaps.filter((o) =>
   [o.pstack && `upstream/pstack/${o.pstack}`, o.mattpocock && `upstream/mattpocock/${o.mattpocock}`]
@@ -67,6 +77,10 @@ const unseen = manifest.skills
   .filter((s) => !included.has(s) && !declined.has(s));
 
 console.log(`\nupstream files changed: ${changed.length}`);
+if (watched.length) {
+  console.log("upstream changed under the overlay (re-read; a patch can apply and still say the wrong thing):");
+  for (const w of watched) console.log(`  ${w.path} <- ${w.by}`);
+}
 if (review.length) {
   console.log("overlap pairs whose upstream side changed (re-decide in overlay/selection.json):");
   for (const o of review) console.log(`  ${o.skill}: winner ${o.winner}`);

@@ -8,6 +8,7 @@
 
 1. Read `../../grilling/SKILL.md` and follow it. Run the **how** skill over the affected subsystem first, so your questions rest on what the repo already does.
 2. Size the round by the execution playbook.
+   - If the user granted full autonomy ("going to bed", "run until done", "be fully autonomous"), ask nothing. Write the intent from the request, with every decision in your list, and go on. Session pickup inherits the prior intent file and asks only about what changed since the handoff.
    - Babysit, Shipping, Pause safely, and Worktree cleanup get one question or none.
    - Investigation, Runtime forensics, and Trace forensics get the questions that set the evidence bar and the deliverable. Almost everything else there is a fact, and facts are yours.
    - Every other playbook gets the full frontier.
@@ -25,6 +26,6 @@
 6. On confirmation, match the execution playbook again, because the answers can move a task from one type to another. Copy its steps into the todo list.
 7. Write the summary to `docs/intents/<slug>.md` and commit it as the first commit on the task's branch, inside the worktree that the **Worktree** section of `SKILL.md` opens. A design that lives only in the chat dies at the next compaction, handoff, or review. Read-only playbooks keep the summary in the reply and write no file.
 
-**Amending it.** When execution finds a better shape, amend the intent file in the same change and say what moved. **Opening a PR** reads the final diff against it.
+**Amending it.** When execution finds a better shape, amend the intent file in the same change and say what moved. The **code-review** skill checks the final diff against it before review.
 
 **Reply:** the confirmed design, the decisions the user made and the ones you made for them, what is out of scope, the intent file path, and the execution playbook you hand it to.

@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 0380e6c..eb6003f 100644
+index 79e1eb3..8e82381 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -12,6 +12,10 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md

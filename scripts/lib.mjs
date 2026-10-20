@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -34,3 +34,25 @@ export const stripUrls = (text) =>
     .split(URL)
     .filter((_, i) => i % 2 === 0)
     .join(" ");
+
+const PATCHES = join(ROOT, "overlay", "patches");
+export const listPatches = () =>
+  existsSync(PATCHES)
+    ? readdirSync(PATCHES)
+        .filter((f) => f.endsWith(".patch"))
+        .sort()
+    : [];
+
+export const patchTargets = (patch) =>
+  [...readFileSync(join(PATCHES, patch), "utf8").matchAll(/^\+\+\+ b\/(.+)$/gm)].map((m) => m[1]);
+
+export function upstreamOf(distPath, selection, renames) {
+  let path = distPath;
+  for (const [from, to] of Object.entries(renames.paths)) {
+    if (path === to || path.startsWith(`${to}/`)) path = from + path.slice(to.length);
+  }
+  const [top, skill, ...rest] = path.split("/");
+  const pocock = selection.mattpocock.include.find((p) => p.endsWith(`/${skill}`));
+  if (top === "skills" && pocock) return ["upstream/mattpocock", pocock, ...rest].join("/");
+  return `upstream/pstack/${path}`;
+}

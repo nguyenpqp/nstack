@@ -78,5 +78,39 @@
       "mattpocock": "skills/engineering/improve-codebase-architecture/",
       "reason": "architect shapes new code before it exists. improve-codebase-architecture finds deepening opportunities in existing code."
     }
+  ],
+  "wraps": [
+    {
+      "upstream": "upstream/mattpocock/skills/productivity/grilling/",
+      "by": "overlay/files/skills/n-mode/playbooks/interview.md"
+    },
+    {
+      "upstream": "upstream/mattpocock/skills/engineering/setup-matt-pocock-skills/",
+      "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
+    },
+    {
+      "upstream": "upstream/mattpocock/skills/engineering/to-spec/",
+      "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
+    },
+    {
+      "upstream": "upstream/mattpocock/skills/engineering/to-tickets/",
+      "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
+    },
+    {
+      "upstream": "upstream/mattpocock/skills/engineering/implement-spec/",
+      "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
+    },
+    {
+      "upstream": "upstream/mattpocock/skills/engineering/code-review/",
+      "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
+    },
+    {
+      "upstream": "upstream/pstack/skills/tdd/",
+      "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
+    },
+    {
+      "upstream": "upstream/pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
+      "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
+    }
   ]
 }

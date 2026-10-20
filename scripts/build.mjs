@@ -1,19 +1,22 @@
 #!/usr/bin/env node
-// Usage: node scripts/build.mjs [--out <dir>] [--skip-patch <name>] [--no-check]
+// Usage: node scripts/build.mjs [--out <dir>] [--until <patch-name>] [--lenient] [--no-check]
 // Assembles dist/ from upstream/ plus overlay/. Never reads the network.
+// --until applies only the patches that sort before <patch-name>. --lenient reports failures without failing.
 
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { cpSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
-import { ROOT, isText, outsideUrls, readJson, rel, walk } from "./lib.mjs";
+import { ROOT, isText, listPatches, outsideUrls, readJson, rel, walk } from "./lib.mjs";
 
 const args = process.argv.slice(2);
 const flag = (name) => {
   const i = args.indexOf(name);
   return i === -1 ? undefined : args[i + 1];
 };
-const OUT = flag("--out") ?? join(ROOT, "dist");
-const skipPatch = flag("--skip-patch");
+const OUT = resolve(flag("--out") ?? join(ROOT, "dist"));
+const until = flag("--until");
+const lenient = args.includes("--lenient");
+if (rel(ROOT, OUT).startsWith("..")) throw new Error(`--out must be inside ${ROOT}, because git apply only writes there`);
 
 const UP = join(ROOT, "upstream");
 const OVERLAY = join(ROOT, "overlay");
@@ -58,9 +61,35 @@ for (const file of walk(OUT)) {
   if (after !== before) writeFileSync(file, after);
 }
 
+const files = join(OVERLAY, "files");
+if (existsSync(files)) {
+  for (const file of walk(files)) {
+    const dest = join(OUT, rel(files, file));
+    if (existsSync(dest)) {
+      failed.push(`overlay/files/${rel(files, file)} would replace an upstream file; turn it into a patch`);
+      continue;
+    }
+    mkdirSync(dirname(dest), { recursive: true });
+    cpSync(file, dest);
+  }
+}
+
+const patches = listPatches().filter((p) => !until || p < `${until}.patch`);
+for (const patch of patches) {
+  try {
+    execFileSync("git", ["apply", "--whitespace=nowarn", `--directory=${rel(ROOT, OUT)}`, join(OVERLAY, "patches", patch)], {
+      cwd: ROOT,
+      stdio: ["ignore", "ignore", "pipe"],
+    });
+  } catch (err) {
+    failed.push(`overlay/patches/${patch} no longer applies\n${String(err.stderr).trim().replace(/^/gm, "    ")}`);
+  }
+}
+
 const tiers = readJson(join(OVERLAY, "agents.json"));
 const baseAgent = readFileSync(join(OUT, tiers.base), "utf8");
 const baseName = baseAgent.match(/^name: (.+)$/m)[1];
+if (!/^description: .+$/m.test(baseAgent)) failed.push(`${tiers.base} has no one-line description for the effort tiers`);
 for (const { effort, use } of tiers.variants) {
   const variant = baseAgent
     .replace(/^name: .+$/m, `name: ${baseName}-${effort}`)
@@ -72,40 +101,16 @@ for (const { effort, use } of tiers.variants) {
   writeFileSync(join(OUT, dirname(tiers.base), `${baseName}-${effort}.md`), variant);
 }
 
-const files = join(OVERLAY, "files");
-if (existsSync(files)) {
-  for (const file of walk(files)) {
-    const dest = join(OUT, rel(files, file));
-    if (existsSync(dest)) console.warn(`overlay replaces ${rel(OUT, dest)} whole; prefer a patch`);
-    mkdirSync(dirname(dest), { recursive: true });
-    cpSync(file, dest);
-  }
-}
-
-const patchDir = join(OVERLAY, "patches");
-const patches = existsSync(patchDir) ? readdirSync(patchDir).filter((f) => f.endsWith(".patch")).sort() : [];
-for (const patch of patches) {
-  if (patch === `${skipPatch}.patch`) continue;
-  try {
-    execFileSync("git", ["apply", "--whitespace=nowarn", `--directory=${rel(ROOT, OUT)}`, join(patchDir, patch)], {
-      cwd: ROOT,
-      stdio: ["ignore", "ignore", "pipe"],
-    });
-  } catch (err) {
-    failed.push(`overlay/patches/${patch} no longer applies\n${String(err.stderr).trim().replace(/^/gm, "    ")}`);
-  }
-}
-
 mkdirSync(join(OUT, ".claude-plugin"), { recursive: true });
 cpSync(join(OVERLAY, "plugin.json"), join(OUT, ".claude-plugin", "plugin.json"));
 
 if (failed.length) {
   console.error(`overlay items that need a human (${failed.length}):`);
   for (const f of failed) console.error(`  ${f}`);
-  process.exit(1);
+  if (!lenient) process.exit(1);
 }
 console.log(`built ${rel(ROOT, OUT)} with ${patches.length} patches`);
-if (!args.includes("--no-check")) {
+if (!args.includes("--no-check") && !lenient) {
   try {
     execFileSync(process.execPath, [join(ROOT, "scripts", "check.mjs"), OUT], { stdio: "inherit" });
   } catch {

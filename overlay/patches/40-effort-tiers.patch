@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index a664ec7..6fc594d 100644
+index 1e5f6e8..696532b 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -117,7 +117,7 @@ After the merge lands, leave the worktree with `ExitWorktree` and `action: "keep
