@@ -1,0 +1,64 @@
+# n-stack
+
+n-stack is a Claude Code plugin built from two upstreams and one set of local changes:
+
+- [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`.
+- [Matt Pocock's skills](https://github.com/mattpocock/skills): grilling, the spec pipeline, design vocabulary, diagnosing-bugs, and code-review.
+- The qstack layer: an interview gate, worktree and merge rules, effort-tiered agents, sticky mode, and a four-model review panel.
+
+The upstream text is never edited by hand. A script pulls both upstreams, applies the local changes, and tells you which change broke. That keeps n-stack current with upstream at the cost of one command.
+
+## Install
+
+```bash
+/plugin marketplace add <owner>/n-stack
+/plugin install n-stack@n-stack
+```
+
+Then run `/n-stack:setup-nstack` to pick models per role, and `/n-stack:n-mode` to start a task.
+
+To try a local checkout, run `/plugin marketplace add E:\workspace\n-stack`.
+
+## Layout
+
+| Path | What it holds | Who writes it |
+| --- | --- | --- |
+| `upstream.json` | The two upstream repos, refs, and the paths to vendor. | You |
+| `UPSTREAM.lock` | The commit SHA of each vendored upstream. | `sync.mjs` |
+| `upstream/pstack/`, `upstream/mattpocock/` | Untouched snapshots of each upstream. | `sync.mjs` only |
+| `overlay/selection.json` | Which skills ship, which are declined, and who wins each overlap. | You |
+| `overlay/renames.json` | Entry-point renames, applied to paths and text. URLs are left alone. | You |
+| `overlay/agents.json` | The effort tiers generated from `n-agent`. | You |
+| `overlay/files/` | Files that n-stack adds, copied over the build. | You |
+| `overlay/patches/` | Small patches to upstream text, applied in name order. | `mkpatch.mjs` |
+| `overlay/check-allow.json` | Upstream example links that are not real files. | You |
+| `dist/` | The plugin Claude Code installs. Committed so installs need no build. | `build.mjs` |
+
+## Update from upstream
+
+```bash
+node scripts/sync.mjs
+```
+
+The script fetches both upstreams, rewrites `upstream/` and `UPSTREAM.lock`, rebuilds `dist/`, and runs the check. It prints only what needs you:
+
+- **Overlay items that need a human.** A patch that no longer applies, or a rename whose source upstream removed. The build stops with exit code 1.
+- **Overlap pairs whose upstream side changed.** Re-read both sides and confirm the winner in `overlay/selection.json`.
+- **New Matt Pocock skills.** Add each one to `include` or `decline`.
+- **pstack skills added or removed.** New pstack skills ship automatically.
+
+Review `git diff upstream/` for what upstream changed, then commit. To pin an upstream, pass its SHA, as in `node scripts/sync.mjs pstack=<sha>`.
+
+## Change n-stack
+
+1. Run `node scripts/build.mjs` so `dist/` is current.
+2. Edit the file under `dist/`.
+3. Run `node scripts/mkpatch.mjs <nn-name>`. It writes `overlay/patches/<nn-name>.patch` and rebuilds.
+
+Keep one concern per patch, so a sync failure names the concern that broke. To repair a broken patch, apply the change by hand in `dist/` and run `mkpatch.mjs` with the same name. Put a whole new file in `overlay/files/` instead of a patch.
+
+`node scripts/check.mjs` fails on a dangling link, a missing skill or agent reference, or a name that the renames should have removed.
+
+## Credits and license
+
+pstack is MIT, copyright Lauren Tan. Matt Pocock's skills are MIT, copyright Matt Pocock. Both licenses ship in `dist/licenses/`. The qstack layer adapts ideas from QuangDN's qstack.

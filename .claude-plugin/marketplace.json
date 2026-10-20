@@ -1,0 +1,12 @@
+{
+  "name": "n-stack",
+  "owner": { "name": "nguyenpqp" },
+  "description": "n-stack, a Claude Code workflow plugin kept in sync with pstack and Matt Pocock's skills.",
+  "plugins": [
+    {
+      "name": "n-stack",
+      "source": "./dist",
+      "description": "pstack and Matt Pocock's skills, with the qstack layer, kept in sync with both upstreams."
+    }
+  ]
+}
