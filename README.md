@@ -1,23 +1,23 @@
-# n-stack
+# nstack
 
-n-stack is a Claude Code plugin built from two upstreams and one set of local changes:
+nstack is a Claude Code plugin built from two upstreams and one set of local changes:
 
 - [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`.
 - [Matt Pocock's skills](https://github.com/mattpocock/skills): grilling, the spec pipeline, design vocabulary, diagnosing-bugs, and code-review.
-- The n-stack layer: an interview gate, worktree and merge rules, effort-tiered agents, sticky mode, and a four-model review panel.
+- The nstack layer: an interview gate, worktree and merge rules, effort-tiered agents, sticky mode, and a four-model review panel.
 
-The upstream text is never edited by hand. A script pulls both upstreams, applies the local changes, and tells you which change broke. That keeps n-stack current with upstream at the cost of one command.
+The upstream text is never edited by hand. A script pulls both upstreams, applies the local changes, and tells you which change broke. That keeps nstack current with upstream at the cost of one command.
 
 ## Install
 
 ```bash
 /plugin marketplace add nguyenpqp/nstack
-/plugin install n-stack@n-stack
+/plugin install nstack@nstack
 ```
 
-Then run `/n-stack:setup-nstack` to pick models per role, and `/n-stack:n-mode` to start a task.
+Then run `/nstack:setup-nstack` to pick models per role, and `/nstack:n-mode` to start a task.
 
-To try a local checkout, run `/plugin marketplace add E:\workspace\n-stack`.
+To try a local checkout, run `/plugin marketplace add E:\workspace\nstack`.
 
 ## Layout
 
@@ -29,7 +29,7 @@ To try a local checkout, run `/plugin marketplace add E:\workspace\n-stack`.
 | `overlay/selection.json` | Which skills ship, which are declined, and who wins each overlap. | You |
 | `overlay/renames.json` | Entry-point renames, applied to paths and text. URLs are left alone. | You |
 | `overlay/agents.json` | The effort tiers generated from `n-agent`. | You |
-| `overlay/files/` | Files that n-stack adds, copied over the build. | You |
+| `overlay/files/` | Files that nstack adds, copied over the build. | You |
 | `overlay/patches/` | Small patches to upstream text, applied in name order. | `mkpatch.mjs` |
 | `overlay/check-allow.json` | Upstream example links that are not real files. | You |
 | `dist/` | The plugin Claude Code installs. Committed so installs need no build. | `build.mjs` |
@@ -50,7 +50,7 @@ The script fetches both upstreams, rewrites `upstream/` and `UPSTREAM.lock`, reb
 
 Review `git diff upstream/` for what upstream changed, then commit. To pin an upstream, pass its SHA, as in `node scripts/sync.mjs pstack=<sha>`.
 
-## Change n-stack
+## Change nstack
 
 1. Run `node scripts/mkpatch.mjs start <nn-name>`. It builds `dist/` with every patch that sorts before `<nn-name>`, then applies `<nn-name>` itself if it exists.
 2. Edit the files under `dist/`.
