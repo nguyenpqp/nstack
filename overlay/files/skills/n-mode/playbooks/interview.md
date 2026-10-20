@@ -11,6 +11,7 @@
    - If the user granted full autonomy ("going to bed", "run until done", "be fully autonomous"), ask nothing. Write the intent from the request, with every decision in your list, and go on. Session pickup inherits the prior intent file and asks only about what changed since the handoff.
    - Babysit, Shipping, Pause safely, and Worktree cleanup get one question or none.
    - Investigation, Runtime forensics, and Trace forensics get the questions that set the evidence bar and the deliverable. Almost everything else there is a fact, and facts are yours.
+   - A spec or design doc already in hand (a game design doc, a PRD, a ticket with acceptance criteria) is the answer sheet. Read it first. Ask only about its gaps, its contradictions, and what it leaves to engineering. Cite the section each question comes from. Work that splits into several tickets matches **Spec build**.
    - Every other playbook gets the full frontier.
    - An explicit ask ("interview me", "grill me", "phỏng vấn") upgrades any row to the full frontier.
 3. Deliver each round with `AskUserQuestion` from the main session. A question raised inside a subagent never reaches the user. Put your recommended answer first, with `(Recommended)` on its label and the tradeoff in its description. Never write an "Other" option, because the tool adds one. When the frontier is larger than one call allows, send the calls one after another in the same turn.
