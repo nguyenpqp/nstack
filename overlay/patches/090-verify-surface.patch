@@ -9,7 +9,7 @@ index 6851fd3..ad61c5f 100644
 +| `control-ui`, `control-cli`, or any skill from `cursor-team-kit` named as the control skill | The project's own control skill, a project-local skill under `.claude/skills/` that drives the app the way a user does. If the repo has none, run the **create-verification-skill** skill once to make it. Until one exists, drive the surface through the project's own runner (its test command, a headless or scripted run, a screenshot tool the session has) and say which. That is not a skip, so write no line. |
 +| `/deslop` from `cursor-team-kit` | Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits. That is not a skip, so write no line. |
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 5c03a3f..a68722e 100644
+index cb64e4a..abdf364 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -33,9 +33,9 @@ Remaining triggers:
@@ -18,7 +18,7 @@ index 5c03a3f..a68722e 100644
  - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
 -- Before commit → the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`).
 +- Before commit → Claude Code's built-in `/simplify` over the diff, as the adapter maps `/deslop`.
- - Before review, or before **Merging back** when no PR opens → the **no-comments** skill (`/no-comments`), then Claude Code's built-in `/code-review` over the branch.
+ - Before review, or before **Merging back** when no PR opens → the **no-comments** skill (`/no-comments`), then Claude Code's built-in `/code-review` over the branch. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
 -- Shipping UI / IDE / CLI → the matching control skill. `cursor-team-kit` publishes `control-cli` (CLIs and TUIs) and `control-ui` (browser / Electron / web UIs). For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
 +- Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, the **create-verification-skill** skill makes it, for any language, engine, or platform. Until it exists, drive the surface through the project's own runner and say which. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
  - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.

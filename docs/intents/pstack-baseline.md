@@ -41,6 +41,6 @@ The user's:
 Made for them:
 
 - The Spec build playbook goes with the pipeline. Multi-ticket work matches pstack's Multi-phase or multi-PR plan.
-- Review before a PR runs `interrogate` with the intent file as its intent, in place of Pocock's `code-review`. Later replaced by Claude Code's built-in `/code-review`, which also runs before a local merge, because the user prefers Claude Code's built-in skills and a cheap review. `interrogate` stays for contested designs.
+- Review before a PR runs `interrogate` with the intent file as its intent, in place of Pocock's `code-review`. Later replaced by Claude Code's built-in `/code-review`, which also runs before a local merge, because the user prefers Claude Code's built-in skills and a cheap review. The lead then checks the diff against the intent's Outcome and Out of scope itself. `interrogate` stays for contested designs.
 - Bug fix step 2 runs `diagnosing-bugs` phases 1 to 4 across steps 1 and 2, in its own patch, `065-diagnosis-loop`.
 - This intent supersedes the Pocock groups decision in `n-stack.md`.
