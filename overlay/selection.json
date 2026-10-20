@@ -4,7 +4,6 @@
   },
   "mattpocock": {
     "include": [
-      "skills/productivity/grilling",
       "skills/engineering/diagnosing-bugs"
     ],
     "rename": {},
@@ -29,6 +28,7 @@
       "skills/engineering/wayfinder",
       "skills/engineering/wizard",
       "skills/productivity/grill-me",
+      "skills/productivity/grilling",
       "skills/productivity/handoff",
       "skills/productivity/teach",
       "skills/productivity/to-questionnaire",
@@ -81,10 +81,6 @@
     }
   ],
   "wraps": [
-    {
-      "upstream": "upstream/mattpocock/skills/productivity/grilling/",
-      "by": "overlay/files/skills/n-mode/playbooks/interview.md"
-    },
     {
       "upstream": "upstream/mattpocock/skills/engineering/diagnosing-bugs/",
       "by": "overlay/patches/065-diagnosis-loop.patch"

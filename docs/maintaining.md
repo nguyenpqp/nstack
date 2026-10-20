@@ -2,7 +2,7 @@
 
 A guide for the agent that pulls upstream changes into nstack.
 
-nstack is pstack plus two Matt Pocock skills plus a thin overlay. Your job is to keep it current with both upstreams while every overlay change still says something true. The scripts do the mechanics, and the README's "Update from upstream" and "Change nstack" sections explain them. This guide covers the judgment.
+nstack is pstack plus one Matt Pocock skill plus a thin overlay. Your job is to keep it current with both upstreams while every overlay change still says something true. The scripts do the mechanics, and the README's "Update from upstream" and "Change nstack" sections explain them. This guide covers the judgment.
 
 ## Invariants
 

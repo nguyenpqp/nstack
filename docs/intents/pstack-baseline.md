@@ -13,6 +13,8 @@ Two Pocock skills ship:
 - `grilling`, the base of the Interview playbook.
 - `diagnosing-bugs`, whose phases 1 to 4 run across Bug fix steps 1 and 2.
 
+`interview-and-spec-build.md` later dropped `grilling` and brought Spec build back without Pocock's pipeline.
+
 ## Surfaces
 
 - Anyone running `/nstack:n-mode`.

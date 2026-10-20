@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 8e82381..c8e638e 100644
+index 7c4c758..1c9d626 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -22,6 +22,7 @@ The Principles section below grounds every trigger. In your reply, name each pri
@@ -19,7 +19,7 @@ index 8e82381..c8e638e 100644
  
  A large or cross-cutting effort (a migration across many call sites, an ambitious multi-part change), or work the user steps away from to trust later, routes to the **figure-it-out** skill even when a narrower playbook like Feature fits. Use **figure-it-out** whenever no bundled playbook fits. It designs a bespoke, rigorous playbook for the task. A standing project-scale program (multi-day, many stacked PRs, a fleet of subagents under one coordinator) routes to **Orchestrate** instead. figure-it-out designs one bespoke run, orchestrate runs the program.
  
-+- **Interview.** The opening round of every other playbook, not an alternative to them. Runs the **grilling** skill through `AskUserQuestion` and ends in a confirmed intent file.
++- **Interview.** The opening round of every other playbook, not an alternative to them. Frontier rounds through `AskUserQuestion`, sized by the matched playbook's row in its axes table, ending in a confirmed intent file.
  - **Investigation.** Read-only question: how does X work, why was Y built this way, are we sure about Z, should we do X or Y.
  - **Bug fix.** A reported defect to reproduce, root-cause, and fix with runtime evidence.
  - **Perf issue.** A measured slowness to trace and improve against a baseline.
