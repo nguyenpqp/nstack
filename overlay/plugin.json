@@ -1,7 +1,7 @@
 {
   "name": "nstack",
-  "description": "pstack and Matt Pocock's skills, with an interview gate, worktree rules, and effort-tiered agents, kept in sync with both upstreams.",
+  "description": "pstack plus Matt Pocock's diagnosing-bugs, with an interview gate, a Spec build playbook, worktree rules, and effort-tiered agents, kept in sync with both upstreams.",
   "author": { "name": "nguyenpqp" },
   "license": "MIT",
-  "keywords": ["nstack", "n-mode", "pstack", "workflow", "principles", "grilling", "subagents"]
+  "keywords": ["nstack", "n-mode", "pstack", "workflow", "principles", "subagents"]
 }

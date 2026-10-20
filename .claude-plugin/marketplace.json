@@ -6,7 +6,7 @@
     {
       "name": "nstack",
       "source": "./dist",
-      "description": "pstack and Matt Pocock's skills, with an interview gate, worktree rules, and effort-tiered agents, kept in sync with both upstreams."
+      "description": "pstack plus Matt Pocock's diagnosing-bugs, with an interview gate, a Spec build playbook, worktree rules, and effort-tiered agents, kept in sync with both upstreams."
     }
   ]
 }
