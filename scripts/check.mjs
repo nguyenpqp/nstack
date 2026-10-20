@@ -27,6 +27,8 @@ const agents = new Set(readdirSync(join(DIST, "agents")).map((f) => frontName(jo
 const adapter = readFileSync(join(DIST, "docs", "harness", "claude-code.md"), "utf8");
 const mapped = new Set(
   adapter
+    .split(/^## Cursor-only features$/m)[1]
+    .split(/^## /m)[0]
     .split("\n")
     .filter((line) => line.startsWith("| "))
     .flatMap((line) => [...line.split("|")[1].matchAll(/`\/?([a-z0-9-]+)`/g)].map((m) => m[1])),

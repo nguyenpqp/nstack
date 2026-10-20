@@ -44,6 +44,11 @@ Made for them:
 - Cursor names are mapped once in the adapter instead of patched at each of about ten call sites.
 - `create-skill` gets an adapter row. `triage` and `skill-creator` are allowed per file.
 
-## Open questions
+## Follow-up calls
 
-- The lint matches "the **x** skill" phrasing only. Backticked names without the word "skill", like the old `control-cli` line, still pass.
+The user handed these to the agent.
+
+- `tdd-feature`'s description is scoped to features by patch 96, so it no longer competes with pstack's `tdd` on bugs.
+- The lint reads mapped names from the adapter's Cursor-only features table only.
+- Not done. The lint stays on "the **x** skill" phrasing. Matching every backticked word would flag commands, paths, and fields, and the one remaining miss (`poteto-help` saying `control-cli` ships in `cursor-team-kit`) is true, with the adapter mapping it.
+- Not done. `tdd-feature`'s TypeScript examples stay. They are upstream text, and the rules they illustrate are language-neutral. Rewriting them would be a patch that breaks on every upstream edit.
