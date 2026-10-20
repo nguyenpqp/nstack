@@ -60,7 +60,7 @@ Keep one concern per patch, so a sync failure names the concern that broke. To r
 
 Put a whole new file in `overlay/files/`. The build refuses an overlay file that would replace an upstream file, because a replaced file never receives upstream fixes. When an overlay file wraps an upstream skill, add the pair to `wraps` in `overlay/selection.json`, so sync tells you when that skill changes.
 
-`node scripts/check.mjs` fails on a dangling link, a missing skill or agent reference, or a name that the renames should have removed.
+`node scripts/check.mjs` fails on a dangling link, a missing skill or agent reference, or a name that the renames should have removed. Prose that names a skill ("the **x** skill") must name one that ships, one that has a row in `docs/harness/claude-code.md`, or one allowed for that file in `overlay/check-allow.json`.
 
 ## Credits and license
 

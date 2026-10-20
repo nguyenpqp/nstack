@@ -23,7 +23,17 @@ for (const skill of skills) {
 }
 const agents = new Set(readdirSync(join(DIST, "agents")).map((f) => frontName(join(DIST, "agents", f))));
 
+// A Cursor-only skill is fine to name when the adapter maps it to a Claude Code equivalent.
+const adapter = readFileSync(join(DIST, "docs", "harness", "claude-code.md"), "utf8");
+const mapped = new Set(
+  adapter
+    .split("\n")
+    .filter((line) => line.startsWith("| "))
+    .flatMap((line) => [...line.split("|")[1].matchAll(/`\/?([a-z0-9-]+)`/g)].map((m) => m[1])),
+);
+
 const LINK = /\]\(([^)\s]+)\)/g;
+const PROSE_SKILL = /(?:\*\*|`)([a-z0-9][a-z0-9-]*)(?:\*\*|`)( principle)? skill\b/g;
 const SIBLING = /\.\.\/([a-z0-9-]+)\/SKILL\.md/g;
 const AGENT = new RegExp(`\\b${plugin}:([a-z0-9-]+)`, "g");
 
@@ -42,6 +52,11 @@ for (const file of walk(DIST)) {
     if (allow[rel(DIST, file)]?.includes(target)) continue;
     const path = target.split("#")[0];
     if (path && !existsSync(join(dirname(file), decodeURIComponent(path)))) report(file, `dangling link ${target}`);
+  }
+  for (const [, word, principle] of text.matchAll(PROSE_SKILL)) {
+    const name = principle ? `principle-${word.replace(/^principle-/, "")}` : word;
+    if (skills.has(name) || mapped.has(name) || allow[rel(DIST, file)]?.includes(name)) continue;
+    report(file, `names skill ${name}, which does not ship and has no adapter row`);
   }
   for (const [, name] of text.matchAll(SIBLING)) {
     if (!skills.has(name)) report(file, `references missing skill ${name}`);
