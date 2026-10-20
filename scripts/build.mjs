@@ -56,7 +56,11 @@ for (const path of selection.mattpocock.include) {
     failed.push(`overlay/selection.json: upstream has no ${path} to include`);
     continue;
   }
-  cpSync(join(UP, "mattpocock", path), dest, { recursive: true });
+  // agents/openai.yaml is Codex metadata that Claude Code never reads.
+  cpSync(join(UP, "mattpocock", path), dest, {
+    recursive: true,
+    filter: (src) => rel(join(UP, "mattpocock", path), src) !== "agents",
+  });
   if (name !== basename(path)) {
     const skill = join(dest, "SKILL.md");
     writeFileSync(skill, readFileSync(skill, "utf8").replace(/^name: .+$/m, `name: ${name}`));
