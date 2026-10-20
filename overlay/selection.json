@@ -35,5 +35,48 @@
       "skills/productivity/writing-for-agents"
     ]
   },
-  "overlaps": []
+  "overlaps": [
+    {
+      "skill": "tdd",
+      "winner": "pstack",
+      "pstack": "skills/tdd/",
+      "mattpocock": "skills/engineering/tdd/",
+      "reason": "n-mode's feature and bug-fix playbooks call pstack's tdd by name."
+    },
+    {
+      "skill": "teach",
+      "winner": "pstack",
+      "pstack": "skills/teach/",
+      "mattpocock": "skills/productivity/teach/",
+      "reason": "pstack's teach weaves how and why, which n-stack ships."
+    },
+    {
+      "skill": "prototype",
+      "winner": "pstack",
+      "pstack": "skills/poteto-mode/playbooks/prototype.md",
+      "mattpocock": "skills/engineering/prototype/",
+      "reason": "n-mode routes empirical forks to its prototype playbook."
+    },
+    {
+      "skill": "code-review",
+      "winner": "mattpocock",
+      "pstack": "skills/interrogate/",
+      "mattpocock": "skills/engineering/code-review/",
+      "reason": "pstack has no standards-and-spec review. interrogate stays as the multi-model adversarial pass."
+    },
+    {
+      "skill": "diagnosing-bugs",
+      "winner": "both",
+      "pstack": "skills/poteto-mode/playbooks/bug-fix.md",
+      "mattpocock": "skills/engineering/diagnosing-bugs/",
+      "reason": "The bug-fix playbook owns the flow. diagnosing-bugs is its diagnosis loop."
+    },
+    {
+      "skill": "improve-codebase-architecture",
+      "winner": "both",
+      "pstack": "skills/architect/",
+      "mattpocock": "skills/engineering/improve-codebase-architecture/",
+      "reason": "architect shapes new code before it exists. improve-codebase-architecture finds deepening opportunities in existing code."
+    }
+  ]
 }

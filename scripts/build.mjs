@@ -5,7 +5,7 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { execFileSync } from "node:child_process";
-import { ROOT, isText, readJson, rel, walk } from "./lib.mjs";
+import { ROOT, isText, outsideUrls, readJson, rel, walk } from "./lib.mjs";
 
 const args = process.argv.slice(2);
 const flag = (name) => {
@@ -49,7 +49,7 @@ for (const [from, to] of Object.entries(renames.paths)) {
 for (const file of walk(OUT)) {
   if (!isText(file) || file.startsWith(join(OUT, "licenses"))) continue;
   const before = readFileSync(file, "utf8");
-  const after = renames.text.reduce((s, [from, to]) => s.split(from).join(to), before);
+  const after = outsideUrls(before, (part) => renames.text.reduce((s, [from, to]) => s.split(from).join(to), part));
   if (after !== before) writeFileSync(file, after);
 }
 
@@ -87,4 +87,8 @@ if (failed.length) {
   process.exit(1);
 }
 console.log(`built ${rel(ROOT, OUT)} with ${patches.length} patches`);
-execFileSync(process.execPath, [join(ROOT, "scripts", "check.mjs"), OUT], { stdio: "inherit" });
+try {
+  execFileSync(process.execPath, [join(ROOT, "scripts", "check.mjs"), OUT], { stdio: "inherit" });
+} catch {
+  process.exit(1);
+}

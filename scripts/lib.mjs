@@ -21,3 +21,16 @@ const BINARY = /\.(png|jpe?g|gif|webp|ico|pdf|mp4|mov|woff2?|ttf|zip)$/i;
 export const isText = (path) => !BINARY.test(path);
 
 export const rel = (from, path) => relative(from, path).split("\\").join("/");
+
+const URL = /(https?:\/\/[^\s)>\]"'`]+)/;
+export const outsideUrls = (text, fn) =>
+  text
+    .split(URL)
+    .map((part, i) => (i % 2 ? part : fn(part)))
+    .join("");
+
+export const stripUrls = (text) =>
+  text
+    .split(URL)
+    .filter((_, i) => i % 2 === 0)
+    .join(" ");

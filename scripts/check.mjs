@@ -4,7 +4,7 @@
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { ROOT, isText, readJson, rel, walk } from "./lib.mjs";
+import { ROOT, isText, readJson, rel, stripUrls, walk } from "./lib.mjs";
 
 const DIST = resolve(process.argv[2] ?? join(ROOT, "dist"));
 const plugin = readJson(join(DIST, ".claude-plugin", "plugin.json")).name;
@@ -31,8 +31,9 @@ for (const file of walk(DIST)) {
   if (!isText(file) || file.startsWith(join(DIST, "licenses"))) continue;
   const text = readFileSync(file, "utf8");
 
+  const prose = stripUrls(text);
   for (const [from] of renames.text) {
-    if (text.includes(from)) report(file, `still says ${from}`);
+    if (prose.includes(from)) report(file, `still says ${from}`);
   }
   if (!file.endsWith(".md")) continue;
 

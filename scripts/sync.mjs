@@ -54,7 +54,7 @@ const selection = readJson(join(ROOT, "overlay", "selection.json"));
 const touched = (dir) => changed.some((p) => p.startsWith(dir));
 
 const review = selection.overlaps.filter((o) =>
-  [o.pstack && `upstream/pstack/skills/${o.pstack}/`, o.mattpocock && `upstream/mattpocock/${o.mattpocock}/`]
+  [o.pstack && `upstream/pstack/${o.pstack}`, o.mattpocock && `upstream/mattpocock/${o.mattpocock}`]
     .filter(Boolean)
     .some(touched),
 );

@@ -1,4 +1,17 @@
 {
-  "paths": {},
-  "text": []
+  "paths": {
+    "skills/poteto-mode": "skills/n-mode",
+    "skills/setup-pstack": "skills/setup-nstack",
+    "agents/poteto-agent.md": "agents/n-agent.md",
+    "docs/guide/02-poteto-mode.md": "docs/guide/02-n-mode.md"
+  },
+  "text": [
+    ["pstack:", "n-stack:"],
+    ["poteto-mode", "n-mode"],
+    ["poteto-agent", "n-agent"],
+    ["setup-pstack", "setup-nstack"],
+    ["pstack-models", "nstack-models"],
+    ["# Poteto mode", "# N mode"],
+    ["# Poteto subagent", "# N subagent"]
+  ]
 }
