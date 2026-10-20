@@ -1,0 +1,27 @@
+diff --git a/docs/guide/09-make-it-yours.md b/docs/guide/09-make-it-yours.md
+index fb90a6a..16a88fd 100644
+--- a/docs/guide/09-make-it-yours.md
++++ b/docs/guide/09-make-it-yours.md
+@@ -91,10 +91,6 @@ The [Eval playbook](../../skills/n-mode/playbooks/eval.md) is built around one f
+ 
+ Read every output yourself before accepting the verdict. If you disagree with the judge, suspect the rubric before you suspect your judgment.
+ 
+-## Build a bot UI with `/make-bot-ui`
+-
+-One situational skill is for Grok Bot users. [`/make-bot-ui`](../../skills/make-bot-ui/SKILL.md) builds a small page whose buttons wake a bot over a webhook routine. For example, you could swipe through a review queue and have each swipe ask the bot to act on that item. A server on your machine holds the webhook's sender key, so the key never reaches the browser or the chat. The skill also covers exposing the page on Tailscale.
+-
+ **Pitfall:** don't edit a skill mid-task because it's misbehaving. Fix it in its own PR and keep the task moving. A skill edit that ships tangled into feature work is invisible to review and impossible to evaluate.
+ 
+ Next: [Recipes and pitfalls](./10-recipes-and-pitfalls.md).
+diff --git a/skills/poteto-help/SKILL.md b/skills/poteto-help/SKILL.md
+index 0963ea2..b2f0c27 100644
+--- a/skills/poteto-help/SKILL.md
++++ b/skills/poteto-help/SKILL.md
+@@ -97,7 +97,6 @@ The default answer is `/n-mode`, which runs most of the others when its steps ne
+ | Turn their own working habits into a personal mode skill | [`/automate-me`](../automate-me/SKILL.md) |
+ | Turn what a finished task taught into skill edits | [`/reflect`](../reflect/SKILL.md) |
+ | Stop agents from repeating the same mistakes in this repo | [`/correct`](../correct/SKILL.md) |
+-| Build a page whose buttons wake a Grok Bot over a webhook | [`/make-bot-ui`](../make-bot-ui/SKILL.md) |
+ | Find their way around pstack | `/poteto-help` |
+ 
+ If a skill directory next to this one is missing from the table, read its frontmatter and route by its description. The `principle-*` directories are covered under principles below.

@@ -13,5 +13,21 @@
     ["pstack-models", "nstack-models"],
     ["# Poteto mode", "# N mode"],
     ["# Poteto subagent", "# N subagent"]
+  ],
+  "claudeCode": [
+    ["~/.cursor/rules/nstack-models.mdc", "~/.claude/rules/nstack-models.md"],
+    ["nstack-models.mdc", "nstack-models.md"],
+    [".cursor/skills/", ".claude/skills/"],
+    ["~/.cursor/plugins/", "~/.claude/plugins/"],
+    ["AskQuestion", "AskUserQuestion"],
+    ["subagent_type: generalPurpose", "subagent_type: \"general-purpose\""],
+    ["`generalPurpose`", "`general-purpose`"],
+    [" a Task subagent", " an Agent subagent"],
+    [" a `Task`", " an `Agent`"],
+    ["`Task`", "`Agent`"],
+    ["the Task tool", "the Agent tool"],
+    ["Task spawn", "Agent spawn"],
+    ["Task `model`", "Agent `model`"],
+    ["Task schema", "Agent schema"]
   ]
 }

@@ -1,6 +1,6 @@
 {
   "pstack": {
-    "exclude": []
+    "exclude": ["make-bot-ui"]
   },
   "mattpocock": {
     "include": [

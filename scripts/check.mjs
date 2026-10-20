@@ -48,6 +48,11 @@ for (const file of walk(DIST)) {
     if (prose.includes(from)) report(file, `still says ${from}`);
   }
   if (!file.endsWith(".md")) continue;
+  if (file !== join(DIST, "docs", "harness", "claude-code.md")) {
+    for (const [from] of renames.claudeCode) {
+      if (prose.includes(from)) report(file, `still says ${from}`);
+    }
+  }
 
   for (const [, target] of text.matchAll(LINK)) {
     if (/^(https?:|mailto:|#|<|\$\{)/.test(target)) continue;

@@ -22,7 +22,8 @@ nstack is pstack plus one Matt Pocock skill plus a thin overlay. Your job is to 
    - **A new pstack skill.** It ships automatically. Check that it does not collide with a kept Pocock skill or with the nstack layer by name, trigger, or routing.
    - **A removed pstack skill, or a `selection.json` path that is gone.** Find what in `overlay/` still points at it and fix that.
 3. Read `git diff upstream/` yourself for drift that the report cannot see:
-   - Cursor-only names that need a row in `docs/harness/claude-code.md`.
+   - Cursor-only names that need a row in `docs/harness/claude-code.md`, or a `claudeCode` entry in `overlay/renames.json` when a plain rewrite is enough.
+   - New Cursor-only skills. nstack targets Claude Code only, so a skill that works only in Cursor goes in `selection.json` `pstack.exclude`.
    - New or renamed model slugs, which patch `070-models` maps.
    - Edits to pstack's mode skill (`n-mode` in `dist/`, `poteto-mode` upstream) that contradict the nstack layer.
    - Renamed entry points, which `overlay/renames.json` must follow.

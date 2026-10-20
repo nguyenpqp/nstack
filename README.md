@@ -2,7 +2,7 @@
 
 nstack is a Claude Code plugin built from two upstreams and one set of local changes:
 
-- [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`. It is the baseline and wins every overlap.
+- [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`. It is the baseline and wins every overlap. nstack targets Claude Code only, so it drops `make-bot-ui` and rewrites the common Cursor names.
 - [Matt Pocock's skills](https://github.com/mattpocock/skills): only `diagnosing-bugs`, the one piece that pstack lacks and n-mode can use cleanly.
 - The nstack layer: an interview gate sized per playbook, a Spec build playbook for parallel tickets, worktree and merge rules, effort-tiered agents, sticky mode, and a four-model review panel.
 
@@ -29,7 +29,7 @@ To try a local checkout, start Claude Code in the checkout and run `/plugin mark
 | `UPSTREAM.lock` | The commit SHA of each vendored upstream. | `sync.mjs` |
 | `upstream/pstack/`, `upstream/mattpocock/` | Untouched snapshots of each upstream. | `sync.mjs` only |
 | `overlay/selection.json` | Which skills ship, which are declined, and who wins each overlap. `mattpocock.rename` ships an included skill under another name when its name collides with pstack's. | You |
-| `overlay/renames.json` | Entry-point renames, applied to paths and text. URLs are left alone. | You |
+| `overlay/renames.json` | Entry-point renames, applied to paths and text. `claudeCode` rewrites Cursor names in `.md` files to Claude Code names after the patches, in every file but the adapter `docs/harness/claude-code.md`. URLs are left alone. | You |
 | `overlay/agents.json` | The effort tiers generated from `n-agent`. | You |
 | `overlay/files/` | Files that nstack adds, copied over the build. | You |
 | `overlay/patches/` | Small patches to upstream text, applied in name order. | `mkpatch.mjs` |
@@ -61,7 +61,7 @@ To hand the whole loop to an agent, point it at [docs/maintaining.md](docs/maint
 ## Change nstack
 
 1. Run `node scripts/mkpatch.mjs start <nnn-name>`. It builds `dist/` with every patch that sorts before `<nnn-name>`, then applies `<nnn-name>` itself if it exists.
-2. Edit the files under `dist/`.
+2. Edit the files under `dist/`. This partial build skips the `claudeCode` rewrite, so the files still show Cursor names such as `Task`. Edit them as they are.
 3. Run `node scripts/mkpatch.mjs save <nnn-name>`. It refuses unless the last `start` named the same patch, because a `dist/` built with later patches would leak them into this one. It writes `overlay/patches/<nnn-name>.patch` and rebuilds with every patch.
 
 Keep one concern per patch, so a sync failure names the concern that broke. To repair a patch that no longer applies, run the same two commands. `start` applies what it can and leaves `.rej` files for the hunks that failed. Finish those by hand and delete the `.rej` files before `save`.

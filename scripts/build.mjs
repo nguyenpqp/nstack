@@ -113,6 +113,18 @@ for (const patch of patches) {
   }
 }
 
+// Cursor names become Claude Code names after the patches, so patch context stays upstream text. A partial build skips
+// this so mkpatch diffs the same text it applies to. The adapter keeps both sides of its tables.
+const ADAPTER = join(OUT, "docs", "harness", "claude-code.md");
+if (!until) {
+  for (const file of walk(OUT)) {
+    if (!file.endsWith(".md") || file === ADAPTER) continue;
+    const before = readFileSync(file, "utf8");
+    const after = outsideUrls(before, (part) => renames.claudeCode.reduce((s, [from, to]) => s.split(from).join(to), part));
+    if (after !== before) retrying(`write ${rel(OUT, file)}`, () => writeFileSync(file, after));
+  }
+}
+
 const tiers = readJson(join(OVERLAY, "agents.json"));
 const baseAgent = readFileSync(join(OUT, tiers.base), "utf8");
 const baseName = baseAgent.match(/^name: (.+)$/m)[1];
