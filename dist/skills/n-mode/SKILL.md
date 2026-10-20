@@ -1,6 +1,6 @@
 ---
 name: n-mode
-description: poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for poteto, /n-mode, or requests to work in this style.
+description: n-stack's agent style, built on pstack, for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for /n-mode or requests to work in this style.
 disable-model-invocation: true
 icon: crown
 color: yellow
@@ -12,23 +12,30 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
 
 Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `n-agent` prompt.
 
+## Sticky mode
+
+Once invoked, n-mode stays on for the rest of the conversation. Claude Code has no frontmatter flag for this, so the rule lives here. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
+
 ## Non-negotiables
 
 The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.
 
 Remaining triggers:
 
+- **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `docs/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
 - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
 - About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. Under a full-autonomy grant, decide a call the grant covers, act on it, and report it, with no reply word and no offer. Under the grant, for a call only the operator can make, apply a default, report it with a full explanation, and say in plain words what the operator could tell you to do instead. The operator answers in their own words. Never give a shorthand token to type back. Gates the operator named and the Always-pause list in Autonomy still need the operator.
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
 - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
+- A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook.
+- Domain terms, a glossary, or an architecture decision worth recording → the **domain-modeling** skill. A module's interface, depth, or seams → the **codebase-design** skill. Hunting refactor opportunities in existing code → the **improve-codebase-architecture** skill.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
 - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
 - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
 - Before commit → the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`).
-- Before review → the **no-comments** skill (`/no-comments`).
+- Before review → the **no-comments** skill (`/no-comments`), then the **code-review** skill against the intent file.
 - Shipping UI / IDE / CLI → the matching control skill. `cursor-team-kit` publishes `control-cli` (CLIs and TUIs) and `control-ui` (browser / Electron / web UIs). For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
 - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
 - Any PR-status request ("babysit this", "get it green", "address the bugbot comments", and most often "check on PR X" or "anything outstanding on X") → the **Babysit** playbook (`playbooks/babysit.md`), not Cursor's built-in babysit skill, whose description matches the same words. Never triggered by merely opening a PR. Declare its mode before polling. The playbook's step 1 owns the request-to-mode mapping. Reaching for `drive` inside a phase agent stops that agent finishing its turn.
@@ -90,9 +97,29 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **No is an acceptable answer.** Asked whether to do something, invited to add scope, or shown an approach, reply with your real judgment. Decline, push back, or say "this doesn't earn its place" when true. A recommendation is a judgment, not a validation. Agreement is not the default, candor over sycophancy.
 
+## Worktree
+
+**Every playbook that writes files to the repo opens a worktree before its first edit.** Create it at `./.worktrees/<branch>` with `git worktree add`, and name the branch per Conventional Commits from the task. Add `.worktrees/` to `.gitignore` before the first worktree exists, or the worktree lands in the next commit. The root checkout stays on the integration branch and never holds feature work. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
+
+**`EnterWorktree` and `ExitWorktree` own the session's directory.** A shell `cd` does not move the session, so call `EnterWorktree` with `path` at the worktree you created. Pass `path`, never `name`, because `name` opens its own worktree under `.claude/worktrees/` and breaks the `./.worktrees/<branch>` convention. When the repo sits outside the session's launch directory, `EnterWorktree` refuses it. Then address the worktree with absolute paths and `git -C <worktree>`, and say so once in the reply.
+
+**Who skips it.** Read-only playbooks, Babysit, Pause safely, Worktree cleanup, Prototype (its sketch lives in a scratch dir), Eval, and Shipping. Session pickup adopts the prior worktree instead of opening one. Coordinators that only write briefs (Orchestrate, Autopilot-full, Autopilot-stack, Multi-phase plan) skip it, and their workers carry `isolation: "worktree"`. Spec build opens one for the spec branch.
+
+**Outside a git repository, skip this section.** If `git rev-parse --is-inside-work-tree` fails, edit in place and do not run `git init`. Run delegates that could write the same files one at a time.
+
+**Merging back.** Confirm `git merge-base --is-ancestor <integration> <branch>` and an empty `git -C <root> status --porcelain`. Take the lock with `mkdir <root>/.git/merge.lock`, run `git -C <root> merge --ff-only <branch>`, then `rmdir` the lock. A refused fast-forward means another session moved the base, so rebase in your own worktree and retry. Never force. Set `git -C <root> config merge.ff only` once so the root enforces this itself. If the session is pinned to the worktree and the root command is refused, work down this ladder and stop at the first rung that lands.
+
+1. Call `ExitWorktree` with `action: "keep"`, merge from the restored directory, then `EnterWorktree` with `path` to come back.
+2. Run `git -C <root> config receive.denyCurrentBranch updateInstead` once, then `git push . HEAD:<integration>` from inside the worktree. Git refuses the push when the root is dirty or the update is not a fast-forward, which keeps the same guarantee.
+3. Hand the operator the exact command with the reason in one sentence. They run it from the prompt with a leading `!`.
+
+Never move the branch with `git update-ref` or a bare `git push` into the root. Both advance the ref without touching the root working tree, which leaves every merged file looking deleted there.
+
+After the merge lands, leave the worktree with `ExitWorktree` and `action: "keep"`, then remove it with `git -C <root> worktree remove <path>` and delete the branch.
+
 ## Subagents
 
-**Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
+**Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pick the effort variant the step needs, and pass the plugin namespace in `subagent_type`. `n-stack:n-agent-medium` takes explore, search, verify, and mechanical edits already specified step by step. `n-stack:n-agent-high` takes implementation from a description and per-task diff review. `n-stack:n-agent-xhigh` takes plan writing, hard debugging, design decisions, and the final branch review. Plain `n-stack:n-agent` runs at the session's effort. The variant sets effort only, so the role's `model` still applies. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
 
 **Defaults for every `Task` call.** `run_in_background: true`, agent mode (readonly strips MCP), file pointers not inlined context, explicit model per role (configurable via `/setup-nstack`. Defaults `grok-4.7-xhigh-fast` for code, `claude-opus-5-5-xhigh` for prose and judgment). Code delegates tier by difficulty. The hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms) go to your strongest judgment model (`claude-opus-5-5-xhigh`), whether the task needs judgment on vague intent or is a precisely specified sequence of steps to execute to the letter. Trivial mechanical edits go to your fast code model. Per-role lines in the `/setup-nstack` rule override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role line of `inherit-parent` or `auto` runs that role on the parent chat model (omit Task `model`). Each code playbook's configured model comes from its line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), and the hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.
 
@@ -122,10 +149,11 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
 
 ## Playbooks
 
-Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md`, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Copy its steps in verbatim.
+Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md`, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Copy its steps in verbatim. The order before step 1 is fixed: the Interview round, then the worktree, then the intent commit.
 
 A large or cross-cutting effort (a migration across many call sites, an ambitious multi-part change), or work the user steps away from to trust later, routes to the **figure-it-out** skill even when a narrower playbook like Feature fits. Use **figure-it-out** whenever no bundled playbook fits. It designs a bespoke, rigorous playbook for the task. A standing project-scale program (multi-day, many stacked PRs, a fleet of subagents under one coordinator) routes to **Orchestrate** instead. figure-it-out designs one bespoke run, orchestrate runs the program.
 
+- **Interview.** The opening round of every other playbook, not an alternative to them. Runs the **grilling** skill through `AskUserQuestion` and ends in a confirmed intent file.
 - **Investigation.** Read-only question: how does X work, why was Y built this way, are we sure about Z, should we do X or Y.
 - **Bug fix.** A reported defect to reproduce, root-cause, and fix with runtime evidence.
 - **Perf issue.** A measured slowness to trace and improve against a baseline.
@@ -133,6 +161,7 @@ A large or cross-cutting effort (a migration across many call sites, an ambitiou
 - **Runtime forensics.** Diagnose a runtime symptom (leak, idle-CPU spin, glitch) from live instrumentation. The deliverable is a diagnosis, not a fix.
 - **Trace forensics.** Diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot) handed to you after the fact. The deliverable is a diagnosis, not a fix.
 - **Feature.** New or changed behavior, built from a named data shape.
+- **Spec build.** One spec split into tickets with blocking edges, built in one session through the **to-spec**, **to-tickets**, and **implement-spec** skills. Every ticket lands on one spec branch, which gets one review and one PR. Distinct from Feature, one coupled change, and from the Autopilots, where every unit ships its own PR.
 - **Refactoring.** A behavior-preserving change to structure or shape (rename, extract, inline, dedupe, move).
 - **Prototype.** A throwaway sketch to make a design or behavioral decision cheaply, or to settle an empirical fork by observing it instead of asking the human ("prototype", "mock it up", "try this layout", "sketch it to decide").
 - **Visual parity.** Pixel-exact UI equivalence: matching two implementations or migrating a styling system.

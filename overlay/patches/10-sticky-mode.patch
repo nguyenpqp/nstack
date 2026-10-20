@@ -1,0 +1,15 @@
+diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
+index 0380e6c..eb6003f 100644
+--- a/skills/n-mode/SKILL.md
++++ b/skills/n-mode/SKILL.md
+@@ -12,6 +12,10 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
+ 
+ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `n-agent` prompt.
+ 
++## Sticky mode
++
++Once invoked, n-mode stays on for the rest of the conversation. Claude Code has no frontmatter flag for this, so the rule lives here. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
++
+ ## Non-negotiables
+ 
+ The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.

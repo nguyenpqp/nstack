@@ -1,0 +1,25 @@
+diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
+index eb6003f..ff69963 100644
+--- a/skills/n-mode/SKILL.md
++++ b/skills/n-mode/SKILL.md
+@@ -22,6 +22,7 @@ The Principles section below grounds every trigger. In your reply, name each pri
+ 
+ Remaining triggers:
+ 
++- **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `docs/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
+ - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
+ - About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. Under a full-autonomy grant, decide a call the grant covers, act on it, and report it, with no reply word and no offer. Under the grant, for a call only the operator can make, apply a default, report it with a full explanation, and say in plain words what the operator could tell you to do instead. The operator answers in their own words. Never give a shorthand token to type back. Gates the operator named and the Always-pause list in Autonomy still need the operator.
+ - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
+@@ -126,10 +127,11 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
+ 
+ ## Playbooks
+ 
+-Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md`, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Copy its steps in verbatim.
++Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md`, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Copy its steps in verbatim. The order before step 1 is fixed: the Interview round, then the worktree, then the intent commit.
+ 
+ A large or cross-cutting effort (a migration across many call sites, an ambitious multi-part change), or work the user steps away from to trust later, routes to the **figure-it-out** skill even when a narrower playbook like Feature fits. Use **figure-it-out** whenever no bundled playbook fits. It designs a bespoke, rigorous playbook for the task. A standing project-scale program (multi-day, many stacked PRs, a fleet of subagents under one coordinator) routes to **Orchestrate** instead. figure-it-out designs one bespoke run, orchestrate runs the program.
+ 
++- **Interview.** The opening round of every other playbook, not an alternative to them. Runs the **grilling** skill through `AskUserQuestion` and ends in a confirmed intent file.
+ - **Investigation.** Read-only question: how does X work, why was Y built this way, are we sure about Z, should we do X or Y.
+ - **Bug fix.** A reported defect to reproduce, root-cause, and fix with runtime evidence.
+ - **Perf issue.** A measured slowness to trace and improve against a baseline.

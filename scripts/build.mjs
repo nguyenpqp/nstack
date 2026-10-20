@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Usage: node scripts/build.mjs [--out <dir>] [--skip-patch <name>]
+// Usage: node scripts/build.mjs [--out <dir>] [--skip-patch <name>] [--no-check]
 // Assembles dist/ from upstream/ plus overlay/. Never reads the network.
 
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
@@ -53,6 +53,20 @@ for (const file of walk(OUT)) {
   if (after !== before) writeFileSync(file, after);
 }
 
+const tiers = readJson(join(OVERLAY, "agents.json"));
+const baseAgent = readFileSync(join(OUT, tiers.base), "utf8");
+const baseName = baseAgent.match(/^name: (.+)$/m)[1];
+for (const { effort, use } of tiers.variants) {
+  const variant = baseAgent
+    .replace(/^name: .+$/m, `name: ${baseName}-${effort}`)
+    .replace(
+      /^description: (.+)$/m,
+      (_, d) =>
+        `description: ${baseName} pinned to ${effort} effort. Use for ${use}. Model still comes from the role's Agent \`model\` param. ${d}\neffort: ${effort}`,
+    );
+  writeFileSync(join(OUT, dirname(tiers.base), `${baseName}-${effort}.md`), variant);
+}
+
 const files = join(OVERLAY, "files");
 if (existsSync(files)) {
   for (const file of walk(files)) {
@@ -87,8 +101,10 @@ if (failed.length) {
   process.exit(1);
 }
 console.log(`built ${rel(ROOT, OUT)} with ${patches.length} patches`);
-try {
-  execFileSync(process.execPath, [join(ROOT, "scripts", "check.mjs"), OUT], { stdio: "inherit" });
-} catch {
-  process.exit(1);
+if (!args.includes("--no-check")) {
+  try {
+    execFileSync(process.execPath, [join(ROOT, "scripts", "check.mjs"), OUT], { stdio: "inherit" });
+  } catch {
+    process.exit(1);
+  }
 }

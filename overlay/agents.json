@@ -1,0 +1,8 @@
+{
+  "base": "agents/n-agent.md",
+  "variants": [
+    { "effort": "medium", "use": "explore, search, verify (lint, typecheck, build, test), and mechanical edits already specified step by step" },
+    { "effort": "high", "use": "implementing from a description and reviewing one task's diff" },
+    { "effort": "xhigh", "use": "plan writing, hard debugging, design decisions, and the final review of a whole branch" }
+  ]
+}
