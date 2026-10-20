@@ -16,9 +16,9 @@ nstack is pstack plus three Matt Pocock skills plus a thin overlay. Your job is 
 
 ## Loop
 
-1. Run `node scripts/sync.mjs`. If it reports no upstream change, say so and stop.
+1. Run `node scripts/sync.mjs`. If it reports no upstream change and `git status` is clean, say so and stop. A dirty `dist/` with no upstream change means someone edited `overlay/` without rebuilding, so commit that rebuild first.
 2. Work through each item the report lists. Treat it as a starting list, not the whole truth.
-   - **A patch no longer applies.** Repair it with `mkpatch start` and `save`, keeping what the patch was for. If upstream now does what the patch did, delete the patch.
+   - **A patch no longer applies.** Repair it with `mkpatch start` and `save`, keeping what the patch was for. If upstream now does what the patch did, delete the patch. A repair can shift the context that a later patch anchors on. The rebuild after `save` names that patch, so repair it next.
    - **Upstream changed under a patch or a wrapping overlay file.** Read the upstream diff beside the patch. A patch that applies cleanly can still be wrong or unneeded.
    - **An overlap pair changed.** Re-read both sides. pstack keeps the slot unless it lost the capability.
    - **A new Pocock skill, or an included one that moved or vanished.** Apply the keep rule. When in doubt, decline it.
