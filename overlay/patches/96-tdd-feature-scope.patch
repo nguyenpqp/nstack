@@ -1,0 +1,12 @@
+diff --git a/skills/tdd-feature/SKILL.md b/skills/tdd-feature/SKILL.md
+index a36f08c..c9bd187 100644
+--- a/skills/tdd-feature/SKILL.md
++++ b/skills/tdd-feature/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: tdd-feature
+-description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
++description: Test-driven development for features. Use when the user wants to build a feature test-first, mentions "red-green-refactor", or wants integration tests. For a bug fix, use the tdd skill instead.
+ ---
+ 
+ # Test-Driven Development
