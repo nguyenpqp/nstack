@@ -1,0 +1,26 @@
+diff --git a/docs/harness/claude-code.md b/docs/harness/claude-code.md
+index 6851fd3..ad61c5f 100644
+--- a/docs/harness/claude-code.md
++++ b/docs/harness/claude-code.md
+@@ -67,3 +67,5 @@ Claude Code has no Cursor Automations, Bugbot, Cursor cloud agents, or built-in
+ | Bugbot | Bugbot comments on a GitHub PR are ordinary review threads, so triage them with the forge command that the step gives. Skip a step that starts, waits for, or configures Bugbot when the PR has no Bugbot check or comment. |
+ | Cursor cloud agents | `environment: "cloud"` maps to a worktree, as in Subagent fields. Skip a step that needs the cloud agent itself, such as its dashboard status or its own machine. |
+ | A built-in PR tool | Use the forge command that the step gives, such as `gh pr create`. That is not a skip, so write no line. |
++| `control-ui`, `control-cli`, or any skill from `cursor-team-kit` named as the control skill | The project's own control skill, a project-local skill under `.claude/skills/` that drives the app the way a user does. If the repo has none, run the **create-verification-skill** skill once to make it. Until one exists, drive the surface through the project's own runner (its test command, a headless or scripted run, a screenshot tool the session has) and say which. That is not a skip, so write no line. |
++| `/deslop` from `cursor-team-kit` | Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits. That is not a skip, so write no line. |
+diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
+index d351233..a1e5b3a 100644
+--- a/skills/n-mode/SKILL.md
++++ b/skills/n-mode/SKILL.md
+@@ -34,9 +34,9 @@ Remaining triggers:
+ - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
+ - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
+ - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
+-- Before commit → the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`).
++- Before commit → Claude Code's built-in `/simplify` over the diff, as the adapter maps `/deslop`.
+ - Before review → the **no-comments** skill (`/no-comments`), then the **code-review** skill against the intent file.
+-- Shipping UI / IDE / CLI → the matching control skill. `cursor-team-kit` publishes `control-cli` (CLIs and TUIs) and `control-ui` (browser / Electron / web UIs). For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
++- Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, the **create-verification-skill** skill makes it, for any language, engine, or platform. Until it exists, drive the surface through the project's own runner and say which. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
+ - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
+ - Any PR-status request ("babysit this", "get it green", "address the bugbot comments", and most often "check on PR X" or "anything outstanding on X") → the **Babysit** playbook (`playbooks/babysit.md`), not Cursor's built-in babysit skill, whose description matches the same words. Never triggered by merely opening a PR. Declare its mode before polling. The playbook's step 1 owns the request-to-mode mapping. Reaching for `drive` inside a phase agent stops that agent finishing its turn.
+ - Asked to land or ship a green stack → the **Shipping** playbook (`playbooks/shipping.md`). Green is not safe. Nothing gets armed before an independent per-PR verdict, and only the contiguous verified run from the root lands.
