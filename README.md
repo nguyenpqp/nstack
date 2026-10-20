@@ -36,6 +36,7 @@ To try a local checkout, start Claude Code in the checkout and run `/plugin mark
 | `overlay/check-allow.json` | Upstream example links that are not real files. | You |
 | `overlay/plugin.json` | The plugin manifest. It sets no `version`, so Claude Code versions installs by the commit of `dist/`, and a commit that changes `dist/` reaches users on their next update. A pinned version keeps users on their cached copy until it changes. | You |
 | `dist/` | The plugin Claude Code installs. Committed so installs need no build. | `build.mjs` |
+| `.github/workflows/check.yml` | CI that rebuilds `dist/` and fails when it differs from the commit, or when the check fails. | You |
 
 ## Update from upstream
 
