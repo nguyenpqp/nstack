@@ -35,22 +35,22 @@ Theirs:
 
 - Vendor plus overlay. Manual sync.
 - pstack base is upstream's `harness/pstack/claude-code` tree.
-- Pocock groups: interview (grilling, grill-me), spec pipeline (to-spec, to-tickets, implement-spec), design vocabulary (domain-modeling, codebase-design, improve-codebase-architecture), debug and review (diagnosing-bugs, code-review).
-- Overlaps resolve per pair with pstack as default.
+- Pocock groups: interview (grilling, grill-me), spec pipeline (to-spec, to-tickets, implement-spec), design vocabulary (domain-modeling, codebase-design, improve-codebase-architecture), debug and review (diagnosing-bugs, code-review). Superseded by `pstack-baseline.md`, which ships only grilling, domain-modeling, and diagnosing-bugs.
+- Overlaps resolve per pair with pstack as default. `pstack-baseline.md` makes pstack win every overlap.
 - Rename entry points only: `poteto-mode` to `n-mode`, `poteto-agent` to `n-agent`, `setup-pstack` to `setup-nstack`.
 - nstack layer: interview gate, worktree and merge rules, effort-tiered agents, sticky mode, 4-model review panel.
 - Models: `sonnet` for code, `opus` for judgment and prose, panel `opus`, `sonnet`, `haiku`, `fable`.
 - Distribution: a GitHub repo acting as its own marketplace, `dist/` committed.
-- Location: `E:\workspace\n-stack`.
+- Location: any local checkout, added with `/plugin marketplace add ./`.
 
 Made for them:
 
 - The interview playbook wraps Pocock's `grilling` instead of a copied interview playbook, so grilling updates flow in on sync.
-- The spec build playbook wraps `to-spec`, `to-tickets`, and `implement-spec` plus the worktree rules.
-- Pocock's `code-review` stays as `nstack:code-review`. pstack has no equivalent.
-- `setup-matt-pocock-skills` ships, because the spec pipeline and code-review need its issue-tracker config.
+- The spec build playbook wraps `to-spec`, `to-tickets`, and `implement-spec` plus the worktree rules. Dropped by `pstack-baseline.md` with the pipeline.
+- Pocock's `code-review` stays as `nstack:code-review`. Dropped by `pstack-baseline.md`. `interrogate` reviews against the intent file instead.
+- `setup-matt-pocock-skills` ships, because the spec pipeline and code-review need its issue-tracker config. Dropped by `pstack-baseline.md` with both.
 - Tooling is Node `.mjs`, matching upstream's generator.
 
 ## Open questions
 
-- The GitHub owner for the marketplace repo. Nothing pushes until the operator names it.
+- The GitHub owner for the marketplace repo. Resolved: `nguyenpqp`.

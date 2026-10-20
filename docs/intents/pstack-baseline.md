@@ -12,7 +12,7 @@ Three Pocock skills ship:
 
 - `grilling`, the base of the Interview playbook.
 - `domain-modeling`, the only glossary and ADR discipline.
-- `diagnosing-bugs`, run as phases 1 to 4 inside Bug fix step 2.
+- `diagnosing-bugs`, whose phases 1 to 4 run across Bug fix steps 1 and 2.
 
 ## Surfaces
 
@@ -40,5 +40,5 @@ Made for them:
 
 - The Spec build playbook goes with the pipeline. Multi-ticket work matches pstack's Multi-phase or multi-PR plan.
 - Review before a PR runs `interrogate` with the intent file as its intent, in place of Pocock's `code-review`.
-- Bug fix step 2 runs `diagnosing-bugs` phases 1 to 4 in its own patch.
+- Bug fix step 2 runs `diagnosing-bugs` phases 1 to 4 across steps 1 and 2, in its own patch, `65-diagnosis-loop`.
 - This intent supersedes the Pocock groups decision in `n-stack.md`.

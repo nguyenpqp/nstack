@@ -14,6 +14,8 @@ Five commits on `fix/generic-workflow`, fast-forwarded to `main`. `node scripts/
 4. `check.mjs` fails on prose naming a skill that does not ship, has no adapter row, and is not allowed for that file.
 5. Spec build lands a shape shared across a process boundary as its own blocking ticket.
 
+`pstack-baseline.md` undid items 1 and 5 when it dropped Pocock's `tdd` and Spec build. Item 2 now matches Multi-phase or multi-PR plan.
+
 ## Surfaces
 
 - Anyone running `/nstack:n-mode` on any stack.
