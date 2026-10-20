@@ -41,7 +41,7 @@ Theirs:
 - nstack layer: interview gate, worktree and merge rules, effort-tiered agents, sticky mode, 4-model review panel.
 - Models: `sonnet` for code, `opus` for judgment and prose, panel `opus`, `sonnet`, `haiku`, `fable`.
 - Distribution: a GitHub repo acting as its own marketplace, `dist/` committed.
-- Location: `E:\workspace\nstack`.
+- Location: `E:\workspace\n-stack`.
 
 Made for them:
 
