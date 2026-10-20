@@ -104,7 +104,7 @@ The frontier is small on purpose for Investigation and for the operations rows. 
 | "Frontier looks empty enough" | Empty means empty. Name every remaining branch first. |
 | "They answered the last round, I can start" | The gate needs a confirmed design, not answered questions. |
 | "Never-block says just decide it myself" | Never-block governs the middle of a run. This is its start. |
-| "This task is too small to interview" | The axes row sizes the round, not your read of the task. Ops rows are one question or none. Every other row is a full frontier. |
+| "This task is too small to interview" | The axes row sizes the round, not your read of the task. Ops rows are one question or none. Every other row is a full frontier. Only a full-autonomy grant or a design doc in hand shrinks it. |
 | "I'll have the subagent ask them" | A subagent's question never reaches the user. Ask from the main session. |
 | "The design is confirmed in the chat, that's enough" | Chat does not survive compaction, a handoff, or a reviewer. Commit `docs/intents/<slug>.md`. |
 | "The build outgrew the intent, I'll explain it in the PR" | Amend the intent in the same PR. A file describing the old design teaches the next reader the wrong thing. |
