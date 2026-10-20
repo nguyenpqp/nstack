@@ -1,9 +1,9 @@
 ---
 name: setup-nstack
-description: Configure which models pstack uses per role and at what reasoning budget. Detects your available models and writes an always-applied rule that overrides the skill defaults. Use for /setup-nstack, "configure pstack models", "pstack budget", or changing pstack's model choices.
+description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes an always-applied rule that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
 ---
 
-# Setup pstack
+# Setup nstack
 
 In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.
 
