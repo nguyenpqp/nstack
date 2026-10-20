@@ -23,8 +23,21 @@ const OVERLAY = join(ROOT, "overlay");
 const selection = readJson(join(OVERLAY, "selection.json"));
 const renames = readJson(join(OVERLAY, "renames.json"));
 
-rmSync(OUT, { recursive: true, force: true });
+rmSync(OUT, { recursive: true, force: true, maxRetries: 5 });
 mkdirSync(OUT, { recursive: true });
+
+// A rename under dist/ fails now and then on Windows, likely a short-lived lock, so retry before failing.
+const renameRetrying = (from, to) => {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return renameSync(from, to);
+    } catch (err) {
+      if (attempt === 10 || !["EPERM", "EACCES", "EBUSY"].includes(err.code)) throw err;
+      console.error(`rename ${rel(OUT, from)} failed with ${err.code}, retrying`);
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 100 * attempt);
+    }
+  }
+};
 
 const excluded = new Set(selection.pstack.exclude);
 for (const dir of ["skills", "agents", "docs"]) {
@@ -61,7 +74,7 @@ for (const [from, to] of Object.entries(renames.paths)) {
     continue;
   }
   mkdirSync(dirname(join(OUT, to)), { recursive: true });
-  renameSync(join(OUT, from), join(OUT, to));
+  renameRetrying(join(OUT, from), join(OUT, to));
 }
 for (const file of walk(OUT)) {
   if (!isText(file) || file.startsWith(join(OUT, "licenses"))) continue;
