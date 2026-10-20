@@ -1,7 +1,7 @@
 {
   "name": "n-stack",
   "version": "0.1.0",
-  "description": "pstack and Matt Pocock's skills, with the qstack layer, kept in sync with both upstreams.",
+  "description": "pstack and Matt Pocock's skills, with an interview gate, worktree rules, and effort-tiered agents, kept in sync with both upstreams.",
   "author": { "name": "nguyenpqp" },
   "license": "MIT",
   "keywords": ["n-stack", "n-mode", "pstack", "workflow", "principles", "grilling", "subagents"]

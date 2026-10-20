@@ -4,7 +4,7 @@ n-stack is a Claude Code plugin built from two upstreams and one set of local ch
 
 - [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`.
 - [Matt Pocock's skills](https://github.com/mattpocock/skills): grilling, the spec pipeline, design vocabulary, diagnosing-bugs, and code-review.
-- The qstack layer: an interview gate, worktree and merge rules, effort-tiered agents, sticky mode, and a four-model review panel.
+- The n-stack layer: an interview gate, worktree and merge rules, effort-tiered agents, sticky mode, and a four-model review panel.
 
 The upstream text is never edited by hand. A script pulls both upstreams, applies the local changes, and tells you which change broke. That keeps n-stack current with upstream at the cost of one command.
 
@@ -64,4 +64,4 @@ Put a whole new file in `overlay/files/`. The build refuses an overlay file that
 
 ## Credits and license
 
-pstack is MIT, copyright Lauren Tan. Matt Pocock's skills are MIT, copyright Matt Pocock. Both licenses ship in `dist/licenses/`. The qstack layer adapts ideas from QuangDN's qstack.
+pstack is MIT, copyright Lauren Tan. Matt Pocock's skills are MIT, copyright Matt Pocock. Both licenses ship in `dist/licenses/`.

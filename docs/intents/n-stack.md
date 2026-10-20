@@ -2,11 +2,11 @@
 
 ## Problem
 
-qstack is a hand port of a pstack snapshot. It drifted. It is behind upstream on Origin support, patch-id shipping, arena, and script fixes, and every upstream update needs a manual diff.
+A hand port of a pstack snapshot drifts behind upstream. Every upstream update then needs a manual diff.
 
 ## Outcome
 
-n-stack is a Claude Code native plugin built from pstack, Matt Pocock's skills, and the qstack layer. One command, `node scripts/sync.mjs`, pulls both upstreams, rebuilds the plugin, and lists only what needs a human: patches that no longer apply, and overlap pairs whose upstream side changed.
+n-stack is a Claude Code native plugin built from pstack, Matt Pocock's skills, and the n-stack layer. One command, `node scripts/sync.mjs`, pulls both upstreams, rebuilds the plugin, and lists only what needs a human: patches that no longer apply, and overlap pairs whose upstream side changed.
 
 ## Surfaces
 
@@ -25,7 +25,7 @@ n-stack is a Claude Code native plugin built from pstack, Matt Pocock's skills, 
 
 - Codex and Cursor builds.
 - A session-start routing hook.
-- The qstack delegation consent gate, the FINISHED banner, and the `how` Critique mode.
+- A delegation consent gate, the FINISHED banner, and the `how` Critique mode.
 - A scheduled GitHub Action.
 - Pocock's deprecated and in-progress skills.
 
@@ -38,14 +38,14 @@ Theirs:
 - Pocock groups: interview (grilling, grill-me), spec pipeline (to-spec, to-tickets, implement-spec), design vocabulary (domain-modeling, codebase-design, improve-codebase-architecture), debug and review (diagnosing-bugs, code-review).
 - Overlaps resolve per pair with pstack as default.
 - Rename entry points only: `poteto-mode` to `n-mode`, `poteto-agent` to `n-agent`, `setup-pstack` to `setup-nstack`.
-- qstack layer: interview gate, worktree and merge rules, effort-tiered agents, sticky mode, 4-model review panel.
+- n-stack layer: interview gate, worktree and merge rules, effort-tiered agents, sticky mode, 4-model review panel.
 - Models: `sonnet` for code, `opus` for judgment and prose, panel `opus`, `sonnet`, `haiku`, `fable`.
 - Distribution: a GitHub repo acting as its own marketplace, `dist/` committed.
 - Location: `E:\workspace\n-stack`.
 
 Made for them:
 
-- The interview playbook wraps Pocock's `grilling` instead of copying qstack's `interview.md`, so grilling updates flow in on sync.
+- The interview playbook wraps Pocock's `grilling` instead of a copied interview playbook, so grilling updates flow in on sync.
 - The spec build playbook wraps `to-spec`, `to-tickets`, and `implement-spec` plus the worktree rules.
 - Pocock's `code-review` stays as `n-stack:code-review`. pstack has no equivalent.
 - `setup-matt-pocock-skills` ships, because the spec pipeline and code-review need its issue-tracker config.
