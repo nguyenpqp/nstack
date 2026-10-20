@@ -6,7 +6,7 @@
 // A patch is always diffed against the patches that sort before it, so later patches never leak into its context.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, rel, walk } from "./lib.mjs";
 
@@ -18,6 +18,7 @@ if (!["start", "save"].includes(command) || !name || name.endsWith(".patch")) {
 
 const DIST = join(ROOT, "dist");
 const PRISTINE = join(ROOT, ".cache", "pristine");
+const STARTED = join(ROOT, ".cache", "mkpatch-start");
 const BUILD = join(ROOT, "scripts", "build.mjs");
 const out = join(ROOT, "overlay", "patches", `${name}.patch`);
 const build = (...args) => execFileSync(process.execPath, [BUILD, ...args], { stdio: "inherit" });
@@ -31,8 +32,18 @@ if (command === "start") {
     });
     console.log(applied.status === 0 ? `applied ${rel(ROOT, out)}` : `applied ${rel(ROOT, out)} partly; finish the .rej hunks by hand`);
   }
+  mkdirSync(join(ROOT, ".cache"), { recursive: true });
+  writeFileSync(STARTED, name);
   console.log(`edit dist/, then run: node scripts/mkpatch.mjs save ${name}`);
   process.exit(0);
+}
+
+const started = existsSync(STARTED) ? readFileSync(STARTED, "utf8") : undefined;
+if (started !== name) {
+  console.error(
+    `run "node scripts/mkpatch.mjs start ${name}" first${started ? ` (the last start was ${started})` : ""}; a dist/ built with later patches leaks them into this one`,
+  );
+  process.exit(1);
 }
 
 const leftovers = [...walk(DIST)].filter((f) => f.endsWith(".rej") || f.endsWith(".orig"));
@@ -62,6 +73,7 @@ const patch = diff.stdout
   .join("\n");
 
 rmSync(PRISTINE, { recursive: true, force: true });
+rmSync(STARTED, { force: true });
 if (!patch.trim()) {
   rmSync(out, { force: true });
   console.log(`no difference; removed ${rel(ROOT, out)} if it existed`);

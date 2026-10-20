@@ -59,7 +59,7 @@ Review `git diff upstream/` for what upstream changed, then commit. To pin an up
 
 1. Run `node scripts/mkpatch.mjs start <nn-name>`. It builds `dist/` with every patch that sorts before `<nn-name>`, then applies `<nn-name>` itself if it exists.
 2. Edit the files under `dist/`.
-3. Run `node scripts/mkpatch.mjs save <nn-name>`. It writes `overlay/patches/<nn-name>.patch` and rebuilds with every patch.
+3. Run `node scripts/mkpatch.mjs save <nn-name>`. It refuses unless the last `start` named the same patch, because a `dist/` built with later patches would leak them into this one. It writes `overlay/patches/<nn-name>.patch` and rebuilds with every patch.
 
 Keep one concern per patch, so a sync failure names the concern that broke. To repair a patch that no longer applies, run the same two commands. `start` applies what it can and leaves `.rej` files for the hunks that failed. Finish those by hand and delete the `.rej` files before `save`.
 
