@@ -17,7 +17,7 @@ The upstream text is never edited by hand. A script pulls both upstreams, applie
 
 Then run `/nstack:setup-nstack` to pick models per role, and `/nstack:n-mode` to start a task.
 
-To try a local checkout, run `/plugin marketplace add E:\workspace\n-stack`.
+To try a local checkout, start Claude Code in the checkout and run `/plugin marketplace add ./`.
 
 ## Layout
 
