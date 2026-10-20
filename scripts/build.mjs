@@ -34,10 +34,15 @@ for (const dir of ["skills", "agents", "docs"]) {
   });
 }
 
+const failed = [];
 for (const path of selection.mattpocock.include) {
   const name = selection.mattpocock.rename?.[path] ?? basename(path);
   const dest = join(OUT, "skills", name);
   if (existsSync(dest)) throw new Error(`mattpocock ${path} collides with an existing skill at ${rel(OUT, dest)}`);
+  if (!existsSync(join(UP, "mattpocock", path))) {
+    failed.push(`overlay/selection.json: upstream has no ${path} to include`);
+    continue;
+  }
   cpSync(join(UP, "mattpocock", path), dest, { recursive: true });
   if (name !== basename(path)) {
     const skill = join(dest, "SKILL.md");
@@ -50,7 +55,6 @@ for (const name of ["pstack", "mattpocock"]) {
   cpSync(join(UP, name, "LICENSE"), join(OUT, "licenses", `${name}.LICENSE`));
 }
 
-const failed = [];
 for (const [from, to] of Object.entries(renames.paths)) {
   if (!existsSync(join(OUT, from))) {
     failed.push(`overlay/renames.json: upstream has no ${from} to rename to ${to}`);

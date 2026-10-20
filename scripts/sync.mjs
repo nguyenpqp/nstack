@@ -63,18 +63,19 @@ const watched = [
   ...selection.wraps.map((w) => ({ path: w.upstream, by: w.by })),
 ].filter((w) => touched(w.path));
 
-const review = selection.overlaps.filter((o) =>
-  [o.pstack && `upstream/pstack/${o.pstack}`, o.mattpocock && `upstream/mattpocock/${o.mattpocock}`]
-    .filter(Boolean)
-    .some(touched),
+const overlapPaths = (o) =>
+  [o.pstack && `upstream/pstack/${o.pstack}`, o.mattpocock && `upstream/mattpocock/${o.mattpocock}`].filter(Boolean);
+const review = selection.overlaps.filter((o) => overlapPaths(o).some(touched));
+const gone = [...selection.wraps.map((w) => w.upstream), ...selection.overlaps.flatMap(overlapPaths)].filter(
+  (p) => !existsSync(join(ROOT, p)),
 );
 
 const included = new Set(selection.mattpocock.include);
 const declined = new Set(selection.mattpocock.decline ?? []);
 const manifest = readJson(join(ROOT, "upstream", "mattpocock", ".claude-plugin", "plugin.json"));
-const unseen = manifest.skills
-  .map((s) => s.replace(/^\.\//, ""))
-  .filter((s) => !included.has(s) && !declined.has(s));
+const listedSkills = manifest.skills.map((s) => s.replace(/^\.\//, ""));
+const unseen = listedSkills.filter((s) => !included.has(s) && !declined.has(s));
+const dropped = selection.mattpocock.include.filter((s) => !listedSkills.includes(s));
 
 console.log(`\nupstream files changed: ${changed.length}`);
 if (watched.length) {
@@ -88,6 +89,14 @@ if (review.length) {
 if (unseen.length) {
   console.log("new mattpocock skills, neither included nor declined in overlay/selection.json:");
   for (const s of unseen) console.log(`  ${s}`);
+}
+if (dropped.length) {
+  console.log("included mattpocock skills that upstream no longer lists (move or decline in overlay/selection.json):");
+  for (const s of dropped) console.log(`  ${s}`);
+}
+if (gone.length) {
+  console.log("overlay/selection.json paths missing upstream, so sync can no longer watch them:");
+  for (const p of gone) console.log(`  ${p}`);
 }
 
 const listed = (spec) => {

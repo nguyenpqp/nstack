@@ -43,10 +43,12 @@ node scripts/sync.mjs
 
 The script fetches both upstreams, rewrites `upstream/` and `UPSTREAM.lock`, rebuilds `dist/`, and runs the check. It prints only what needs you:
 
-- **Overlay items that need a human.** A patch that no longer applies, or a rename whose source upstream removed. The build stops with exit code 1.
+- **Overlay items that need a human.** A patch that no longer applies, a rename whose source upstream removed, or an included Matt Pocock skill that upstream removed. The build stops with exit code 1.
 - **Upstream changed under the overlay.** An upstream file that a patch edits or an overlay playbook wraps has changed. The patch may still apply and say the wrong thing, so re-read it.
 - **Overlap pairs whose upstream side changed.** Re-read both sides and confirm the winner in `overlay/selection.json`.
 - **New Matt Pocock skills.** Add each one to `include` or `decline`.
+- **Included Matt Pocock skills that upstream no longer lists.** Point `include` at the new path, or decline the skill.
+- **`wraps` and `overlaps` paths missing upstream.** Sync can no longer tell you when they change, so point each at its new path.
 - **pstack skills added or removed.** New pstack skills ship automatically.
 
 Review `git diff upstream/` for what upstream changed, then commit. To pin an upstream, pass its SHA, as in `node scripts/sync.mjs pstack=<sha>`.
