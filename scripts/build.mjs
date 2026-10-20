@@ -63,7 +63,8 @@ for (const path of selection.mattpocock.include) {
   });
   if (name !== basename(path)) {
     const skill = join(dest, "SKILL.md");
-    writeFileSync(skill, readFileSync(skill, "utf8").replace(/^name: .+$/m, `name: ${name}`));
+    const renamed = readFileSync(skill, "utf8").replace(/^name: .+$/m, `name: ${name}`);
+    retrying(`write ${rel(OUT, skill)}`, () => writeFileSync(skill, renamed));
   }
 }
 
@@ -96,7 +97,7 @@ if (existsSync(files)) {
       continue;
     }
     mkdirSync(dirname(dest), { recursive: true });
-    cpSync(file, dest);
+    retrying(`copy ${rel(OUT, dest)}`, () => cpSync(file, dest));
   }
 }
 
@@ -124,7 +125,8 @@ for (const { effort, use } of tiers.variants) {
       (_, d) =>
         `description: ${baseName} pinned to ${effort} effort. Use for ${use}. Model still comes from the role's Agent \`model\` param. ${d}\neffort: ${effort}`,
     );
-  writeFileSync(join(OUT, dirname(tiers.base), `${baseName}-${effort}.md`), variant);
+  const tier = join(OUT, dirname(tiers.base), `${baseName}-${effort}.md`);
+  retrying(`write ${rel(OUT, tier)}`, () => writeFileSync(tier, variant));
 }
 
 mkdirSync(join(OUT, ".claude-plugin"), { recursive: true });
