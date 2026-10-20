@@ -20,6 +20,7 @@ for (const [name, src] of Object.entries(sources)) {
   if (!existsSync(join(cache, ".git"))) {
     mkdirSync(cache, { recursive: true });
     git(cache, "init", "-q");
+    git(cache, "config", "core.autocrlf", "false");
     git(cache, "remote", "add", "origin", src.repo);
   }
   const ref = pins[name] ?? src.ref;
