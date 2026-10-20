@@ -32,6 +32,7 @@ To try a local checkout, run `/plugin marketplace add E:\workspace\n-stack`.
 | `overlay/files/` | Files that nstack adds, copied over the build. | You |
 | `overlay/patches/` | Small patches to upstream text, applied in name order. | `mkpatch.mjs` |
 | `overlay/check-allow.json` | Upstream example links that are not real files. | You |
+| `overlay/plugin.json` | The plugin manifest. It sets no `version`, so Claude Code versions installs by the commit of `dist/` and every rebuild reaches users. A pinned version keeps users on their cached copy until it changes. | You |
 | `dist/` | The plugin Claude Code installs. Committed so installs need no build. | `build.mjs` |
 
 ## Update from upstream
