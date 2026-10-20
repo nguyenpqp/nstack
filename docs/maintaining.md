@@ -1,11 +1,8 @@
----
-name: maintain-nstack
-description: Pull new pstack and Matt Pocock upstream changes into nstack and resolve what they break or change. Use for "sync nstack", "update nstack from upstream", or periodic nstack maintenance.
----
+# Maintaining nstack
 
-# Maintain nstack
+A guide for the agent that pulls upstream changes into nstack.
 
-nstack is pstack plus three Matt Pocock skills plus a thin overlay. Your job is to keep it current with both upstreams while every overlay change still says something true. The scripts do the mechanics, and the README's "Update from upstream" and "Change nstack" sections explain them. This skill covers the judgment.
+nstack is pstack plus three Matt Pocock skills plus a thin overlay. Your job is to keep it current with both upstreams while every overlay change still says something true. The scripts do the mechanics, and the README's "Update from upstream" and "Change nstack" sections explain them. This guide covers the judgment.
 
 ## Invariants
 
