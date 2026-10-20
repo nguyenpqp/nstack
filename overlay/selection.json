@@ -9,6 +9,7 @@
       "skills/engineering/to-spec",
       "skills/engineering/to-tickets",
       "skills/engineering/implement-spec",
+      "skills/engineering/tdd",
       "skills/engineering/setup-matt-pocock-skills",
       "skills/engineering/domain-modeling",
       "skills/engineering/codebase-design",
@@ -16,11 +17,13 @@
       "skills/engineering/diagnosing-bugs",
       "skills/engineering/code-review"
     ],
+    "rename": {
+      "skills/engineering/tdd": "tdd-feature"
+    },
     "decline": [
       "skills/engineering/ask-matt",
       "skills/engineering/grill-with-docs",
       "skills/engineering/triage",
-      "skills/engineering/tdd",
       "skills/engineering/wayfinder",
       "skills/engineering/implement",
       "skills/engineering/prototype",
@@ -38,10 +41,10 @@
   "overlaps": [
     {
       "skill": "tdd",
-      "winner": "pstack",
+      "winner": "both",
       "pstack": "skills/tdd/",
       "mattpocock": "skills/engineering/tdd/",
-      "reason": "n-mode's feature and bug-fix playbooks call pstack's tdd by name."
+      "reason": "pstack's tdd covers bug fixes with a cheap test path, and the bug-fix playbook calls it. Pocock's ships as tdd-feature for test-first feature work in spec build."
     },
     {
       "skill": "teach",
@@ -105,7 +108,7 @@
       "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
     },
     {
-      "upstream": "upstream/pstack/skills/tdd/",
+      "upstream": "upstream/mattpocock/skills/engineering/tdd/",
       "by": "overlay/files/skills/n-mode/playbooks/spec-build.md"
     },
     {

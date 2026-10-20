@@ -10,7 +10,7 @@
 4. Write a write-scope table to `docs/intents/<slug>-tickets.md` and commit it. One row per ticket, with the paths it may write and its exact verify command. Two tickets whose write paths overlap get a blocking edge, per **Separate Before Serializing Shared State**. This table is the coordinator's, not the tracker's.
 5. Run the **implement-spec** skill with the spec branch as its integration branch. It owns the implementer worktrees, its own code-review step, and the draft PR. n-mode changes three things in it.
    - Spawn each implementer with `subagent_type: "nstack:n-agent-high"` and `isolation: "worktree"`, and give it the ticket's row from the table.
-   - Tell each implementer to read `../../tdd/SKILL.md` and follow it, instead of calling the `Skill` tool with `tdd`. pstack's tdd is explicit-only, so the `Skill` call fails.
+   - Tell each implementer to read `../../tdd-feature/SKILL.md` and follow it, instead of calling the `Skill` tool with `tdd`. In nstack `tdd` is pstack's bug-fix skill. The seams in the spec are the confirmed seams, because to-spec checked them with the user, so the implementer does not ask again.
    - A ticket lands on the spec branch only after its verify command passes there.
 6. When implement-spec finishes, run the **interrogate** skill over the whole spec branch. This is the multi-model pass that implement-spec does not run.
 7. Run **Opening a PR** on the draft PR that implement-spec opened. Mark it ready there. Do not open a second PR.

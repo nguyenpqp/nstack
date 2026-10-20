@@ -35,9 +35,14 @@ for (const dir of ["skills", "agents", "docs"]) {
 }
 
 for (const path of selection.mattpocock.include) {
-  const dest = join(OUT, "skills", basename(path));
+  const name = selection.mattpocock.rename?.[path] ?? basename(path);
+  const dest = join(OUT, "skills", name);
   if (existsSync(dest)) throw new Error(`mattpocock ${path} collides with an existing skill at ${rel(OUT, dest)}`);
   cpSync(join(UP, "mattpocock", path), dest, { recursive: true });
+  if (name !== basename(path)) {
+    const skill = join(dest, "SKILL.md");
+    writeFileSync(skill, readFileSync(skill, "utf8").replace(/^name: .+$/m, `name: ${name}`));
+  }
 }
 
 mkdirSync(join(OUT, "licenses"));

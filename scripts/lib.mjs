@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -52,7 +52,7 @@ export function upstreamOf(distPath, selection, renames) {
     if (path === to || path.startsWith(`${to}/`)) path = from + path.slice(to.length);
   }
   const [top, skill, ...rest] = path.split("/");
-  const pocock = selection.mattpocock.include.find((p) => p.endsWith(`/${skill}`));
+  const pocock = selection.mattpocock.include.find((p) => (selection.mattpocock.rename?.[p] ?? basename(p)) === skill);
   if (top === "skills" && pocock) return ["upstream/mattpocock", pocock, ...rest].join("/");
   return `upstream/pstack/${path}`;
 }

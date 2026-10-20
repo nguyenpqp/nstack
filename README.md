@@ -26,7 +26,7 @@ To try a local checkout, run `/plugin marketplace add E:\workspace\n-stack`.
 | `upstream.json` | The two upstream repos, refs, and the paths to vendor. | You |
 | `UPSTREAM.lock` | The commit SHA of each vendored upstream. | `sync.mjs` |
 | `upstream/pstack/`, `upstream/mattpocock/` | Untouched snapshots of each upstream. | `sync.mjs` only |
-| `overlay/selection.json` | Which skills ship, which are declined, and who wins each overlap. | You |
+| `overlay/selection.json` | Which skills ship, which are declined, and who wins each overlap. `mattpocock.rename` ships an included skill under another name when its name collides with pstack's. | You |
 | `overlay/renames.json` | Entry-point renames, applied to paths and text. URLs are left alone. | You |
 | `overlay/agents.json` | The effort tiers generated from `n-agent`. | You |
 | `overlay/files/` | Files that nstack adds, copied over the build. | You |
