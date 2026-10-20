@@ -37,7 +37,7 @@ The user's:
 
 Made for them:
 
-- Spec build uses `nstack:n-agent-*`, reviews with `interrogate` and the intent file instead of `/code-review`, and drops the sentence that routes a declined delegation to Feature.
+- Spec build uses `nstack:n-agent-*`, reviews with `interrogate` and the intent file instead of `/code-review` (later switched to the built-in `/code-review`, per `pstack-baseline.md`), and drops the sentence that routes a declined delegation to Feature.
 - Spec build implementers write the failing test first per **principle-test-behavior-not-implementation**, not pstack's bug-fix `tdd`.
 - Spec build explore notes go to a directory outside the repo that the brief names.
 - Outside a git repository, the intent file is written but not committed.

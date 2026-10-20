@@ -36,7 +36,7 @@
 
 **Where it lands when no worktree is yours.** The coordinator rows (**Multi-phase plan**, **Orchestrate**, **Autopilot-full**, **Autopilot-stack**) author briefs and open no worktree, so the intent rides the first unit's worktree and lands in that unit's PR. Never commit it on the root checkout, which stays on the integration branch and holds no feature work. **Session pickup** inherits the file the prior run already committed, so amend that one rather than opening a second.
 
-**Amending it.** The intent is the design as confirmed, not a prediction that must come true. When execution finds a better shape, amend the file in the same PR that changes course and say what moved. The **interrogate** skill takes it as the intent when it reviews the final diff, so an intent left describing the old design is the failure, not the change of course itself.
+**Amending it.** The intent is the design as confirmed, not a prediction that must come true. When execution finds a better shape, amend the file in the same PR that changes course and say what moved. Later reviews and sessions read it as the design, so an intent left describing the old design is the failure, not the change of course itself.
 
 **Axes by execution playbook**
 

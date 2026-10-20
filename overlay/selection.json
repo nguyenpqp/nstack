@@ -63,7 +63,7 @@
       "winner": "pstack",
       "pstack": "skills/interrogate/",
       "mattpocock": "skills/engineering/code-review/",
-      "reason": "interrogate's rubric checks the diff against the intent, and n-mode hands it the intent file. Pocock's name also collides with Claude Code's built-in code-review skill."
+      "reason": "Claude Code's built-in /code-review is n-mode's review before a PR or a local merge, and interrogate stays for contested designs. Pocock's skill would also collide with the built-in's name."
     },
     {
       "skill": "diagnosing-bugs",
