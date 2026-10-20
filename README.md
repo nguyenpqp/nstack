@@ -17,6 +17,8 @@ The upstream text is never edited by hand. A script pulls both upstreams, applie
 
 Then run `/nstack:setup-nstack` to pick models per role, and `/nstack:n-mode` to start a task.
 
+To update, run `/plugin marketplace update nstack`. Claude Code does not auto-update third-party marketplaces unless you turn it on.
+
 To try a local checkout, start Claude Code in the checkout and run `/plugin marketplace add ./`.
 
 ## Layout
@@ -32,7 +34,7 @@ To try a local checkout, start Claude Code in the checkout and run `/plugin mark
 | `overlay/files/` | Files that nstack adds, copied over the build. | You |
 | `overlay/patches/` | Small patches to upstream text, applied in name order. | `mkpatch.mjs` |
 | `overlay/check-allow.json` | Upstream example links that are not real files. | You |
-| `overlay/plugin.json` | The plugin manifest. It sets no `version`, so Claude Code versions installs by the commit of `dist/` and every rebuild reaches users. A pinned version keeps users on their cached copy until it changes. | You |
+| `overlay/plugin.json` | The plugin manifest. It sets no `version`, so Claude Code versions installs by the commit of `dist/`, and a commit that changes `dist/` reaches users on their next update. A pinned version keeps users on their cached copy until it changes. | You |
 | `dist/` | The plugin Claude Code installs. Committed so installs need no build. | `build.mjs` |
 
 ## Update from upstream
