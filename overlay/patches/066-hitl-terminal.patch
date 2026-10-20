@@ -1,0 +1,27 @@
+diff --git a/skills/diagnosing-bugs/SKILL.md b/skills/diagnosing-bugs/SKILL.md
+index d039541..ea175ce 100644
+--- a/skills/diagnosing-bugs/SKILL.md
++++ b/skills/diagnosing-bugs/SKILL.md
+@@ -32,7 +32,7 @@ Spend disproportionate effort here. **Be aggressive. Be creative. Refuse to give
+ 7. **Property / fuzz loop.** If the bug is "sometimes wrong output", run 1000 random inputs and look for the failure mode.
+ 8. **Bisection harness.** If the bug appeared between two known states (commit, dataset, version), automate "boot at state X, check, repeat" so you can `git bisect run` it.
+ 9. **Differential loop.** Run the same input through old-version vs new-version (or two configs) and diff outputs.
+-10. **HITL bash script.** Last resort. If a human must click, drive _them_ with `scripts/hitl-loop.template.sh` so the loop is still structured. Captured output feeds back to you.
++10. **HITL bash script.** Last resort. If a human must click, drive _them_ with `scripts/hitl-loop.template.sh` so the loop is still structured. Captured output feeds back to you. Your shell has no keyboard input, so the script dies at its first prompt there. Copy and edit it, then give the user the command to run it in their own terminal, with its absolute path, and have them paste the `--- Captured ---` block back.
+ 
+ Build the right feedback loop, and the bug is 90% fixed.
+ 
+diff --git a/skills/diagnosing-bugs/scripts/hitl-loop.template.sh b/skills/diagnosing-bugs/scripts/hitl-loop.template.sh
+index 2431984..afd865c 100644
+--- a/skills/diagnosing-bugs/scripts/hitl-loop.template.sh
++++ b/skills/diagnosing-bugs/scripts/hitl-loop.template.sh
+@@ -1,7 +1,8 @@
+ #!/usr/bin/env bash
+ # Human-in-the-loop reproduction loop.
+ # Copy this file, edit the steps below, and run it.
+-# The agent runs the script; the user follows prompts in their terminal.
++# The user runs the script in their own terminal and pastes the Captured block
++# back to the agent, because the agent's shell has no keyboard input.
+ #
+ # Usage:
+ #   bash hitl-loop.template.sh
