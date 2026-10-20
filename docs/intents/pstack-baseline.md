@@ -6,18 +6,17 @@ nstack ships 12 of Matt Pocock's skills beside pstack. Most of them duplicate a 
 
 ## Outcome
 
-pstack is the baseline and wins every overlap. A Pocock skill ships only when pstack has no equivalent, it runs without an issue tracker, and every skill it calls also ships. `node scripts/check.mjs` passes on 59 skills.
+pstack is the baseline and wins every overlap. A Pocock skill ships only when pstack has no equivalent, it runs without an issue tracker, and every skill it calls also ships. `node scripts/check.mjs` passes on 58 skills.
 
-Three Pocock skills ship:
+Two Pocock skills ship:
 
 - `grilling`, the base of the Interview playbook.
-- `domain-modeling`, the only glossary and ADR discipline.
 - `diagnosing-bugs`, whose phases 1 to 4 run across Bug fix steps 1 and 2.
 
 ## Surfaces
 
 - Anyone running `/nstack:n-mode`.
-- The maintainer running `sync.mjs`, who now sees changes to 3 Pocock skills instead of 12.
+- The maintainer running `sync.mjs`, who now sees changes to 2 Pocock skills instead of 12.
 
 ## Constraints
 
@@ -34,7 +33,8 @@ Three Pocock skills ship:
 The user's:
 
 - Keep the nstack layer as is.
-- Ship only `grilling`, `domain-modeling`, and `diagnosing-bugs`. Decline the rest, `code-review`, `improve-codebase-architecture`, `codebase-design`, `tdd`, `wizard`, `writing-for-agents`, and `to-questionnaire` included.
+- Ship only `grilling` and `diagnosing-bugs`. Decline the rest, `code-review`, `improve-codebase-architecture`, `codebase-design`, `tdd`, `wizard`, `writing-for-agents`, and `to-questionnaire` included.
+- Drop `domain-modeling`, which first shipped with this intent. It writes `GLOSSARY.md` and ADRs inline, before the Interview round has opened a worktree and inside read-only playbooks, and in nstack only `diagnosing-bugs` reads the glossary. pstack's `why` still reads any `docs/adr/` a repo keeps.
 
 Made for them:
 

@@ -35,7 +35,7 @@ Theirs:
 
 - Vendor plus overlay. Manual sync.
 - pstack base is upstream's `harness/pstack/claude-code` tree.
-- Pocock groups: interview (grilling, grill-me), spec pipeline (to-spec, to-tickets, implement-spec), design vocabulary (domain-modeling, codebase-design, improve-codebase-architecture), debug and review (diagnosing-bugs, code-review). Superseded by `pstack-baseline.md`, which ships only grilling, domain-modeling, and diagnosing-bugs.
+- Pocock groups: interview (grilling, grill-me), spec pipeline (to-spec, to-tickets, implement-spec), design vocabulary (domain-modeling, codebase-design, improve-codebase-architecture), debug and review (diagnosing-bugs, code-review). Superseded by `pstack-baseline.md`, which ships only grilling and diagnosing-bugs.
 - Overlaps resolve per pair with pstack as default. `pstack-baseline.md` makes pstack win every overlap.
 - Rename entry points only: `poteto-mode` to `n-mode`, `poteto-agent` to `n-agent`, `setup-pstack` to `setup-nstack`.
 - nstack layer: interview gate, worktree and merge rules, effort-tiered agents, sticky mode, 4-model review panel.

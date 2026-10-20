@@ -28,7 +28,6 @@ Remaining triggers:
 - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
 - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
 - A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook. A slowness goes to the Perf issue playbook instead, not to the skill's perf branch.
-- Domain terms, a glossary, or an architecture decision worth recording → the **domain-modeling** skill.
 - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
 - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
 - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
