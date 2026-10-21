@@ -2,7 +2,7 @@
 
 nstack is a Claude Code plugin built from two upstreams and one set of local changes:
 
-- [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`. It is the baseline and wins every overlap. nstack targets Claude Code only, so it drops `make-bot-ui` and rewrites the common Cursor names.
+- [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`. It is the baseline and wins every overlap. nstack targets Claude Code only, so it drops `make-bot-ui`, rewrites every Cursor name to its Claude Code form, and leaves out upstream's Cursor-to-Claude-Code adapter.
 - [Matt Pocock's skills](https://github.com/mattpocock/skills): only `diagnosing-bugs`, the one piece that pstack lacks and n-mode can use cleanly.
 - The nstack layer: an interview gate sized per playbook, a Spec build playbook for parallel tickets, worktree and merge rules, effort-tiered agents, sticky mode, and a four-model review panel.
 
@@ -29,11 +29,12 @@ To try a local checkout, start Claude Code in the checkout and run `/plugin mark
 | `UPSTREAM.lock` | The commit SHA of each vendored upstream. | `sync.mjs` |
 | `upstream/pstack/`, `upstream/mattpocock/` | Untouched snapshots of each upstream. | `sync.mjs` only |
 | `overlay/selection.json` | Which skills ship, which are declined, and who wins each overlap. `mattpocock.rename` ships an included skill under another name when its name collides with pstack's. | You |
-| `overlay/renames.json` | Entry-point renames, applied to paths and text. `claudeCode` rewrites Cursor names in `.md` files to Claude Code names after the patches, in every file but the adapter `docs/harness/claude-code.md`. URLs are left alone. | You |
+| `overlay/renames.json` | Entry-point renames, applied to paths and text. `claudeCode` rewrites Cursor names in `.md` files to Claude Code names after the patches. URLs are left alone. | You |
 | `overlay/agents.json` | The effort tiers generated from `n-agent`. | You |
 | `overlay/files/` | Files that nstack adds, copied over the build. | You |
 | `overlay/patches/` | Small patches to upstream text, applied in name order. | `mkpatch.mjs` |
 | `overlay/check-allow.json` | Upstream example links that are not real files. | You |
+| `overlay/cursor-allow.json` | Per-file text that the Cursor-name check lets through, such as a literal "cursor location". | You |
 | `overlay/plugin.json` | The plugin manifest. It sets no `version`, so Claude Code versions installs by the commit of `dist/`, and a commit that changes `dist/` reaches users on their next update. A pinned version keeps users on their cached copy until it changes. | You |
 | `dist/` | The plugin Claude Code installs. Committed so installs need no build. | `build.mjs` |
 | `.github/workflows/check.yml` | CI that rebuilds `dist/` and fails when it differs from the commit, or when the check fails. | You |
@@ -68,7 +69,7 @@ Keep one concern per patch, so a sync failure names the concern that broke. To r
 
 Put a whole new file in `overlay/files/`. The build refuses an overlay file that would replace an upstream file, because a replaced file never receives upstream fixes. When an overlay file wraps an upstream skill, add the pair to `wraps` in `overlay/selection.json`, so sync tells you when that skill changes.
 
-`node scripts/check.mjs` fails on a dangling link, a missing skill or agent reference, or a name that the renames should have removed. Prose that names a skill ("the **x** skill") must name one that ships, one that has a row in `docs/harness/claude-code.md`, or one allowed for that file in `overlay/check-allow.json`.
+`node scripts/check.mjs` fails on a dangling link, a missing skill or agent reference, a name that the renames should have removed, or a Cursor name or Cursor-only Agent field anywhere in `dist/`. Prose that names a skill ("the **x** skill") must name one that ships, `skill-creator`, or one allowed for that file in `overlay/check-allow.json`.
 
 ## Credits and license
 

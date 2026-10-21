@@ -3,7 +3,8 @@
     "skills/poteto-mode": "skills/n-mode",
     "skills/setup-pstack": "skills/setup-nstack",
     "agents/poteto-agent.md": "agents/n-agent.md",
-    "docs/guide/02-poteto-mode.md": "docs/guide/02-n-mode.md"
+    "docs/guide/02-poteto-mode.md": "docs/guide/02-n-mode.md",
+    "skills/poteto-help": "skills/nstack-help"
   },
   "text": [
     ["pstack:", "nstack:"],
@@ -12,7 +13,9 @@
     ["setup-pstack", "setup-nstack"],
     ["pstack-models", "nstack-models"],
     ["# Poteto mode", "# N mode"],
-    ["# Poteto subagent", "# N subagent"]
+    ["# Poteto subagent", "# N subagent"],
+    ["poteto-help", "nstack-help"],
+    ["# Poteto help", "# nstack help"]
   ],
   "claudeCode": [
     ["~/.cursor/rules/nstack-models.mdc", "~/.claude/rules/nstack-models.md"],
@@ -28,6 +31,23 @@
     ["the Task tool", "the Agent tool"],
     ["Task spawn", "Agent spawn"],
     ["Task `model`", "Agent `model`"],
-    ["Task schema", "Agent schema"]
+    ["Task `model:", "Agent `model:"],
+    ["Task schema", "Agent schema"],
+    ["In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.", "To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`."],
+    ["`claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`", "`opus xhigh`, `sonnet high`, `haiku`, and `fable`"],
+    ["claude-opus-5-5-xhigh", "opus xhigh"],
+    ["grok-4.7-xhigh-fast", "sonnet high"],
+    ["Set `model` to that line's value, or to the default if the rule or the line is missing.", "Set `model` and `effort` from that line's value, or from the default if the rule or the line is missing. A value such as `opus xhigh` means `model: \"opus\"` and `effort: \"xhigh\"`."],
+    ["Pick each subagent's reasoning level and fast or standard speed for the job", "Pick each subagent's reasoning level (`effort`) for the job"],
+    ["todolist", "todo list"],
+    ["~/.cursor/projects/*/", "~/.claude/projects/*/"],
+    [".cursor/worktrees/", ".claude/worktrees/"],
+    ["Cursor's `/loop` command", "the `/loop` command"],
+    ["Cursor's built-in babysit skill", "any other babysit skill"],
+    ["If it rejects the default, use the closest valid slug of the same family from its error message.", "If it rejects the default, omit `model` so the agent runs on the parent model, and say so."],
+    ["**create-skill** skill (Cursor's built-in for authoring SKILL.md files)", "`skill-creator` skill (Anthropic's skill for authoring SKILL.md files. When the session does not list it, write the SKILL.md by hand with `name` and `description` frontmatter, a description that says when to use it, and a body that tells the agent what to do)"],
+    ["Cursor's built-in `create-skill` skill", "the `skill-creator` skill"],
+    ["Cursor's built-in `create-skill`", "the `skill-creator` skill"],
+    ["create-skill", "skill-creator"]
   ]
 }

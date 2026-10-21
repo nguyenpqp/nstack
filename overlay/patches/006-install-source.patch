@@ -11,10 +11,10 @@ index f229392..83ff1b0 100644
  
  ## Pick your models
  
-diff --git a/skills/poteto-help/SKILL.md b/skills/poteto-help/SKILL.md
-index f68898b..0963ea2 100644
---- a/skills/poteto-help/SKILL.md
-+++ b/skills/poteto-help/SKILL.md
+diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
+index 70c3636..4a00a20 100644
+--- a/skills/nstack-help/SKILL.md
++++ b/skills/nstack-help/SKILL.md
 @@ -45,7 +45,7 @@ Installing changes nothing until the user invokes a skill. Only `/setup-nstack`
  
  If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-nstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on Auto or a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/n-mode` for work that needs rigor.

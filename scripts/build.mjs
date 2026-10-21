@@ -39,11 +39,17 @@ const retrying = (label, fn) => {
   }
 };
 
+// nstack rewrites Cursor names in the text itself, so upstream's Claude Code adapter does not ship. Sync still watches it,
+// because a new row there names a Cursor name that the renames or patches must now cover.
+const ADAPTER = "docs/harness";
 const excluded = new Set(selection.pstack.exclude);
 for (const dir of ["skills", "agents", "docs"]) {
   cpSync(join(UP, "pstack", dir), join(OUT, dir), {
     recursive: true,
-    filter: (src) => dir !== "skills" || !excluded.has(rel(join(UP, "pstack", "skills"), src).split("/")[0]),
+    filter: (src) =>
+      dir === "skills"
+        ? !excluded.has(rel(join(UP, "pstack", "skills"), src).split("/")[0])
+        : rel(join(UP, "pstack"), src) !== ADAPTER,
   });
 }
 
@@ -114,11 +120,10 @@ for (const patch of patches) {
 }
 
 // Cursor names become Claude Code names after the patches, so patch context stays upstream text. A partial build skips
-// this so mkpatch diffs the same text it applies to. The adapter keeps both sides of its tables.
-const ADAPTER = join(OUT, "docs", "harness", "claude-code.md");
+// this so mkpatch diffs the same text it applies to.
 if (!until) {
   for (const file of walk(OUT)) {
-    if (!file.endsWith(".md") || file === ADAPTER) continue;
+    if (!file.endsWith(".md")) continue;
     const before = readFileSync(file, "utf8");
     const after = outsideUrls(before, (part) => renames.claudeCode.reduce((s, [from, to]) => s.split(from).join(to), part));
     if (after !== before) retrying(`write ${rel(OUT, file)}`, () => writeFileSync(file, after));

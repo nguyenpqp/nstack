@@ -13,15 +13,15 @@ index fb90a6a..16a88fd 100644
  **Pitfall:** don't edit a skill mid-task because it's misbehaving. Fix it in its own PR and keep the task moving. A skill edit that ships tangled into feature work is invisible to review and impossible to evaluate.
  
  Next: [Recipes and pitfalls](./10-recipes-and-pitfalls.md).
-diff --git a/skills/poteto-help/SKILL.md b/skills/poteto-help/SKILL.md
-index 0963ea2..b2f0c27 100644
---- a/skills/poteto-help/SKILL.md
-+++ b/skills/poteto-help/SKILL.md
+diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
+index 4a00a20..61b7a51 100644
+--- a/skills/nstack-help/SKILL.md
++++ b/skills/nstack-help/SKILL.md
 @@ -97,7 +97,6 @@ The default answer is `/n-mode`, which runs most of the others when its steps ne
  | Turn their own working habits into a personal mode skill | [`/automate-me`](../automate-me/SKILL.md) |
  | Turn what a finished task taught into skill edits | [`/reflect`](../reflect/SKILL.md) |
  | Stop agents from repeating the same mistakes in this repo | [`/correct`](../correct/SKILL.md) |
 -| Build a page whose buttons wake a Grok Bot over a webhook | [`/make-bot-ui`](../make-bot-ui/SKILL.md) |
- | Find their way around pstack | `/poteto-help` |
+ | Find their way around pstack | `/nstack-help` |
  
  If a skill directory next to this one is missing from the table, read its frontmatter and route by its description. The `principle-*` directories are covered under principles below.

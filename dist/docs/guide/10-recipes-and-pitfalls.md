@@ -111,7 +111,7 @@ The fix lands in the repo as architecture, a type, a lint, or a test, so the nex
 ## Ask how without starting the work
 
 ```text
-/poteto-help how do i get n-mode to stay on every turn?
+/nstack-help how do i get n-mode to stay on every turn?
 ```
 
 You get an answer, a prompt to send, and a link to the source. Nothing runs until you send that prompt.
@@ -165,7 +165,7 @@ That's the whole prompt. [`/bro`](../../skills/bro/SKILL.md) restates the last m
 - **Leading with your theory of the cause.** The agent searches wherever you pointed. Ask it to restate the problem first, then share your hunch.
 - **Taking the first design.** One attempt locks in the first shape the model thought of. Ask for prototypes or `/architect` and pick from evidence.
 - **Polishing an abstract plan.** Adversarial review of a plan with no code behind it invents risks that will never happen. Settle the open questions with prototypes, then review what got built.
-- **Parallel agents in one worktree.** They overwrite each other, and nobody can tell which agent changed what. Run them as cloud agents, or say "own worktree per attempt".
+- **Parallel agents in one worktree.** They overwrite each other, and nobody can tell which agent changed what. Spawn each with `isolation: "worktree"`, or say "own worktree per attempt".
 - **Looping before you trust the loop.** A loop that can't verify its own work only makes unchecked work faster. Get the verification skill working first.
 - **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Run `/benchmark-checklist` before the number goes anywhere.
 - **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.

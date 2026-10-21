@@ -1,0 +1,232 @@
+diff --git a/docs/guide/01-setup.md b/docs/guide/01-setup.md
+index 83ff1b0..e0847b3 100644
+--- a/docs/guide/01-setup.md
++++ b/docs/guide/01-setup.md
+@@ -4,15 +4,14 @@ In this page you install the plugin, pick which models pstack uses, and run your
+ 
+ ## Install the plugin
+ 
+-In a Cursor chat, run:
++In Claude Code, run:
+ 
+ ```text
+-/add-plugin pstack
++/plugin marketplace add nguyenpqp/nstack
++/plugin install nstack@nstack
+ ```
+ 
+-Cursor confirms the plugin is installed.
+-
+-In Claude Code, run `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`. Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix there, such as `/nstack:setup-nstack`, which writes its model rule to `~/.claude/rules/nstack-models.md`. The [Claude Code adapter](../harness/claude-code.md) covers the other differences.
++Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`, which writes its model rule to `~/.claude/rules/nstack-models.md`.
+ 
+ ## Pick your models
+ 
+@@ -61,6 +60,6 @@ Pick something real but small, and describe it the way you'd describe it to a co
+ 
+ Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/n-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
+ 
+-From here you can type normal follow-ups. To keep `/n-mode` on for the whole chat, pick it from the `/` menu with Option+Enter (Mac) or Alt+Enter (Windows) instead of Enter. That makes it a [Custom Mode](https://cursor.com/docs/skills#using-a-skill-as-a-custom-mode), which stays in context on every turn until you exit it. Custom Modes are available in the Agents Window and the CLI. Plain Enter attaches the skill to one message, and it fades as the chat moves on.
++From here you can type normal follow-ups. Once started, `/n-mode` stays on for the rest of the conversation and stays out of casual turns. Tell it to stop when you want it off.
+ 
+ Next: [Route work through `/n-mode`](./02-n-mode.md).
+diff --git a/docs/guide/02-n-mode.md b/docs/guide/02-n-mode.md
+index e65939e..1f59dbe 100644
+--- a/docs/guide/02-n-mode.md
++++ b/docs/guide/02-n-mode.md
+@@ -90,7 +90,7 @@ continue
+ keep going until done
+ ```
+ 
+-Short works because the playbook holds the structure, and a Custom Mode keeps `/n-mode` in context on every turn. [Set up pstack](./01-setup.md#run-your-first-task) shows how to start one. Your words carry the intent, and the skill carries the rigor.
++Short works because the playbook holds the structure, and `/n-mode` stays on for the rest of the conversation. [Set up pstack](./01-setup.md#run-your-first-task) shows how to start one. Your words carry the intent, and the skill carries the rigor.
+ 
+ ## Switch tasks with "new task"
+ 
+@@ -104,9 +104,9 @@ A long chat accumulates context from the last task. When you change subjects, sa
+ 
+ ## Give parallel work its own machine
+ 
+-If you run several agents against one repository on one computer, they will fight over the working tree, the ports, and the build output. The cleanest isolation is a [cloud subagent](https://cursor.com/docs/subagents#cloud-subagents). Each one gets its own VM and branch, so it can install dependencies, run your app, and record video of the result without touching your machine. Type `/in-cloud` before the task, or ask the parent chat to hand work to cloud subagents.
++If you run several agents against one repository on one computer, they will fight over the working tree, the ports, and the build output. The cleanest isolation is a subagent spawned with `isolation: "worktree"`. Each one gets its own checkout and branch, so its edits never touch yours. Give each one its own ports when it runs your app.
+ 
+-When the work has to stay local, ask for a worktree up front:
++To pick the worktree yourself, ask for one up front:
+ 
+ ```text
+ /n-mode new task. branch off <base> in a fresh worktree, then port the parser change there.
+diff --git a/docs/guide/05-build-and-clean.md b/docs/guide/05-build-and-clean.md
+index 96755ee..6c63902 100644
+--- a/docs/guide/05-build-and-clean.md
++++ b/docs/guide/05-build-and-clean.md
+@@ -56,7 +56,7 @@ In context, that's enough. [`/tdd`](../../skills/tdd/SKILL.md) writes the smalle
+ 
+ ## Clean before you commit
+ 
+-The [Opening a PR playbook](../../skills/n-mode/playbooks/opening-a-pr.md) runs `/deslop` on the diff before each commit and applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. `/deslop` ships in the `cursor-team-kit` plugin, not in pstack. If you don't have it, ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
++The [Opening a PR playbook](../../skills/n-mode/playbooks/opening-a-pr.md) runs Claude Code's built-in `/simplify` on the diff before each commit and applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. After `/simplify`, it removes what is left of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
+ 
+ For prose, `/unslop` takes a target and any extra rules you have:
+ 
+diff --git a/docs/guide/07-overnight.md b/docs/guide/07-overnight.md
+index 687c0ba..33ae4a1 100644
+--- a/docs/guide/07-overnight.md
++++ b/docs/guide/07-overnight.md
+@@ -1,6 +1,6 @@
+ # Run work while you sleep
+ 
+-This is the payoff for everything before it. An agent you can trust to verify its own work is an agent you can leave alone with a hard task. What makes that safe isn't hope. It's a checkable finish condition, an isolated worktree or cloud agent, and a decision log you audit in the morning.
++This is the payoff for everything before it. An agent you can trust to verify its own work is an agent you can leave alone with a hard task. What makes that safe isn't hope. It's a checkable finish condition, an isolated worktree, and a decision log you audit in the morning.
+ 
+ ![She waves goodnight from the door while robots keep the factory running, one updating a DECISION LOG wall board under a BUILD LOOP ACTIVE sign.](./images/overnight.jpg)
+ 
+@@ -32,12 +32,12 @@ Walk through what each line buys you:
+ - "done means..." turns the goal into checks every iteration can run.
+ - "fresh worktree off `<base>`" keeps the run from colliding with anything else you have open.
+ - "don't ask me before committing" pre-answers the permission the agent would otherwise block on.
+-- `/loop` is Cursor's built-in wake mechanism, not a pstack skill. The [Autonomous run playbook](../../skills/n-mode/playbooks/autonomous-run.md) uses it to re-check the finish condition on events or a heartbeat.
++- `/loop` is Claude Code's built-in wake mechanism, not an nstack skill. The [Autonomous run playbook](../../skills/n-mode/playbooks/autonomous-run.md) uses it to re-check the finish condition on events or a heartbeat.
+ - The escape hatch lets it stop at a genuine dead end and write up why, which beats eight hours of creative goal reinterpretation.
+ 
+ Because you'll review this work after stepping away, `/n-mode` routes it through [`/figure-it-out`](../../skills/figure-it-out/SKILL.md), which designs the run's phases before any code and wires in the decision log.
+ 
+-To stop a run on purpose, tell the agent to pause, or that you're about to go offline or restart Cursor. The [Pause safely playbook](../../skills/n-mode/playbooks/pause-safely.md) finishes or backs out of the current step, commits a work-in-progress checkpoint, and writes a resume note. A fresh chat picks the work up from that note through the Session pickup playbook. Saying "keep going" never triggers a pause.
++To stop a run on purpose, tell the agent to pause, or that you're about to go offline or restart Claude Code. The [Pause safely playbook](../../skills/n-mode/playbooks/pause-safely.md) finishes or backs out of the current step, commits a work-in-progress checkpoint, and writes a resume note. A fresh chat picks the work up from that note through the Session pickup playbook. Saying "keep going" never triggers a pause.
+ 
+ ## What the loop does all night
+ 
+@@ -93,16 +93,16 @@ The contract above drives one task to one finish condition. Some nights hold mor
+ 
+ ## Run many projects in parallel
+ 
+-A [Cursor Project](https://cursor.com/blog/projects) gives one coordinator agent a persistent thread. The coordinator doesn't write code. It directs subagents, which run in the cloud by default, so the work continues when your laptop is closed. That's the shape the Orchestrate playbook expects. Start your prompts to the coordinator with `/n-mode`, and the subagents it spawns follow the playbooks.
++Give one coordinator chat the whole body of work. The coordinator doesn't write code. It directs subagents, each in its own worktree. Subagents stop when the session ends, so keep the machine awake for a long run. That's the shape the Orchestrate playbook expects. Start your prompts to the coordinator with `/n-mode`, and the subagents it spawns follow the playbooks.
+ 
+ A few habits help:
+ 
+-- Give each body of work its own Project, such as a feature, a migration, a perf push, or a tech-debt cleanup. Several can run side by side.
+-- Drag related chats into the Project, finished ones included. They become context for every agent in it.
++- Give each body of work its own coordinator chat, such as a feature, a migration, a perf push, or a tech-debt cleanup. Several can run side by side.
++- Point the coordinator at related earlier chats with `/recall`, so their decisions become context.
+ - Give each PR a verification swarm before it merges, and let Autopilot-stack or Autopilot-full carry the queue.
+ - Ask the coordinator for a plan backed by data, and have it answer open questions with prototypes before it asks you.
+ 
+-One prompt can carry a whole Project, from research through execution:
++One prompt can carry a whole body of work, from research through execution:
+ 
+ ```text
+ /n-mode refactor this repo so its architecture is more agent friendly. use /correct and /architect on past commits and review comments to find the mistakes agents make most here. use /recall for context from past chats. answer open questions with prototypes instead of asking me. come back with a plan backed by real data. once i approve it, run it with autopilot-stack or autopilot-full, and ask me which.
+@@ -115,7 +115,7 @@ Every loop above still waits for you to start it. A scheduled or event-driven au
+ - Every stage can stop the line. Triage can decide the report is expected behavior, repro can fail to reproduce it, and the fixer can judge the change too risky. Each of those outcomes is useful, because it keeps bad work from reaching the next stage, where it costs more to undo.
+ - Every stage hands over evidence. Repro attaches screenshots and video of the broken state, and the fix attaches before-and-after proof. A human can then check that the agent fixed the right thing before reading a line of code.
+ 
+-pstack ships this as a dormant [automation pack](https://github.com/cursor/plugins/blob/main/pstack/automations/benny/README.md) for Slack issue reports. One automation triages each report. The other reproduces confirmed bugs and may prepare a small draft fix. Point an agent at its [`FOR_AGENTS.md`](https://github.com/cursor/plugins/blob/main/pstack/automations/benny/FOR_AGENTS.md) and name the target repository to set it up.
++nstack ships no automations. In Claude Code, a scheduled task or a CI job that runs Claude Code can start each stage.
+ 
+ **Pitfall:** a duration is not a finish condition. "work on this for 4 hours" gives the agent nothing to check, and you'll wake up to four hours of motion instead of a result. Give `/loop` a predicate that can pass or fail.
+ 
+diff --git a/docs/guide/10-recipes-and-pitfalls.md b/docs/guide/10-recipes-and-pitfalls.md
+index f41b51e..500a535 100644
+--- a/docs/guide/10-recipes-and-pitfalls.md
++++ b/docs/guide/10-recipes-and-pitfalls.md
+@@ -165,7 +165,7 @@ That's the whole prompt. [`/bro`](../../skills/bro/SKILL.md) restates the last m
+ - **Leading with your theory of the cause.** The agent searches wherever you pointed. Ask it to restate the problem first, then share your hunch.
+ - **Taking the first design.** One attempt locks in the first shape the model thought of. Ask for prototypes or `/architect` and pick from evidence.
+ - **Polishing an abstract plan.** Adversarial review of a plan with no code behind it invents risks that will never happen. Settle the open questions with prototypes, then review what got built.
+-- **Parallel agents in one worktree.** They overwrite each other, and nobody can tell which agent changed what. Run them as cloud agents, or say "own worktree per attempt".
++- **Parallel agents in one worktree.** They overwrite each other, and nobody can tell which agent changed what. Spawn each with `isolation: "worktree"`, or say "own worktree per attempt".
+ - **Looping before you trust the loop.** A loop that can't verify its own work only makes unchecked work faster. Get the verification skill working first.
+ - **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Run `/benchmark-checklist` before the number goes anywhere.
+ - **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.
+diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
+index 61b7a51..bf60fe0 100644
+--- a/skills/nstack-help/SKILL.md
++++ b/skills/nstack-help/SKILL.md
+@@ -10,9 +10,9 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
+ 
+ Answer the user's question about pstack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a pstack run spends real tokens, so let them send the prompt.
+ 
+-A message that asks for work, such as "use pstack to fix this bug", is not a help question. Read [`n-mode`](../n-mode/SKILL.md), do the work under it, and mention once that a Custom Mode keeps it on.
++A message that asks for work, such as "use pstack to fix this bug", is not a help question. Read [`n-mode`](../n-mode/SKILL.md), do the work under it, and mention once that it stays on for the rest of the conversation.
+ 
+-This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, which the user may not be able to open, so give the user the file's public copy: `https://github.com/cursor/plugins/blob/main/pstack/` followed by its path.
++This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, which the user may not be able to open, so give the user the file's public copy: `https://github.com/nguyenpqp/nstack/blob/main/dist/` followed by its path.
+ 
+ ## Find out what they need
+ 
+@@ -43,23 +43,19 @@ When the model rule is missing and it matters, ask whether the user wants to pic
+ 
+ Installing changes nothing until the user invokes a skill. Only `/setup-nstack` loads from the user's words. The [README](../../README.md) and [guide page 1](../../docs/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
+ 
+-If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-nstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on Auto or a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/n-mode` for work that needs rigor.
++If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-nstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/n-mode` for work that needs rigor.
+ 
+-pstack is built for Cursor. Its Claude Code build, nstack, installs with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`. There, each command takes a `nstack:` prefix, such as `/nstack:n-mode`. The [Claude Code adapter](../../docs/harness/claude-code.md) maps the Cursor names, and a step that needs a Cursor-only feature, such as Bugbot or Automations, is skipped with a one-line note.
++nstack is the Claude Code build of pstack. It installs with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`. There, each command takes a `nstack:` prefix, such as `/nstack:n-mode`.
+ 
+-Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, `/why`, and `/teach`, spawn Cursor subagents with per-role models, and Custom Modes and `/loop` are Cursor features, so those parts may not work there.
++Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, `/why`, and `/teach`, spawn Claude Code subagents with per-role models, so those parts may not work there.
+ 
+ ## Start a task with `/n-mode`
+ 
+ `/n-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-n-mode.md) has examples.
+ 
+-Whether `/n-mode` stays on depends on how the user starts it:
++Once started, `/n-mode` stays on for the rest of the conversation, per its Sticky mode section, and stays out of casual turns. The user turns it off by saying so. A new conversation needs `/nstack:n-mode` again.
+ 
+-- Enter on `/n-mode` attaches the skill to one message. It fades as the chat moves on.
+-- Option+Enter on Mac or Alt+Enter on Windows, or Use as Mode from the skill entry, makes it a Custom Mode. It stays in context every turn until the user exits the mode, and it stays out of casual turns.
+-- Cursor's docs list Custom Modes in the Agents Window and the CLI. Elsewhere, start each new task with `/n-mode`.
+-
+-Link [Cursor's skills docs](https://cursor.com/docs/skills) when this comes up. Mid-chat, "new task" makes the mode match a fresh playbook. `/n-mode` already uses `n-agent` for the subagents its playbook steps spawn. To get the same style from a subagent of your own, spawn it with `subagent_type: "n-agent"`.
++Link [Claude Code's skills docs](https://code.claude.com/docs/en/skills) when this comes up. Mid-chat, "new task" makes the mode match a fresh playbook. `/n-mode` already uses `n-agent` for the subagents its playbook steps spawn. To get the same style from a subagent of your own, spawn it with `subagent_type: "nstack:n-agent"`.
+ 
+ ## Pick a skill
+ 
+@@ -78,7 +74,7 @@ The default answer is `/n-mode`, which runs most of the others when its steps ne
+ | Know what a small diff could break outside itself | [`/blast-radius`](../blast-radius/SKILL.md) |
+ | Settle types and module shape before code that crosses a function boundary | [`/architect`](../architect/SKILL.md) |
+ | Get several attempts at one brief, merged into the best one | [`/arena`](../arena/SKILL.md) |
+-| Run parallel checks over slices, or race workers, as cloud agents | [`/swarm`](../swarm/SKILL.md) |
++| Run parallel checks over slices, or race workers, each in its own worktree | [`/swarm`](../swarm/SKILL.md) |
+ | Have different models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
+ | Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |
+ | Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
+@@ -112,8 +108,8 @@ Close calls:
+ 
+ Not in nstack:
+ 
+-- `/deslop`, `control-cli`, and `control-ui` ship in the `cursor-team-kit` plugin.
+-- `/loop` and `/create-skill` are Cursor built-ins.
++- `/deslop`, `control-cli`, and `control-ui` belong to another plugin. nstack runs Claude Code's built-in `/simplify` in place of `/deslop`, and the project's own control skill under `.claude/skills/` in place of `control-ui` and `control-cli`.
++- `/loop` and `/simplify` are Claude Code built-ins. `skill-creator` is Anthropic's, not nstack's.
+ - pstack has no `/orchestrate` skill. Orchestrate is a `/n-mode` playbook. If the slash menu shows `/orchestrate`, another plugin provides it.
+ 
+ ## Playbooks and principles
+@@ -127,9 +123,9 @@ Playbooks are step lists inside `/n-mode`, not skills, so they have no slash com
+ - "full autopilot on this queue" runs Autopilot-full. "stack them, don't ship" runs Autopilot-stack.
+ - "run the eval playbook" runs Eval.
+ 
+-Without `/n-mode`, a phrase such as "babysit this pr" can start Cursor's own skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
++Without `/n-mode`, a phrase such as "babysit this pr" can start another plugin's skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
+ 
+-pstack has no planning skill. Cursor's Plan Mode works alongside it. For work that spans phases or stacked PRs, asking `/n-mode` for a plan runs the [Multi-phase plan playbook](../n-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
++pstack has no planning skill. Claude Code's plan mode works alongside it. For work that spans phases or stacked PRs, asking `/n-mode` for a plan runs the [Multi-phase plan playbook](../n-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
+ 
+ Principles are one-rule skills that `/n-mode` reads and cites in its replies. The user rarely invokes one. They steer with the names instead, as in "apply prove it works. show me the real output." Typing `/principle-<name>` still loads one on demand. [Guide page 8](../../docs/guide/08-principles.md) lists them.
+ 
+@@ -137,12 +133,12 @@ Principles are one-rule skills that `/n-mode` reads and cites in its replies. Th
+ 
+ | Symptom | Fix |
+ |---|---|
+-| The mode stopped applying after a few turns | It was started with Enter. Start it as a Custom Mode, or start each task with `/n-mode`. |
++| The mode stopped applying after a few turns | A long conversation pushed the skill out of context. Start the task again with `/nstack:n-mode`. |
+ | A question got treated as the next step of the last task | Say "new task", or say the turn doesn't need the mode. |
+ | A new model choice had no effect | The rule from `/setup-nstack` applies to new chats. Start one. |
+ | Runs cost more than expected | See the cost paragraph under Get set up. |
+ | A skill didn't load on its own | Only `/setup-nstack` loads from the user's words. The others load when the user types them or when `/n-mode` runs them, and it doesn't run every skill. |
+-| Parallel agents overwrote each other | Give each agent its own worktree, or run them as cloud agents, which each get their own machine. |
++| Parallel agents overwrote each other | Give each agent its own worktree, such as by spawning it with `isolation: "worktree"`. |
+ | An overnight run moved but finished nothing | `/loop` needs a check that can pass or fail, not a duration. See [guide page 7](../../docs/guide/07-overnight.md). |
+ | The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |
+ 

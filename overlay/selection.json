@@ -84,6 +84,10 @@
     {
       "upstream": "upstream/mattpocock/skills/engineering/diagnosing-bugs/",
       "by": "overlay/patches/065-diagnosis-loop.patch"
+    },
+    {
+      "upstream": "upstream/pstack/docs/harness/claude-code.md",
+      "by": "overlay/renames.json claudeCode and overlay/patches/1*-claude-code-*.patch"
     }
   ]
 }

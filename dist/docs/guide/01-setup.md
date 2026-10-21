@@ -4,15 +4,14 @@ In this page you install the plugin, pick which models pstack uses, and run your
 
 ## Install the plugin
 
-In a Cursor chat, run:
+In Claude Code, run:
 
 ```text
-/add-plugin pstack
+/plugin marketplace add nguyenpqp/nstack
+/plugin install nstack@nstack
 ```
 
-Cursor confirms the plugin is installed.
-
-In Claude Code, run `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`. Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix there, such as `/nstack:setup-nstack`, which writes its model rule to `~/.claude/rules/nstack-models.md`. The [Claude Code adapter](../harness/claude-code.md) covers the other differences.
+Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`, which writes its model rule to `~/.claude/rules/nstack-models.md`.
 
 ## Pick your models
 
@@ -61,6 +60,6 @@ Pick something real but small, and describe it the way you'd describe it to a co
 
 Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/n-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
 
-From here you can type normal follow-ups. To keep `/n-mode` on for the whole chat, pick it from the `/` menu with Option+Enter (Mac) or Alt+Enter (Windows) instead of Enter. That makes it a [Custom Mode](https://cursor.com/docs/skills#using-a-skill-as-a-custom-mode), which stays in context on every turn until you exit it. Custom Modes are available in the Agents Window and the CLI. Plain Enter attaches the skill to one message, and it fades as the chat moves on.
+From here you can type normal follow-ups. Once started, `/n-mode` stays on for the rest of the conversation and stays out of casual turns. Tell it to stop when you want it off.
 
 Next: [Route work through `/n-mode`](./02-n-mode.md).
