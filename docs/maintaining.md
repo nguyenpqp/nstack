@@ -22,9 +22,9 @@ nstack is pstack plus one Matt Pocock skill plus a thin overlay. Your job is to 
    - **A new pstack skill.** It ships automatically. Check that it does not collide with a kept Pocock skill or with the nstack layer by name, trigger, or routing.
    - **A removed pstack skill, or a `selection.json` path that is gone.** Find what in `overlay/` still points at it and fix that.
 3. Read `git diff upstream/` yourself for drift that the report cannot see:
-   - Cursor-only names that need a row in `docs/harness/claude-code.md`, or a `claudeCode` entry in `overlay/renames.json` when a plain rewrite is enough.
+   - New Cursor names. The check fails on most of them. A one-to-one swap goes in `overlay/renames.json` `claudeCode`. Anything that changes meaning, such as a cloud agent, a Cursor-only tool, or a model slug, gets a `1*-claude-code-*` patch. Sync lists `upstream/pstack/docs/harness/claude-code.md` when it changes. nstack does not ship that adapter, but a new row there names a Cursor name that nstack must now rewrite.
    - New Cursor-only skills. nstack targets Claude Code only, so a skill that works only in Cursor goes in `selection.json` `pstack.exclude`.
-   - New or renamed model slugs, which patch `070-models` maps.
+   - New or renamed model slugs. `claudeCode` maps each default slug to a Claude Code value such as `opus xhigh`, and patch `100-claude-code-models` holds the panels and the `setup-nstack` rule.
    - Edits to pstack's mode skill (`n-mode` in `dist/`, `poteto-mode` upstream) that contradict the nstack layer.
    - Renamed entry points, which `overlay/renames.json` must follow.
 4. Rebuild until `node scripts/build.mjs` passes, the check included. Fix a check failure at its cause. Use `overlay/check-allow.json` only for upstream example links and names that are not meant to resolve.

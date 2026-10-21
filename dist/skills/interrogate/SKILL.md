@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Interrogate
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.
+To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`.
 
 Spawn one reviewer per configured model to adversarially review code changes. The adversarial signal comes from model diversity, not assigned personas. The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
@@ -30,14 +30,18 @@ Launch all reviewers in a single message with the Agent tool, one per entry on t
 
 | Subagent | Default model |
 |----------|---------------|
-| Reviewer A | `claude-opus-5-5-xhigh` |
-| Reviewer B | `grok-4.7-xhigh-fast` |
+| Reviewer A | `opus xhigh` |
+| Reviewer B | `sonnet high` |
+| Reviewer C | `haiku` |
+| Reviewer D | `fable` |
 
-Each reviewer gets `subagent_type: "general-purpose"`, `readonly: true`, and `model` set to its configured entry, or its table default when there is no configured line. Omit `model` for an `auto` or `inherit-parent` entry, so that reviewer runs on the parent model.
+An entry such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`. An entry with no effort, such as `haiku`, omits `effort`. Every reviewer runs a Claude model, so the panel gives a narrower spread of views than one that mixes vendors. Say so in the writeup.
 
-If the Agent tool rejects a configured entry, run that reviewer on its family's table default and say so. Families go by prefix: `claude-*`, and `grok-*` with `cursor-grok-*` and `composer-*`. A refused `composer-*` entry runs on Reviewer B's default. With no family match, use Reviewer A's default. If it rejects a table default, spawn with the closest equivalent from the valid slugs in its error message (prefer the same family and reasoning tier), and open a separate PR to update the default table. Do not block the review on the slug issue. Never treat an alias entry as a rejected slug or apply either fallback to it.
+Each reviewer gets `subagent_type: "Explore"`, a brief that says not to edit files (it keeps `Bash`), and `model` set to its configured entry, or its table default when there is no configured line. Omit `model` for an `auto` or `inherit-parent` entry, so that reviewer runs on the parent model.
 
-Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
+If the Agent tool rejects a configured entry, run that reviewer on its table default and say so. `model` takes only `opus`, `sonnet`, `haiku`, or `fable`, so an entry that names another vendor's model counts as rejected. If it rejects a table default, omit `model` so that reviewer runs on the parent model, say so, and open a separate PR to update the default table. Do not block the review on the model issue. Never treat an alias entry as a rejected slug or apply either fallback to it.
+
+Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each subagent's reasoning level (`effort`) for the job, per the Subagents section of the **n-mode** skill.
 
 ## Step 4, Synthesize
 

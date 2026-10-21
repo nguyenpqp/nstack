@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # How
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.
+To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`.
 
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
-Every spawn is an Agent subagent with `subagent_type: "general-purpose"` and `readonly: true`. Explorers use the `how explorer` line in the `nstack-models.md` rule (default `grok-4.7-xhigh-fast`), and every explainer uses the `how explainer` line (default `claude-opus-5-5-xhigh`). Set `model` to that line's value, or to the default if the rule or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If the Agent tool rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
+Every spawn is an Agent subagent with `subagent_type: "Explore"`. It keeps `Bash`, so each brief also says not to edit files, and you check `git status` afterward. Explorers use the `how explorer` line in the `nstack-models.md` rule (default `sonnet high`), and every explainer uses the `how explainer` line (default `opus xhigh`). Set `model` and `effort` from that line's value, or from the default if the rule or the line is missing. A value such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`. Leave `model` unset when the value is `auto` or `inherit-parent`. If the Agent tool rejects a slug, use the default and say so. If it rejects the default, omit `model` so the agent runs on the parent model, and say so. Pick each subagent's reasoning level (`effort`) for the job, per the Subagents section of the **n-mode** skill.
 
 ## 1. Assess complexity
 

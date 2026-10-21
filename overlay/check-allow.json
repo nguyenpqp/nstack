@@ -1,4 +1,3 @@
 {
-  "skills/why/references/synthesizer-prompt.md": ["url"],
-  "docs/harness/claude-code.md": ["skill-creator", "name"]
+  "skills/why/references/synthesizer-prompt.md": ["url"]
 }

@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # Swarm
 
-In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.
+To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`.
 
 ## Start
 
-Open a todolist with one entry per phase before launching anything.
+Open a todo list with one entry per phase before launching anything.
 
 1. Frame
 2. Fan out
@@ -21,14 +21,14 @@ Open a todolist with one entry per phase before launching anything.
 
 1. State the done predicate and the artifact or report the swarm must return.
 2. Choose the shape. Partition into slices, race N workers on identical briefs, or mix both. For a race or mixed shape, declare `first pass`, `rank all`, or `best-of` before spawning.
-4. Pick the worker model from the `swarm workers` line in `~/.claude/rules/nstack-models.md`. If the rule or that line is missing, use `grok-4.7-xhigh-fast`. For `auto` or `inherit-parent`, omit `model` so the workers run on the parent model. If the Agent tool rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message. For a model race, name each arm's model up front. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
+4. Pick the worker model from the `swarm workers` line in `~/.claude/rules/nstack-models.md`. If the rule or that line is missing, use `sonnet high`. For `auto` or `inherit-parent`, omit `model` so the workers run on the parent model. If the Agent tool rejects a slug, use the default and say so. If it rejects the default, omit `model` so the agent runs on the parent model, and say so. For a model race, name each arm's model up front. Pick each subagent's reasoning level (`effort`) for the job, per the Subagents section of the **n-mode** skill.
 5. Give each worker its own writable output when it writes. When workers verify or measure commits, each brief names the exact SHAs. A measurement brief also names the method (sample count, what one sample is, order). The worker records both in its result.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one message with `subagent_type: "general-purpose"`, `environment: "cloud"`, `run_in_background: true`, and the step 4 model, left unset for `auto` or `inherit-parent`. Use `environment: "local"` only when the worker needs access to something on the user's computer.
+Spawn all N workers in one message with `subagent_type: "general-purpose"`, `isolation: "worktree"`, and the step 4 model, left unset for `auto` or `inherit-parent`. Each worker gets its own checkout, so workers never share a working tree. Leave out `isolation` only when the worker must use something running in this checkout, such as a dev server.
 
-When a worker must start from a non-default pushed branch, pass `cloud_base_branch`.
+When a worker must start from a non-default pushed branch, name the branch in its brief and tell it to check that branch out first.
 
 Every brief stands alone. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence. A worker that can prove a defect reports `ISSUES` and lists every issue it can prove, not only the first.
 
