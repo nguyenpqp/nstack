@@ -44,6 +44,7 @@ The user's:
 - Make the workflow complete and efficient on Claude Code while upstream updates stay easy.
 - Fold the effort tiers into one `n-agent`. n-mode already asked for both the tier and the Agent `effort` param, and the dispatch label shows the effort.
 - One commit per concern.
+- Keep n-mode's wall time as it is. The no-skill baseline finished a one-flag change in about 61s with no worktree, intent, delegate, or review. n-mode took about 230s doing all four. Cutting the upstream text each delegate reads would make syncs break more often.
 
 Made for them:
 
@@ -56,7 +57,6 @@ Made for them:
 ## Open questions
 
 - Whether a user approves the `EnterWorktree` prompt in an interactive run. The tool asks every time, even when allowlisted, because it moves the session's working directory. Approved (`--permission-mode bypassPermissions`), it entered `.worktrees/a` by `path`, left with `action: "keep"`, and entered `.worktrees/b` next. Both headless runs, where no one could approve, fell back to `git -C` with absolute paths and still kept the work in the worktree. A user who installed before this change gets the rule line only after rerunning `/setup-nstack`.
-- Whether n-mode's wall time is worth it. The no-skill baseline finished a one-flag change in about 61s with no worktree, intent, delegate, or review. n-mode took about 230s doing all four. The cuts left are in upstream text each delegate reads, which is out of scope.
 
 ## Follow-up
 
