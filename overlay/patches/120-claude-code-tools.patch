@@ -12,7 +12,7 @@ index 114d9b1..8ea0315 100644
  Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill. Each slice mining subagent reads transcripts from the workspace-scoped path the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
  
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index fca79b0..8dad6df 100644
+index 11d58b9..f77e93e 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -33,7 +33,7 @@ Remaining triggers:
@@ -22,7 +22,7 @@ index fca79b0..8dad6df 100644
 -- Before commit → Claude Code's built-in `/simplify` over the diff, as the adapter maps `/deslop`.
 +- Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
  - Before review, or before **Merging back** when no PR opens → the **no-comments** skill (`/no-comments`), then Claude Code's built-in `/code-review` over the branch. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
- - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, the **create-verification-skill** skill makes it, for any language, engine, or platform. Until it exists, drive the surface through the project's own runner and say which. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
+ - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which. Building one with the **create-verification-skill** skill is a task of its own. Offer it in the reply when the project will keep changing that surface, and build it only when the user asks. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
  - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
 diff --git a/skills/n-mode/playbooks/autopilot-full.md b/skills/n-mode/playbooks/autopilot-full.md
 index 25b99b5..191b68e 100644
