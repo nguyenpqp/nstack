@@ -45,7 +45,7 @@ index 924a807..8bb74a8 100644
  Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
  
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index ca7557c..35cf826 100644
+index ff1c0aa..1f89bd8 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -122,7 +122,7 @@ After the merge lands, leave the worktree with `ExitWorktree` and `action: "keep
@@ -58,7 +58,7 @@ index ca7557c..35cf826 100644
  **Label every spawn.** The CLI line shows only the type and the `description`, and a `general-purpose` type reads `Agent`. So open the description with the model and effort, then two or three words for the task, as in `opus xhigh: review diff`. Write the `model` you pass, or `inherit` when you omit it. Write the `effort` you pass, else the session's. Spawns that routed skills make carry the label too.
  
 diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
-index 42a453a..55050a4 100644
+index 42a453a..9ae52d6 100644
 --- a/skills/setup-nstack/SKILL.md
 +++ b/skills/setup-nstack/SKILL.md
 @@ -7,17 +7,17 @@ description: Configure which models nstack uses per role and at what reasoning b
@@ -82,7 +82,7 @@ index 42a453a..55050a4 100644
  
  ### 3. Budget, map, and confirm
  
-@@ -28,43 +28,40 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
+@@ -28,43 +28,41 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
  - `medium — high reasoning`
  - `small — medium reasoning`
  
@@ -111,6 +111,7 @@ index 42a453a..55050a4 100644
 +# nstack model configuration. One line per role. Delete a line to fall back to the skill default.
 +# A value `<model> <effort>`, such as `opus high`, means Task `model: "opus"` and `effort: "high"`. A bare model, such as `haiku`, omits `effort`.
  # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`). Alias entries in a panel list still count toward its fan-out.
++# In a `/nstack:n-mode` run, the n-mode Worktree section is the instruction to work in a worktree. Enter one with EnterWorktree `path`, and leave it with ExitWorktree `action: "keep"`.
  # budget: large (xhigh)
 -feature, refactoring: grok-4.7-xhigh-fast
 -bug-fix: grok-4.7-xhigh-fast
