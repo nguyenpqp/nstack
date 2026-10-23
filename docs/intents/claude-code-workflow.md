@@ -17,7 +17,7 @@ The user asked to "hoàn thiện bộ skill để có workflow hoàn thiện, hi
 - `node scripts/build.mjs` passes, and `check.mjs` fails on any frontmatter field that the Claude Code skill or subagent docs do not list. It also runs `claude plugin validate` when the CLI is on PATH.
 - Agents set `background: true`. One `n-agent` replaces the three effort tiers, and n-mode sets the Agent `effort` per job.
 - A request that states the change asks only what is still open and would change the diff. When nothing is, the round is one confirm-or-correct message. Process is never a question.
-- Worktrees are ignored through `.git/info/exclude`. A missing control skill is offered in the reply, not built.
+- Worktrees are ignored through `.worktrees/.gitignore`, and the merge lock is `.worktrees/merge.lock`, so nothing commits on `main` and nothing writes under `.git/`. A missing control skill is offered in the reply, not built.
 - `diagnosing-bugs` is explicit-only.
 
 ## Surfaces
@@ -55,7 +55,7 @@ Made for them:
 
 ## Open questions
 
-- Whether the rule line makes a real `/nstack:n-mode` run call `EnterWorktree` without hesitating. The eval runs recorded the call instead of making it. A user who installed before this change gets the line only after rerunning `/setup-nstack`.
+- Whether `EnterWorktree` works in an interactive session. Both headless runs called it, hit its confirm prompt, and fell back to `git -C` with absolute paths, which still kept the work in the worktree. A user who installed before this change gets the rule line only after rerunning `/setup-nstack`.
 
 ## Follow-up
 
@@ -63,3 +63,7 @@ Made for them:
 - `EnterWorktree` guards itself to calls the user, CLAUDE.md, or memory asks for. The `/setup-nstack` rule now names the Worktree section as that instruction, and the section exits a worktree before it enters the next one.
 - A third eval round on the autonomy case, after the tier merge, scored 6 of 6. Its code delegate was `subagent_type: "nstack:n-agent"` with `effort: "high"`, and no tier name appeared. Wall time rose to 537s from 426s on one run each, so time is still unsolved.
 - Round 4, two runs per case. `interview.md` reads one axes row through `grep`, which cuts it from 3,180 to 1,748 words. Stepped-away work that one playbook covers stays out of figure-it-out. Autonomy scored 6 of 6 twice, at 265s and 428s (mean 346s, against 426s, 436s, and 537s before). Bug runs stopped at one confirm question each, at 195s and 166s, about level with 182s, because their time goes to reproducing and reading principle leaves.
+- Two real headless runs (`claude -p --plugin-dir`, one feature with full autonomy, each on a fresh fixture repo).
+  - Run 1: 117s, $1.89, success. Its writes to `.git/info/exclude` and `.git/merge.lock` were refused as sensitive files. Patch `030` now keeps both under `.worktrees/`.
+  - Run 2, after that fix: about 230s, $1.84, success, no sensitive-file refusal. It wrote `.worktrees/.gitignore`, committed the intent then the feature in the worktree, delegated to `nstack:n-agent` at `effort: high`, fast-forwarded `main`, removed the worktree, and left 6 of 6 tests passing.
+- Patch `085` defines crossing a function boundary as a change a caller sees, after an eval run sent a one-body edit to the architect.
