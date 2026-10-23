@@ -130,22 +130,6 @@ if (!until) {
   }
 }
 
-const tiers = readJson(join(OVERLAY, "agents.json"));
-const baseAgent = readFileSync(join(OUT, tiers.base), "utf8");
-const baseName = baseAgent.match(/^name: (.+)$/m)[1];
-if (!/^description: .+$/m.test(baseAgent)) failed.push(`${tiers.base} has no one-line description for the effort tiers`);
-for (const { effort, use } of tiers.variants) {
-  const variant = baseAgent
-    .replace(/^name: .+$/m, `name: ${baseName}-${effort}`)
-    .replace(
-      /^description: (.+)$/m,
-      (_, d) =>
-        `description: ${baseName} pinned to ${effort} effort. Use for ${use}. Model still comes from the role's Agent \`model\` param. ${d}\neffort: ${effort}`,
-    );
-  const tier = join(OUT, dirname(tiers.base), `${baseName}-${effort}.md`);
-  retrying(`write ${rel(OUT, tier)}`, () => writeFileSync(tier, variant));
-}
-
 mkdirSync(join(OUT, ".claude-plugin"), { recursive: true });
 cpSync(join(OVERLAY, "plugin.json"), join(OUT, ".claude-plugin", "plugin.json"));
 
