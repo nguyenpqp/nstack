@@ -23,6 +23,7 @@ nstack is pstack plus one Matt Pocock skill plus a thin overlay. Your job is to 
    - **A removed pstack skill, or a `selection.json` path that is gone.** Find what in `overlay/` still points at it and fix that.
 3. Read `git diff upstream/` yourself for drift that the report cannot see:
    - New Cursor names. The check fails on most of them. A one-to-one swap goes in `overlay/renames.json` `claudeCode`. Anything that changes meaning, such as a cloud agent, a Cursor-only tool, or a model slug, gets a `1*-claude-code-*` patch. Sync lists `upstream/pstack/docs/harness/claude-code.md` when it changes. nstack does not ship that adapter, but a new row there names a Cursor name that nstack must now rewrite.
+   - New frontmatter fields. Claude Code ignores a field it does not know, so the check fails on one. Map a Cursor field to its Claude Code name in `claudeCode`, as `is_background` maps to `background`. When Claude Code adds a field, add it to the list in `check.mjs` with the docs page that names it.
    - New Cursor-only skills. nstack targets Claude Code only, so a skill that works only in Cursor goes in `selection.json` `pstack.exclude`.
    - New or renamed model slugs. `claudeCode` maps each default slug to a Claude Code value such as `opus xhigh`, and patch `100-claude-code-models` holds the panels and the `setup-nstack` rule.
    - Edits to pstack's mode skill (`n-mode` in `dist/`, `poteto-mode` upstream) that contradict the nstack layer.

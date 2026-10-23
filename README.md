@@ -69,7 +69,7 @@ Keep one concern per patch, so a sync failure names the concern that broke. To r
 
 Put a whole new file in `overlay/files/`. The build refuses an overlay file that would replace an upstream file, because a replaced file never receives upstream fixes. When an overlay file wraps an upstream skill, add the pair to `wraps` in `overlay/selection.json`, so sync tells you when that skill changes.
 
-`node scripts/check.mjs` fails on a dangling link, a missing skill or agent reference, a name that the renames should have removed, or a Cursor name or Cursor-only Agent field anywhere in `dist/`. Prose that names a skill ("the **x** skill") must name one that ships, `skill-creator`, or one allowed for that file in `overlay/check-allow.json`.
+`node scripts/check.mjs` fails on a dangling link, a missing skill or agent reference, a name that the renames should have removed, a Cursor name or Cursor-only Agent field anywhere in `dist/`, or a skill or agent frontmatter field that the Claude Code docs do not list. When the `claude` CLI is on PATH, it also runs `claude plugin validate dist`. Prose that names a skill ("the **x** skill") must name one that ships, `skill-creator`, or one allowed for that file in `overlay/check-allow.json`.
 
 ## Credits and license
 
