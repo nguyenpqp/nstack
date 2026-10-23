@@ -55,4 +55,10 @@ Made for them:
 
 ## Open questions
 
-- Whether `EnterWorktree` accepts a call that only a skill asks for. Its tool text names the user, CLAUDE.md and memory. The eval runs recorded the call instead of making it, so one real `/nstack:n-mode` run settles it.
+- Whether the rule line makes a real `/nstack:n-mode` run call `EnterWorktree` without hesitating. The eval runs recorded the call instead of making it. A user who installed before this change gets the line only after rerunning `/setup-nstack`.
+
+## Follow-up
+
+- A sync to pstack `8b3326d` ran on top of these commits. Every patch applied unchanged, and the new `statechart` skill shipped without an overlay change.
+- `EnterWorktree` guards itself to calls the user, CLAUDE.md, or memory asks for. The `/setup-nstack` rule now names the Worktree section as that instruction, and the section exits a worktree before it enters the next one.
+- A third eval round on the autonomy case, after the tier merge, scored 6 of 6. Its code delegate was `subagent_type: "nstack:n-agent"` with `effort: "high"`, and no tier name appeared. Wall time rose to 537s from 426s on one run each, so time is still unsolved.
