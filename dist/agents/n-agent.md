@@ -1,7 +1,7 @@
 ---
 name: n-agent
 description: Delegate subagent for code-writing and helper tasks spawned during a `/n-mode` run. Use for delegates, not as the runner for `/n-mode` itself. Spawn a fresh `n-agent` for each new task, and resume one only in the strict cases that n-mode's Subagents section names. Reads the `n-mode` skill's `SKILL.md` in full before any work, including its inline Principles index. Substituting `general-purpose` skips that read and drifts.
-is_background: true
+background: true
 ---
 
 # N subagent

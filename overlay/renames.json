@@ -48,6 +48,8 @@
     ["**create-skill** skill (Cursor's built-in for authoring SKILL.md files)", "`skill-creator` skill (Anthropic's skill for authoring SKILL.md files. When the session does not list it, write the SKILL.md by hand with `name` and `description` frontmatter, a description that says when to use it, and a body that tells the agent what to do)"],
     ["Cursor's built-in `create-skill` skill", "the `skill-creator` skill"],
     ["Cursor's built-in `create-skill`", "the `skill-creator` skill"],
-    ["create-skill", "skill-creator"]
+    ["create-skill", "skill-creator"],
+    ["is_background: true", "background: true"],
+    ["icon: crown\ncolor: yellow\n", ""]
   ]
 }

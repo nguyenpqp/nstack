@@ -2,8 +2,6 @@
 name: n-mode
 description: nstack's agent style, built on pstack, for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for /n-mode or requests to work in this style.
 disable-model-invocation: true
-icon: crown
-color: yellow
 ---
 
 # N mode
