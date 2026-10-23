@@ -55,7 +55,8 @@ Made for them:
 
 ## Open questions
 
-- Whether `EnterWorktree` works in an interactive session. Both headless runs called it, hit its confirm prompt, and fell back to `git -C` with absolute paths, which still kept the work in the worktree. A user who installed before this change gets the rule line only after rerunning `/setup-nstack`.
+- Whether a user approves the `EnterWorktree` prompt in an interactive run. The tool asks every time, even when allowlisted, because it moves the session's working directory. Approved (`--permission-mode bypassPermissions`), it entered `.worktrees/a` by `path`, left with `action: "keep"`, and entered `.worktrees/b` next. Both headless runs, where no one could approve, fell back to `git -C` with absolute paths and still kept the work in the worktree. A user who installed before this change gets the rule line only after rerunning `/setup-nstack`.
+- Whether n-mode's wall time is worth it. The no-skill baseline finished a one-flag change in about 61s with no worktree, intent, delegate, or review. n-mode took about 230s doing all four. The cuts left are in upstream text each delegate reads, which is out of scope.
 
 ## Follow-up
 
