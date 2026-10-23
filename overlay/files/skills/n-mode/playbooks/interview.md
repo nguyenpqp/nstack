@@ -4,7 +4,9 @@
 
 **When this runs.** Every task. Match the execution playbook first, then run this against its row in the axes below, before that playbook's step 1. The row sizes the round, so the Operations rows stay at one question or none. An explicit ask ("interview me", "grill me", "phỏng vấn") upgrades any row to a full frontier. The user opts out per request by saying so ("just pick and go"). Never opt out for them. A fork inside the round that an experiment could settle is not a question. Sketch it per **Prototype** and let the result answer it.
 
-**What shrinks the round.** A full-autonomy grant ("going to bed", "run until done", "be fully autonomous") asks nothing. Write the intent from the request, with every decision in your list, and go on. A spec or design doc already in hand (a game design doc, a PRD, a ticket with acceptance criteria) is the answer sheet. Read it first. Ask only about its gaps, its contradictions, and what it leaves to engineering, and cite the section each question comes from.
+**What shrinks the round.** A full-autonomy grant ("going to bed", "run until done", "be fully autonomous") asks nothing. Write the intent from the request, with every decision in your list, and go on. A spec or design doc already in hand (a game design doc, a PRD, a ticket with acceptance criteria) is the answer sheet. Read it first. Ask only about its gaps, its contradictions, and what it leaves to engineering, and cite the section each question comes from. A request that already states the change, its site, and its cause (a diagnosed bug, a mechanical rename, one flag on one command) answers most of its row the same way. Check the row's frontier against the request and the repo, and ask only what is still open and would change the diff. When nothing is, skip to step 8. The design summary and its confirmation are the whole round.
+
+**Process is not a question.** The playbooks already decide the worktree and branch, how the work lands, the verification surface, the review passes, and whether to build tooling such as a control skill. Those calls are yours. Put them in your decisions list, never in a round.
 
 **principle-never-block-on-the-human does not suppress this round, and neither does the trigger in `SKILL.md` that classifies an ask before it is made.** Both govern the middle of a run, where reversible work belongs off the human's queue. This is the start of the run, where the requirements are the human's to state. Both take full effect the moment the design is confirmed and execution starts. Say out loud that you are in Interview, so the round is announced rather than silent.
 
@@ -104,7 +106,8 @@ The frontier is small on purpose for Investigation and for the operations rows. 
 | "Frontier looks empty enough" | Empty means empty. Name every remaining branch first. |
 | "They answered the last round, I can start" | The gate needs a confirmed design, not answered questions. |
 | "Never-block says just decide it myself" | Never-block governs the middle of a run. This is its start. |
-| "This task is too small to interview" | The axes row sizes the round, not your read of the task. Ops rows are one question or none. Every other row is a full frontier. Only a full-autonomy grant or a design doc in hand shrinks it. |
+| "This task is too small to interview" | The gate never shrinks. The user confirms the design before code. The round does: count what the request and the repo leave open, not the row's length. A full-autonomy grant asks nothing, and a design doc or a stated change asks only its gaps. |
+| "I'll ask how they want it delivered or verified" | Process is the playbook's. Decide it and list it. |
 | "I'll have the subagent ask them" | A subagent's question never reaches the user. Ask from the main session. |
 | "The design is confirmed in the chat, that's enough" | Chat does not survive compaction, a handoff, or a reviewer. Commit `docs/intents/<slug>.md`. |
 | "The build outgrew the intent, I'll explain it in the PR" | Amend the intent in the same PR. A file describing the old design teaches the next reader the wrong thing. |
