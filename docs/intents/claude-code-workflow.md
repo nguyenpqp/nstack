@@ -17,7 +17,7 @@ The user asked to "hoàn thiện bộ skill để có workflow hoàn thiện, hi
 - `node scripts/build.mjs` passes, and `check.mjs` fails on any frontmatter field that the Claude Code skill or subagent docs do not list. It also runs `claude plugin validate` when the CLI is on PATH.
 - Agents set `background: true`. One `n-agent` replaces the three effort tiers, and n-mode sets the Agent `effort` per job.
 - A request that states the change asks only what is still open and would change the diff. When nothing is, the round is one confirm-or-correct message. Process is never a question.
-- Worktrees are ignored through `.worktrees/.gitignore`, and the merge lock is `.worktrees/merge.lock`, so nothing commits on `main` and nothing writes under `.git/`. A missing control skill is offered in the reply, not built.
+- Worktrees live under `.claude/worktrees/`, the one place `EnterWorktree` enters without a prompt. `.claude/worktrees/.gitignore` ignores them, and the merge lock is `.claude/worktrees/merge.lock`, so nothing commits on `main` and nothing writes under `.git/`. A missing control skill is offered in the reply, not built.
 - `diagnosing-bugs` is explicit-only.
 
 ## Surfaces
@@ -56,7 +56,7 @@ Made for them:
 
 ## Open questions
 
-- Whether a user approves the `EnterWorktree` prompt in an interactive run. The tool asks every time, even when allowlisted, because it moves the session's working directory. Approved (`--permission-mode bypassPermissions`), it entered `.worktrees/a` by `path`, left with `action: "keep"`, and entered `.worktrees/b` next. Both headless runs, where no one could approve, fell back to `git -C` with absolute paths and still kept the work in the worktree. A user who installed before this change gets the rule line only after rerunning `/setup-nstack`.
+- None open on the worktree. A user who installed before this change gets the rule line only after rerunning `/setup-nstack`.
 
 ## Follow-up
 
@@ -68,3 +68,4 @@ Made for them:
   - Run 1: 117s, $1.89, success. Its writes to `.git/info/exclude` and `.git/merge.lock` were refused as sensitive files. Patch `030` now keeps both under `.worktrees/`.
   - Run 2, after that fix: about 230s, $1.84, success, no sensitive-file refusal. It wrote `.worktrees/.gitignore`, committed the intent then the feature in the worktree, delegated to `nstack:n-agent` at `effort: high`, fast-forwarded `main`, removed the worktree, and left 6 of 6 tests passing.
 - Patch `085` defines crossing a function boundary as a change a caller sees, after an eval run sent a one-body edit to the architect.
+- The user asked that `EnterWorktree` not stop to ask. Headless tests showed it asks for any `path` outside `.claude/worktrees/`, even when allowlisted, and enters a path inside it with no prompt and no allow rule. Patch `030` moved worktrees there. Writing the ignore file with the Write tool, switching straight from one worktree to the next, and merging after `ExitWorktree` all ran with no prompt. From inside a worktree the root counts as outside the session, so merging back now starts with `ExitWorktree`.
