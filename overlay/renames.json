@@ -50,6 +50,11 @@
     ["Cursor's built-in `create-skill`", "the `skill-creator` skill"],
     ["create-skill", "skill-creator"],
     ["is_background: true", "background: true"],
-    ["icon: crown\ncolor: yellow\n", ""]
+    ["icon: crown\ncolor: yellow\n", ""],
+    ["does not mean pstack is absent", "does not mean nstack is absent"],
+    ["Guides users through pstack setup", "Guides users through nstack setup"],
+    ["1. Install with `/add-plugin pstack` in chat, or from Customize in the sidebar.", "1. Install with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`."],
+    ["On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-verification-skill/SKILL.md` and follow it."],
+    ["On yes, invoke `/create-formal-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-formal-verification-skill/SKILL.md` and follow it."]
   ]
 }

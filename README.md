@@ -29,7 +29,7 @@ To try a local checkout, start Claude Code in the checkout and run `/plugin mark
 | `UPSTREAM.lock` | The commit SHA of each vendored upstream. | `sync.mjs` |
 | `upstream/pstack/`, `upstream/mattpocock/` | Untouched snapshots of each upstream. | `sync.mjs` only |
 | `overlay/selection.json` | Which skills ship, which are declined, and who wins each overlap. `mattpocock.rename` ships an included skill under another name when its name collides with pstack's. | You |
-| `overlay/renames.json` | Entry-point renames, applied to paths and text. `claudeCode` rewrites Cursor names in `.md` files to Claude Code names after the patches. URLs are left alone. | You |
+| `overlay/renames.json` | Entry-point renames, applied to paths and text. `claudeCode` rewrites Cursor names and fields in `.md` files to their Claude Code forms after the patches, along with pstack wording that is wrong for nstack, such as its install command. URLs are left alone. | You |
 | `overlay/files/` | Files that nstack adds, copied over the build. | You |
 | `overlay/patches/` | Small patches to upstream text, applied in name order. | `mkpatch.mjs` |
 | `overlay/check-allow.json` | Upstream example links that are not real files. | You |

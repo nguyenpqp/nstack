@@ -1,6 +1,6 @@
 ---
 name: nstack-help
-description: Guides users through pstack setup, /n-mode, and picking the skill, playbook, or principle for a task. Type /nstack-help with a question.
+description: Guides users through nstack setup, /n-mode, and picking the skill, playbook, or principle for a task. Type /nstack-help with a question.
 disable-model-invocation: true
 ---
 
@@ -37,7 +37,7 @@ When the model rule is missing and it matters, ask whether the user wants to pic
 
 ## Get set up
 
-1. Install with `/add-plugin pstack` in chat, or from Customize in the sidebar.
+1. Install with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`.
 2. Run [`/setup-nstack`](../setup-nstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes a rule. The rule applies to new chats. Then it offers once each to generate a verification skill and a formal verification skill for the project, unless the project already has one.
 3. Start a real task with `/n-mode`, a goal, and a check that can pass or fail.
 
