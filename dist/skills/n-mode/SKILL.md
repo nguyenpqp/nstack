@@ -96,7 +96,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Worktree
 
-**Every playbook that writes files to the repo opens a worktree before its first edit.** Create it at `./.worktrees/<branch>` with `git worktree add`, and name the branch per Conventional Commits from the task. Add `.worktrees/` to `.gitignore` before the first worktree exists, or the worktree lands in the next commit. The root checkout stays on the integration branch and never holds feature work. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
+**Every playbook that writes files to the repo opens a worktree before its first edit.** Create it at `./.worktrees/<branch>` with `git worktree add`, and name the branch per Conventional Commits from the task. Add `.worktrees/` to `<root>/.git/info/exclude` before the first worktree exists, unless `git check-ignore -q .worktrees` already passes. The exclude file keeps the worktree out of every commit without a commit on the root checkout. The root checkout stays on the integration branch and never holds feature work. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
 
 **`EnterWorktree` and `ExitWorktree` own the session's directory.** A shell `cd` does not move the session, so call `EnterWorktree` with `path` at the worktree you created. Pass `path`, never `name`, because `name` opens its own worktree under `.claude/worktrees/` and breaks the `./.worktrees/<branch>` convention. When the repo sits outside the session's launch directory, `EnterWorktree` refuses it. Then address the worktree with absolute paths and `git -C <worktree>`, and say so once in the reply.
 
