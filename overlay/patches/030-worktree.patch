@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 1c9d626..f1da2d4 100644
+index 1c9d626..c98eb2f 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -95,6 +95,26 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
@@ -8,7 +8,7 @@ index 1c9d626..f1da2d4 100644
  
 +## Worktree
 +
-+**Every playbook that writes files to the repo opens a worktree before its first edit.** Create it at `./.worktrees/<branch>` with `git worktree add`, and name the branch per Conventional Commits from the task. Add `.worktrees/` to `<root>/.git/info/exclude` before the first worktree exists, unless `git check-ignore -q .worktrees` already passes. The exclude file keeps the worktree out of every commit without a commit on the root checkout. The root checkout stays on the integration branch and never holds feature work. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
++**Every playbook that writes files to the repo opens a worktree before its first edit.** Create it at `./.worktrees/<branch>` with `git worktree add`, and name the branch per Conventional Commits from the task. Before the first worktree exists, write `<root>/.worktrees/.gitignore` holding the one line `*`, unless `git -C <root> check-ignore -q .worktrees/x` already passes. That file ignores the folder and itself, so no worktree reaches a commit and the root checkout gets no commit. It also keeps the run out of `.git/`, where Claude Code asks permission for every edit. The root checkout stays on the integration branch and never holds feature work. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
 +
 +**`EnterWorktree` and `ExitWorktree` own the session's directory.** A shell `cd` does not move the session, so call `EnterWorktree` with `path` at the worktree you created. Pass `path`, never `name`, because `name` opens its own worktree under `.claude/worktrees/` and breaks the `./.worktrees/<branch>` convention. From inside a worktree, `EnterWorktree` switches only into `.claude/worktrees/`, so call `ExitWorktree` with `action: "keep"` before you enter the next task's worktree. When the repo sits outside the session's launch directory, `EnterWorktree` refuses it. Then address the worktree with absolute paths and `git -C <worktree>`, and say so once in the reply.
 +
@@ -16,7 +16,7 @@ index 1c9d626..f1da2d4 100644
 +
 +**Outside a git repository, skip this section.** If `git rev-parse --is-inside-work-tree` fails, edit in place and do not run `git init`. Run delegates that could write the same files one at a time.
 +
-+**Merging back.** Confirm `git merge-base --is-ancestor <integration> <branch>` and an empty `git -C <root> status --porcelain`. Take the lock with `mkdir <root>/.git/merge.lock`, run `git -C <root> merge --ff-only <branch>`, then `rmdir` the lock. A refused fast-forward means another session moved the base, so rebase in your own worktree and retry. Never force. Set `git -C <root> config merge.ff only` once so the root enforces this itself. If the session is pinned to the worktree and the root command is refused, work down this ladder and stop at the first rung that lands.
++**Merging back.** Confirm `git merge-base --is-ancestor <integration> <branch>` and an empty `git -C <root> status --porcelain`. Take the lock with `mkdir <root>/.worktrees/merge.lock`, run `git -C <root> merge --ff-only <branch>`, then `rmdir` the lock. A refused fast-forward means another session moved the base, so rebase in your own worktree and retry. Never force. Set `git -C <root> config merge.ff only` once so the root enforces this itself. If the session is pinned to the worktree and the root command is refused, work down this ladder and stop at the first rung that lands.
 +
 +1. Call `ExitWorktree` with `action: "keep"`, merge from the restored directory, then `EnterWorktree` with `path` to come back.
 +2. Run `git -C <root> config receive.denyCurrentBranch updateInstead` once, then `git push . HEAD:<integration>` from inside the worktree. Git refuses the push when the root is dirty or the update is not a fast-forward, which keeps the same guarantee.
