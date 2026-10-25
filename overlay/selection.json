@@ -1,6 +1,6 @@
 {
   "pstack": {
-    "exclude": ["make-bot-ui"]
+    "exclude": ["make-bot-ui", "ketchup-video"]
   },
   "mattpocock": {
     "include": [

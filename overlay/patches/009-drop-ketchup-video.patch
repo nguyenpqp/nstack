@@ -1,0 +1,25 @@
+diff --git a/docs/guide/10-recipes-and-pitfalls.md b/docs/guide/10-recipes-and-pitfalls.md
+index 5a37779..f41b51e 100644
+--- a/docs/guide/10-recipes-and-pitfalls.md
++++ b/docs/guide/10-recipes-and-pitfalls.md
+@@ -158,8 +158,6 @@ That's the whole prompt. [`/bro`](../../skills/bro/SKILL.md) restates the last m
+ 
+ [`/ketchup`](../../skills/ketchup/SKILL.md) tells you in plain words what changed since your last message, then lists each call waiting on you with its pick, evidence, and risk. It changes nothing while it reports.
+ 
+-To watch the catch-up instead, run [`/ketchup-video`](../../skills/ketchup-video/SKILL.md). It shows what happened in a short silent video of slides, and lists the calls waiting on you as text under it.
+-
+ ## The pitfalls
+ 
+ - **Enumerating skills in the prompt.** "use /how then /architect then /arena" reorders steps the playbook already sequences. State the goal and constraints. Name a skill only to override a default.
+diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
+index 8c3e0b4..3721fc6 100644
+--- a/skills/nstack-help/SKILL.md
++++ b/skills/nstack-help/SKILL.md
+@@ -75,7 +75,6 @@ The default answer is `/n-mode`, which runs most of the others when its steps ne
+ | Understand a change or subsystem, explained plainly | [`/teach`](../teach/SKILL.md) |
+ | Catch up on their own recent work on a topic | [`/recall`](../recall/SKILL.md) |
+ | Catch up on what changed in this chat since their last message, in plain words and small visuals, with every item waiting on them listed and decidable from the reply alone | [`/ketchup`](../ketchup/SKILL.md) |
+-| Catch up like `/ketchup`, in a short silent video of slides, with the waiting calls as text under it | [`/ketchup-video`](../ketchup-video/SKILL.md) |
+ | Know what a small diff could break outside itself | [`/blast-radius`](../blast-radius/SKILL.md) |
+ | Settle types and module shape before code that crosses a function boundary | [`/architect`](../architect/SKILL.md) |
+ | Get several attempts at one brief, merged into the best one | [`/arena`](../arena/SKILL.md) |
