@@ -55,10 +55,10 @@ index 8bb74a8..f7c967b 100644
  If the Task tool rejects a configured entry, run that reviewer on its table default and say so. `model` takes only `opus`, `sonnet`, `haiku`, or `fable`, so an entry that names another vendor's model counts as rejected. If it rejects a table default, omit `model` so that reviewer runs on the parent model, say so, and open a separate PR to update the default table. Do not block the review on the model issue. Never treat an alias entry as a rejected slug or apply either fallback to it.
  
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 2bcd5dc..3c2bb5b 100644
+index 41c9121..8e54d66 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -120,7 +120,7 @@ After the merge lands, leave the worktree with `ExitWorktree` and `action: "keep
+@@ -119,7 +119,7 @@ After the merge lands, remove the worktree with `git -C <root> worktree remove <
  
  **Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pass the plugin namespace, as `subagent_type: "nstack:n-agent"`, and set the Agent `effort` per **Match the model to the job**. Explore, search, verify, and mechanical edits already specified step by step run at `medium`. Implementation from a description and per-task diff review run at `high`. Plan writing, hard debugging, design decisions, and the final branch review run at `xhigh`. With no `effort`, the agent runs at the session's effort. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
  
@@ -67,7 +67,7 @@ index 2bcd5dc..3c2bb5b 100644
  
  **Match the model to the job.** A role value `<model> <effort>`, such as `opus xhigh`, means Task `model: "opus"` and `effort: "xhigh"`. A value with no effort, such as `haiku`, omits `effort`. Before each spawn, start from the role's line or default and pick the effort the job needs. The `/setup-nstack` budget sets each role's starting effort, xhigh by default. Raise it one step, up to max, for the hardest or subtlest work. Lower it one step for judgment and two or more steps for routine work. Verification is the exception and stays on the `swarm workers` value (`grok-4.7-xhigh-fast` by default). Change only the effort, and keep the model the role names, so a diverse panel stays diverse. A role on `auto` or `inherit-parent` stays on the parent model. If the Task tool rejects the adjusted effort, do not try another. Use the role's line or default and say so.
  
-@@ -175,7 +175,7 @@ A large or cross-cutting effort (a migration across many call sites, an ambitiou
+@@ -174,7 +174,7 @@ A large or cross-cutting effort (a migration across many call sites, an ambitiou
  - **Autopilot-full.** A queue of independent PRs run to merged with full autonomy. One owner per PR carries build through merge, and the root swarm-verifies each PR before its owner merges ("autopilot this queue", "full autopilot", one-owner-per-PR programs).
  - **Autopilot-stack.** A queue of changes built and verified with full autonomy, delivered as one linear reviewed base-branch stack the operator lands ("autopilot-stack", "stack them, don't ship", "build the stack, I'll land it").
  - **Session pickup.** Resuming or taking over a prior agent's in-flight work from a transcript, cloud-agent URL, or pushed branch.
@@ -147,7 +147,7 @@ index 0a0c3cf..c54c02b 100644
  3. **Re-check that the verdicts still describe the code.** A verdict covers a patch, and a chain rebase moves every PR above it to a new SHA without failing any check. Compare `git patch-id` at the verdict SHA with the current head before trusting an older verdict. When the patches differ only in tests, docs, or lint config, a lane's result stands if what it ran builds the same at both SHAs apart from noise. Noise is a difference that also shows up between two builds of the verdict SHA, or an embedded commit SHA. Report each kind of noise with its files, so a reader can check the call. The change itself still gets fresh checks and a review, because the old verdict never saw it. A lane with no build output, such as a dev server, cannot show this, so rerun it, and re-verify anything else that drifted.
  4. **Land bottom-up, one PR at a time.** Always merge the run's lowest unmerged PR, with `origin pr merge <pr>` or `gh pr merge <pr> --squash`. On Origin the plain command also merges every PR below the one you name, and on GitHub a PR whose base is still its parent's branch merges into that branch, not trunk. Read the PR back for the result (`origin pr view <pr>` or `gh pr view <pr> --json state,mergedAt,baseRefName`), because a merge command can report success when a merge queue only queued the PR, and a requested auto-merge is not a merge. A landed PR reads merged with trunk as its base, not its parent's branch. Arm `--auto` (Origin merge-when-ready or GitHub auto-merge) only on a PR whose verdict covers its current head, because it lands whatever head is ready. After a merge lands, retarget the PR whose base was the merged branch to trunk (`origin pr edit <pr> --base <trunk>` or `gh pr edit <pr> --base <trunk>`), move its patch onto the merge result, and push with `--force-with-lease`. The verdict covers the patch, not its commits, so step 3's patch-id rule decides whether the verdict survives. Merge it once its checks pass and its verdict survives.
 diff --git a/skills/reflect/SKILL.md b/skills/reflect/SKILL.md
-index 36f5fe1..25c1a16 100644
+index 918a900..8d7cd2d 100644
 --- a/skills/reflect/SKILL.md
 +++ b/skills/reflect/SKILL.md
 @@ -24,7 +24,7 @@ That covers the legacy flat (`<id>.jsonl`), current nested (`<id>/<id>.jsonl`),
@@ -169,15 +169,15 @@ index 36f5fe1..25c1a16 100644
  ## 4. Structural enforcement check
  
 diff --git a/skills/swarm/SKILL.md b/skills/swarm/SKILL.md
-index 2d28bfd..3d570ba 100644
+index 65aa939..7326dff 100644
 --- a/skills/swarm/SKILL.md
 +++ b/skills/swarm/SKILL.md
 @@ -26,9 +26,9 @@ Open a todolist with one entry per phase before launching anything.
  
  ## Phase B: Fan out
  
--Spawn all N workers in one message with `subagent_type: generalPurpose`, `environment: "cloud"`, `run_in_background: true`, and the step 4 model, left unset for `auto` or `inherit-parent`. Use `environment: "local"` only when the worker needs access to something on the user's computer.
-+Spawn all N workers in one message with `subagent_type: generalPurpose`, `isolation: "worktree"`, and the step 4 model, left unset for `auto` or `inherit-parent`. Each worker gets its own checkout, so workers never share a working tree. Leave out `isolation` only when the worker must use something running in this checkout, such as a dev server.
+-Spawn all N workers in one message with `subagent_type: generalPurpose`, `environment: "cloud"`, `run_in_background: true`, and the step 3 model, left unset for `auto` or `inherit-parent`. Use `environment: "local"` only when the worker needs access to something on the user's computer.
++Spawn all N workers in one message with `subagent_type: generalPurpose`, `isolation: "worktree"`, and the step 3 model, left unset for `auto` or `inherit-parent`. Each worker gets its own checkout, so workers never share a working tree. Leave out `isolation` only when the worker must use something running in this checkout, such as a dev server.
  
 -When a worker must start from a non-default pushed branch, pass `cloud_base_branch`.
 +When a worker must start from a non-default pushed branch, name the branch in its brief and tell it to check that branch out first.
