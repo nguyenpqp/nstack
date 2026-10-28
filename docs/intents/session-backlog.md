@@ -38,9 +38,13 @@ The user's:
 - A correction to the confirmed design amends the intent and redoes the step.
 - The backlog lives at `.claude/worktrees/backlog.md`.
 - A row has three states: queued, in progress, and done.
+- Each row states the work itself, not a one-line restatement of the ask.
+- A complex ask points at a file instead of growing the row.
 
 Made for them:
 
+- A row carries **Ask** in the user's words, **Work** with the behavior, files or surfaces, and approach, **Done when** with the check, and **Evidence** once done.
+- **Work** moves to a file past about three lines. That file is the row's intent when it has one, else `.claude/worktrees/backlog/R<n>.md`, so a design never lives in two places.
 - A row waiting on the user stays in progress and names the question. A dropped row is done with its reason in place of the evidence.
 
 - Checkbox rows numbered `R<n>`, since the user asked whether Claude supports checkbox lists.
