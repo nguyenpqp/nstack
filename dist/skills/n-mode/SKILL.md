@@ -14,6 +14,17 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
 
 Once invoked, n-mode stays on for the rest of the conversation. Claude Code has no frontmatter flag for this, so the rule lives here. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
 
+## Session backlog
+
+A sticky session collects requests one turn at a time, and a request that lives only in the chat gets dropped. Keep every request of the session in `<root>/.claude/worktrees/backlog.md`, where `<root>` is the root checkout. Before the first write, make sure the ignore file that the **Worktree** section names exists, so the backlog never reaches a commit. Outside a git repository, keep the same path and skip the ignore file. One backlog spans every branch of the session, so each row names its branch once it has one.
+
+- **Read before you act.** On each new turn while the backlog has an open row, read the backlog and the intent of the row in progress before anything else.
+- **Write before you act.** Each user message that asks for a change or gives feedback becomes a row before any other step, plus a todo with the same ID. A row reads `- [ ] R<n> <the ask, shortened in the user's words> (<state>)`, where the state is queued, in progress, or done. A row waiting on the user stays in progress and names the question. Number rows in order and never reuse a number.
+- **Sort each row against the intent.** An ask inside the intent's **Outcome** folds into the current run, and every later delegate brief carries it. An ask that contradicts the confirmed design amends the intent in the next commit, stops the delegate on the affected step, and hands that step to a fresh delegate with consolidated scope per **Subagents**. An ask outside the **Outcome** is queued. When the current verifiable unit ends, the queued row gets its own Interview round, sized by its playbook, and its own intent.
+- **Close a row on evidence.** Mark a row done and tick `[x]` only with a commit SHA, a verify result, or a PR link in the row. A dropped row is done with `dropped: <reason>` in place of the evidence, and the reply says so.
+- **Show it.** While any row is open, end every reply with the open rows and any row closed this turn. The run's final reply lists every row. Orchestrate drain turns and the Multi-phase plan tick keep their own status rules instead.
+- **Hand it over.** Pause safely points its resume note at the backlog, and Session pickup reads it as the list of open work.
+
 ## Non-negotiables
 
 The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.

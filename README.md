@@ -4,7 +4,7 @@ nstack is a Claude Code plugin built from two upstreams and one set of local cha
 
 - [pstack](https://github.com/cursor/plugins/tree/main/pstack) by Lauren Tan, taken from its generated Claude Code tree at `harness/pstack/claude-code`. It is the baseline and wins every overlap. nstack targets Claude Code only, so it drops `make-bot-ui`, rewrites every Cursor name to its Claude Code form, and leaves out upstream's Cursor-to-Claude-Code adapter.
 - [Matt Pocock's skills](https://github.com/mattpocock/skills): only `diagnosing-bugs`, the one piece that pstack lacks and n-mode can use cleanly.
-- The nstack layer: an interview gate sized per playbook, a Spec build playbook for parallel tickets, worktree and merge rules, per-job agent effort, sticky mode, and a four-model review panel.
+- The nstack layer: an interview gate sized per playbook, a Spec build playbook for parallel tickets, worktree and merge rules, per-job agent effort, sticky mode with a session backlog, and a four-model review panel.
 
 The upstream text is never edited by hand. A script pulls both upstreams, applies the local changes, and tells you which change broke. That keeps nstack current with upstream at the cost of one command.
 

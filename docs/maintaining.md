@@ -7,7 +7,7 @@ nstack is pstack plus one Matt Pocock skill plus a thin overlay. Your job is to 
 ## Invariants
 
 - **pstack is the baseline and wins every overlap.** A Pocock skill ships only when pstack has no equivalent skill, playbook, or principle, it runs without an issue tracker, and every skill it calls through the Skill tool also ships. The reasoning lives in `docs/intents/pstack-baseline.md`.
-- **The nstack layer stays**: the interview gate, worktree rules, per-job agent effort, sticky mode, and dispatch labels. Keep it working on top of whatever upstream changes.
+- **The nstack layer stays**: the interview gate, worktree rules, per-job agent effort, sticky mode, the session backlog, and dispatch labels. Keep it working on top of whatever upstream changes.
 - **`upstream/` and `dist/` are generated.** Every change goes in `overlay/`: patches through `mkpatch`, whole new files in `overlay/files/`, ship decisions in `overlay/selection.json`.
 - **One concern per patch and per commit.** Every commit builds and passes the check.
 
