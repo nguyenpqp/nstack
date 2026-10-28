@@ -1,21 +1,14 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 77b18a6..cad7607 100644
+index 77b18a6..845ba3e 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -16,6 +16,17 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
+@@ -16,6 +16,10 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
  
  Once invoked, n-mode stays on for the rest of the conversation. Claude Code has no frontmatter flag for this, so the rule lives here. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
  
 +## Session backlog
 +
-+A sticky session collects requests one turn at a time, and a request that lives only in the chat gets dropped. Keep every request of the session in `<root>/.claude/worktrees/backlog.md`, where `<root>` is the root checkout. Before the first write, make sure the ignore file that the **Worktree** section names exists, so the backlog never reaches a commit. Outside a git repository, keep the same path and skip the ignore file. One backlog spans every branch of the session, so each row names its branch once it has one.
-+
-+- **Read before you act.** On each new turn while the backlog has an open row, read the backlog and the intent of the row in progress before anything else.
-+- **Write before you act.** Each user message that asks for a change or gives feedback becomes a row before any other step, plus a todo with the same ID. A row opens with `- [ ] R<n> <short title> (<state>, <branch>)`, where the state is queued, in progress, or done, and carries indented lines below it. **Ask** quotes the user's words. **Work** says concretely what will change: the behavior, the files or surfaces it touches, and the approach. It is not the ask restated. When **Work** needs more than about three lines, keep a one-line summary and point at a file that holds the rest: the row's intent file when it has one, else `<root>/.claude/worktrees/backlog/R<n>.md`. **Done when** names the check that proves it. Fill **Work** and **Done when** as you sort the row, before it moves to in progress, and rewrite them when the work changes course. A row waiting on the user stays in progress and adds a **Waiting on** line with the question. Number rows in order and never reuse a number.
-+- **Sort each row against the intent.** An ask inside the intent's **Outcome** folds into the current run, and every later delegate brief carries it. An ask that contradicts the confirmed design amends the intent in the next commit, stops the delegate on the affected step, and hands that step to a fresh delegate with consolidated scope per **Subagents**. An ask outside the **Outcome** is queued. When the current verifiable unit ends, the queued row gets its own Interview round, sized by its playbook, and its own intent.
-+- **Close a row on evidence.** Mark a row done and tick `[x]` only with an **Evidence** line that holds a commit SHA, a verify result, or a PR link. A dropped row is done with `dropped: <reason>` as its **Evidence**, and the reply says so.
-+- **Show it.** While any row is open, end every reply with the open rows and any row closed this turn. The run's final reply lists every row. Orchestrate drain turns and the Multi-phase plan tick keep their own status rules instead.
-+- **Hand it over.** Pause safely points its resume note at the backlog, and Session pickup reads it as the list of open work.
++A sticky session collects asks one turn at a time, and an ask that lives only in the chat gets dropped. The chat that runs n-mode, never a delegate, keeps every ask in a backlog file per `references/session-backlog.md`. Read that file when the first ask of a run arrives. Each user message that asks for a change or gives feedback becomes a row before any other step. On each new turn while a row is open, read the backlog and the intent of the row in progress before anything else, and end the reply with the title lines of the open rows.
 +
  ## Non-negotiables
  
