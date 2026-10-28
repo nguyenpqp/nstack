@@ -6,10 +6,10 @@ The user "thường hay add feature và feedback liên tục trong phiên" and w
 
 ## Outcome
 
-- Patch `150-session-backlog` adds a **Session backlog** section after **Sticky mode** in `n-mode/SKILL.md`.
+- Patch `150-session-backlog` adds a short **Session backlog** section after **Sticky mode** in `n-mode/SKILL.md`. The rules live in `references/session-backlog.md`, which only the chat that runs n-mode reads, so delegates do not pay for them.
 - Every mid-session ask becomes a numbered checkbox row in `<root>/.claude/worktrees/backlog.md` and a todo before any other step. Each new turn with an open row reads the backlog and the intent first.
 - An ask inside the intent's **Outcome** folds in. One that contradicts the confirmed design amends the intent and restarts the affected step on a fresh delegate. One outside the **Outcome** is queued for its own Interview round and intent.
-- A row is ticked only with evidence or a stated drop reason. While a row is open, every reply ends with the open rows and the ones closed that turn.
+- A row is ticked only with evidence or a stated drop reason. While a row is open, every reply ends with the title lines of the open rows and the ones closed that turn. The full rows stay in the file.
 - `node scripts/build.mjs` passes, the check included.
 
 ## Surfaces
@@ -51,6 +51,7 @@ Made for them:
 - Show the open rows and the rows closed that turn at the end of each reply, and every row only in the final reply, so long sessions stay short.
 - Put the pickup and pause pointers in the new section rather than patching those playbooks, so the concern stays in one patch.
 - Number the patch `150`, after every other patch.
+- Move the rules out of `SKILL.md` after the user asked whether it had grown too long. The inline section was 493 words, about a tenth of the file, and every `n-agent` read it without using it. The section is now about 100 words.
 
 ## Open questions
 
