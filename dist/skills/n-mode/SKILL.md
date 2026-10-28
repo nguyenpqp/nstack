@@ -16,7 +16,7 @@ Once invoked, n-mode stays on for the rest of the conversation. Claude Code has 
 
 ## Session backlog
 
-A sticky session collects asks one turn at a time, and an ask that lives only in the chat gets dropped. The chat that runs n-mode, never a delegate, keeps every ask in a backlog file per `references/session-backlog.md`. Read that file when the first ask of a run arrives. Each user message that asks for a change or gives feedback becomes a row before any other step. On each new turn while a row is open, read the backlog and the intent of the row in progress before anything else, and end the reply with the title lines of the open rows.
+A sticky session collects asks one turn at a time, and an ask that lives only in the chat gets dropped. The chat that runs n-mode, never a delegate, keeps every ask in a backlog file per `references/session-backlog.md`. Read that file when the first ask of a run arrives. Each user message that asks for a change or gives feedback becomes a draft row before any other step, and a task only after the user confirms your restatement of it. On each new turn while a row is open, read the backlog and the intent of the row in progress before anything else. End a reply with the title lines of the rows that changed state that turn.
 
 ## Non-negotiables
 
