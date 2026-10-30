@@ -51,6 +51,7 @@ bug-fix: sonnet high
 perf-issue: sonnet high
 hillclimb: sonnet high
 judgment and prose: opus xhigh
+hard tasks: opus medium
 hardest tasks: fable xhigh
 how explorer: sonnet high
 how explainer: opus xhigh
