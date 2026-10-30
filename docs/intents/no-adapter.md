@@ -28,6 +28,7 @@ The user's:
 
 - Remove the adapter rather than reload it after compaction.
 - Keep `poteto-help` and rename it `nstack-help`.
+- Upstream's "fast code model" has no Claude Code role, so trivial mechanical edits go to the code model with its effort lowered, through a `claudeCode` rename. Adding a `haiku` role was turned down, since a seemingly mechanical edit can still need judgment.
 
 Made for them:
 

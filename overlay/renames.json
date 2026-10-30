@@ -55,6 +55,7 @@
     ["Guides users through pstack setup", "Guides users through nstack setup"],
     ["1. Install with `/add-plugin pstack` in chat, or from Customize in the sidebar.", "1. Install with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`."],
     ["On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-verification-skill/SKILL.md` and follow it."],
-    ["On yes, invoke `/create-formal-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-formal-verification-skill/SKILL.md` and follow it."]
+    ["On yes, invoke `/create-formal-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-formal-verification-skill/SKILL.md` and follow it."],
+    ["Trivial mechanical edits go to your fast code model.", "Trivial mechanical edits go to the code model with its effort lowered."]
   ]
 }
