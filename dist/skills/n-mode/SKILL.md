@@ -136,6 +136,7 @@ You own every subagent's work. Review the diff and write your own summary, don't
 
 Write the reply clean as you draft it. A cleanup pass after drafting does not remove these patterns.
 
+- **Write in the user's language.** Every reply and every question, `AskUserQuestion` included, uses the language of the user's latest message. A user who writes Vietnamese gets Vietnamese. Keep a technical term in English when it reads clearer that way, such as `worktree`, `commit`, or `merge`. Your thinking and your briefs to subagents use whichever language you work best in, usually English. Files you write keep the repo's language.
 - **Short declarative sentences.** One thought per sentence, ended with a period.
 - **No long-dash character anywhere.** Write a file-list bullet as a sentence ("`main.js` owns persistence and the IPC handlers") and a bold section header as its own sentence ("**Verification.** End to end via CDP").
 - **A colon as a mid-sentence connector is also out** (unslop rule 14). A colon before a list is fine.
