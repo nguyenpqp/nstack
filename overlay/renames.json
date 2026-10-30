@@ -34,7 +34,7 @@
     ["Task `model:", "Agent `model:"],
     ["Task schema", "Agent schema"],
     ["In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.", "To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`."],
-    ["`claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`", "`opus xhigh` and `fable xhigh`"],
+    ["`claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`", "`opus xhigh` and `fable high`"],
     ["claude-opus-5-5-xhigh", "opus xhigh"],
     ["grok-4.7-xhigh-fast", "sonnet high"],
     ["Set `model` to that line's value, or to the default if the rule or the line is missing.", "Set `model` and `effort` from that line's value, or from the default if the rule or the line is missing. A value such as `opus xhigh` means `model: \"opus\"` and `effort: \"xhigh\"`."],

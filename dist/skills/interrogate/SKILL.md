@@ -31,7 +31,7 @@ Launch all reviewers in a single message with the Agent tool, one per entry on t
 | Subagent | Default model |
 |----------|---------------|
 | Reviewer A | `opus xhigh` |
-| Reviewer B | `fable xhigh` |
+| Reviewer B | `fable high` |
 
 An entry such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`. An entry with no effort, such as `haiku`, omits `effort`. Every reviewer runs a Claude model, so the panel gives a narrower spread of views than one that mixes vendors. Say so in the writeup.
 

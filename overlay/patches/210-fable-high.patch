@@ -1,0 +1,33 @@
+diff --git a/skills/interrogate/SKILL.md b/skills/interrogate/SKILL.md
+index 00dc543..9ab4e72 100644
+--- a/skills/interrogate/SKILL.md
++++ b/skills/interrogate/SKILL.md
+@@ -31,7 +31,7 @@ Launch all reviewers in a single message with the Task tool, one per entry on th
+ | Subagent | Default model |
+ |----------|---------------|
+ | Reviewer A | `opus xhigh` |
+-| Reviewer B | `fable xhigh` |
++| Reviewer B | `fable high` |
+ 
+ An entry such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`. An entry with no effort, such as `haiku`, omits `effort`. Every reviewer runs a Claude model, so the panel gives a narrower spread of views than one that mixes vendors. Say so in the writeup.
+ 
+diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
+index b04d199..fa2eb3e 100644
+--- a/skills/setup-nstack/SKILL.md
++++ b/skills/setup-nstack/SKILL.md
+@@ -59,11 +59,11 @@ why investigators: sonnet high
+ why synthesizer: opus xhigh
+ reflect tooling: sonnet high
+ reflect judgment, divergent, synthesizer: opus xhigh
+-arena runners: opus xhigh, fable xhigh
+-arena cross-judge pool: opus xhigh, fable xhigh
++arena runners: opus xhigh, fable high
++arena cross-judge pool: opus xhigh, fable high
+ swarm workers: sonnet high
+-architect runners: opus xhigh, fable xhigh
+-interrogate reviewers: opus xhigh, fable xhigh
++architect runners: opus xhigh, fable high
++interrogate reviewers: opus xhigh, fable high
+ ```
+ 
+ ### 6. Confirm
