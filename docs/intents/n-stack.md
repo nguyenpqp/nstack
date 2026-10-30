@@ -39,7 +39,7 @@ Theirs:
 - Overlaps resolve per pair with pstack as default. `pstack-baseline.md` makes pstack win every overlap.
 - Rename entry points only: `poteto-mode` to `n-mode`, `poteto-agent` to `n-agent`, `setup-pstack` to `setup-nstack`.
 - nstack layer: interview gate, worktree and merge rules, effort-tiered agents, sticky mode, 4-model review panel.
-- Models: `sonnet` for code, `opus` for judgment and prose, panel `opus`, `sonnet`, `haiku`, `fable`.
+- Models: `sonnet` for code, `opus` for judgment and prose, panel `opus`, `sonnet`, `haiku`, `fable`. Superseded by `panel-models.md`, which sets the panel to `opus` and `fable` and the hardest tasks to `fable`.
 - Distribution: a GitHub repo acting as its own marketplace, `dist/` committed.
 - Location: any local checkout, added with `/plugin marketplace add ./`.
 

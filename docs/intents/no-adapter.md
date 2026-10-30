@@ -9,7 +9,7 @@ Every nstack skill told the agent to read the Claude Code adapter once per sessi
 - `dist/` holds no Cursor name and no Cursor-only Agent field. `check.mjs` fails on any that a sync brings back, unless `overlay/cursor-allow.json` allows that text for that file.
 - Upstream's `docs/harness/claude-code.md` no longer ships. Sync still watches it through `selection.json` `wraps`.
 - The pointer sentence at the top of each skill becomes the one rule the adapter held that every skill needs: read another nstack skill's `SKILL.md` directly, because the Skill tool refuses them.
-- Model values are Claude Code values (`opus xhigh`, `sonnet high`, `haiku`, `fable`). Panels default to those four entries, and the `setup-nstack` rule says how a value maps to `model` and `effort`.
+- Model values are Claude Code values (`opus xhigh`, `sonnet high`, `haiku`, `fable`). Panels default to those four entries (superseded by `panel-models.md`, which keeps `opus xhigh` and `fable xhigh`), and the `setup-nstack` rule says how a value maps to `model` and `effort`.
 - `poteto-help` ships as `nstack-help`.
 
 ## Constraints
