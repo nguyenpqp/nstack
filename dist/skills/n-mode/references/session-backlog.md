@@ -68,6 +68,7 @@ When the run keeps no intent file, sort against the design its reply confirmed.
 
 - An ask inside the intent's **Outcome** folds into the current run, and every later delegate brief carries it.
 - A confirmed ask that contradicts the design amends the intent in the next commit, stops the delegate on the affected step, and hands that step to a fresh delegate with consolidated scope per **Subagents** in `SKILL.md`.
+- A confirmed row that extends what the intent records, such as a **Decisions** line it widens, amends that line in the row's own commit, so the intent never trails the code.
 - An ask outside the **Outcome** is its own unit. A row whose **Work** fits in about three lines stands in for its intent and starts as soon as it can. A larger row gets its own Interview round and intent when it comes up, with the row as its answer sheet, asking only what the row leaves open, and those questions share the turn's one `AskUserQuestion` call.
 
 ## Show it

@@ -93,6 +93,7 @@ Made for them:
 - The check greps `backlog-done.md` for the ask's key terms, since a test run found an ask that a dropped row had already settled only by reading the whole archive.
 - The turn's grep runs before the new draft row is written, since three of five test runs stalled on which of the two came first.
 - Undoing a drop makes a new row that quotes the archived **Ask**, since numbers are never reused.
+- A confirmed row that extends a line the intent records amends that line in its own commit, since a test run widened a **Decisions** line and left the intent behind the code.
 - Free rows start at the end of every turn and whenever a row closes, since test runs left startable rows idle when no rule named the moment.
 - Five scenario runs (a clear ask, an overlap with a row in progress, a reorder and drop, an ask that undoes shipped work, a `discuss` after another row) passed 39 of 40 checks on the first version and 40 of 40 after these fixes.
 - The check runs before any question, so its risks join the same question round instead of opening a second one. A broad code search goes to an `Explore` subagent that returns only the finding.
