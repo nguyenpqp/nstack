@@ -9,7 +9,7 @@ The user "thường hay add feature và feedback liên tục trong phiên" and w
 - Patch `150-session-backlog` adds a short **Session backlog** section after **Sticky mode** in `n-mode/SKILL.md`. The rules live in `references/session-backlog.md`, which only the chat that runs n-mode reads, so delegates do not pay for them.
 - Every message the user types after the run's opening request that asks for a change or gives feedback becomes a numbered checkbox row in `<root>/.claude/worktrees/backlog.md` before any other step, and a todo once confirmed. The opening request goes through Interview. Each new turn with an open row first greps the open title lines and reads in full only the rows it touches and their intents.
 - Session pickup reads the backlog as open work, and the Pause safely resume note points at it. The **Session backlog** section says so, so a pickup with no new message still finds it.
-- An ask inside the intent's **Outcome** folds in. One that contradicts the confirmed design amends the intent and restarts the affected step on a fresh delegate. One outside the **Outcome** is queued for its own Interview round and intent.
+- An ask inside the intent's **Outcome** folds in. One that contradicts the confirmed design amends the intent and restarts the affected step on a fresh delegate. One outside the **Outcome** is its own unit: a short row starts as soon as no tag holds it and its **Touches** miss every row in progress, and a larger one gets its own Interview round and intent.
 - Each ask is written as a draft row at once, then checked against the code, the open rows' **Touches**, the in-flight branches, recent commits on those paths, and the intent. A low-risk row n-mode confirms itself and restates in the reply. A row with an open call or a high risk waits on the user, asked after the startable rows go to background delegates, and is prepared read-only meanwhile. A row is checked again, more cheaply, when it starts.
 - A row is ticked only with evidence or a stated drop reason. A reply ends with the title lines of the rows that changed that turn and of every row still tagged `waiting`, and lists every title line when the user asks for progress and at the end of the run, from both files. A done row moves to `<root>/.claude/worktrees/backlog-done.md` with its title line, **Ask**, and **Evidence**, so `backlog.md` holds only open work.
 - The file order is the queue. Title-line tags hold a row (`after R<n>`, `later`), mark it as waiting on the user (`waiting: <question>`), or make it a conversation (`discuss`). A message that only reorders, holds, or drops rows edits them at once. A new run names any open rows left from an earlier one in its first reply.
@@ -65,6 +65,7 @@ Order and flexibility:
 - Deferral and "after R<n>" are tags on the title line, not a separate section.
 - A message that only reorders, holds, or drops rows edits them at once and is reported in the reply, with no check and no question.
 - `waiting` goes on the title line, and a new run names open rows left from an earlier one.
+- A queued row outside the **Outcome** runs in parallel with the rows in progress when their **Touches** share no path. A row whose **Work** fits in about three lines stands in for its own intent. A larger one still gets its own Interview round.
 
 Context:
 
@@ -80,7 +81,7 @@ Made for them:
 - Put the pickup and pause pointers in the `SKILL.md` section rather than patching those playbooks, so the concern stays in one patch and a pickup that has not read the reference still finds the backlog.
 - Number the patch `150`, after every other patch.
 - Report only the rows that changed in a turn, plus the rows still waiting on the user, since the file always holds the full list.
-- Move the rules out of `SKILL.md` after the user asked whether it had grown too long. The inline section was 493 words, about a tenth of the file, and every `n-agent` read it without using it. The section is now about 250 words.
+- Move the rules out of `SKILL.md` after the user asked whether it had grown too long. The inline section was 493 words, about a tenth of the file, and every `n-agent` read it without using it. The section is now about 170 words.
 - A run with no intent file sorts rows against the design its reply confirmed.
 - A queued row's later Interview round asks only what the confirmed row leaves open.
 - "No agent on it yet" means queued with no branch or delegate. An updated row keeps its number, so its place in the queue, its todo, its file, and the IDs earlier replies named stay valid. A new row that replaced the old one would have moved the work to the back of the queue.
@@ -89,7 +90,11 @@ Made for them:
 - A row in progress keeps going when another row is moved above it, unless the user says to stop it.
 - A `discuss` row runs its Interview with the user even under full autonomy, since the user asked to talk it through.
 - `later` rows come up in the run's final reply, so a held row is not forgotten.
-- A queued row outside the **Outcome** gets its Interview round when it is the next to start, not as soon as the current unit ends, so a held row is not interviewed early.
+- The check greps `backlog-done.md` for the ask's key terms, since a test run found an ask that a dropped row had already settled only by reading the whole archive.
+- The turn's grep runs before the new draft row is written, since three of five test runs stalled on which of the two came first.
+- Undoing a drop makes a new row that quotes the archived **Ask**, since numbers are never reused.
+- Free rows start at the end of every turn and whenever a row closes, since test runs left startable rows idle when no rule named the moment.
+- Five scenario runs (a clear ask, an overlap with a row in progress, a reorder and drop, an ask that undoes shipped work, a `discuss` after another row) passed 39 of 40 checks on the first version and 40 of 40 after these fixes.
 - The check runs before any question, so its risks join the same question round instead of opening a second one. A broad code search goes to an `Explore` subagent that returns only the finding.
 - Shipped work is found with `git log` on the touched paths, so the archive stays small.
 - A shared path with a row in progress is handled as `after R<n>`, so two delegates never meet in a merge.
