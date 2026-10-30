@@ -51,18 +51,18 @@ bug-fix: sonnet high
 perf-issue: sonnet high
 hillclimb: sonnet high
 judgment and prose: opus xhigh
-hardest tasks: opus xhigh
+hardest tasks: fable xhigh
 how explorer: sonnet high
 how explainer: opus xhigh
 why investigators: sonnet high
 why synthesizer: opus xhigh
 reflect tooling: sonnet high
 reflect judgment, divergent, synthesizer: opus xhigh
-arena runners: opus xhigh, sonnet high, haiku, fable
-arena cross-judge pool: opus xhigh, sonnet high, haiku, fable
+arena runners: opus xhigh, fable xhigh
+arena cross-judge pool: opus xhigh, fable xhigh
 swarm workers: sonnet high
-architect runners: opus xhigh, sonnet high, haiku, fable
-interrogate reviewers: opus xhigh, sonnet high, haiku, fable
+architect runners: opus xhigh, fable xhigh
+interrogate reviewers: opus xhigh, fable xhigh
 ```
 
 ### 6. Confirm
