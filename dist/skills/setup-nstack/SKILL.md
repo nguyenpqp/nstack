@@ -23,12 +23,12 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
 
 **(a) Ask for a budget.** Prefer AskUserQuestion over free text. Offer these four options with these exact labels, and name the current budget when the rule records one. With no rule, say that `large` matches the skill defaults.
 
-- `unlimited — max reasoning`
-- `large — xhigh reasoning`
-- `medium — high reasoning`
-- `small — medium reasoning`
+- `unlimited — one step above the defaults`
+- `large — the defaults`
+- `medium — one step below the defaults`
+- `small — two steps below the defaults`
 
-**(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by model, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` set the effort of every value that has one, panel entries included, to `max`, `xhigh`, `high`, or `medium`. The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A bare model keeps no effort. If the target effort is not a detected effort, use the highest detected effort below it. `inherit-parent` and `auto` do not change. So `unlimited` turns `opus xhigh` into `opus max`, `large` keeps the defaults, and `small` turns them into `opus medium` and `sonnet medium`.
+**(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by model, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` move the effort of every value that has one, panel entries included, one step up, not at all, one step down, or two steps down from its default. The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`, and a move past either end stops there. Moving every value by the same steps keeps the gap between jobs, so implementation stays below planning and review. A bare model keeps no effort. If the resulting effort is not a detected effort, use the highest detected effort below it. `inherit-parent` and `auto` do not change. So `unlimited` turns `opus xhigh` into `opus max` and `sonnet high` into `sonnet xhigh`, `large` keeps the defaults, and `small` turns them into `opus medium` and `sonnet low`.
 
 **(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskUserQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it that differs from the parent's model when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
@@ -38,14 +38,14 @@ Every model written must be a detected `model` value, and every effort a detecte
 
 ### 5. Write the rule
 
-Write `~/.claude/rules/nstack-models.md` with no frontmatter: the comment lines, a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels n-mode uses. Overwrite the whole file so re-runs stay idempotent. Never put the role lines in `CLAUDE.md` or `AGENTS.md`. Shape:
+Write `~/.claude/rules/nstack-models.md` with no frontmatter: the comment lines, a `# budget` line with the chosen label and its move, and one line per role, using the same labels n-mode uses. Overwrite the whole file so re-runs stay idempotent. Never put the role lines in `CLAUDE.md` or `AGENTS.md`. Shape:
 
 ```
 # nstack model configuration. One line per role. Delete a line to fall back to the skill default.
 # A value `<model> <effort>`, such as `opus high`, means Agent `model: "opus"` and `effort: "high"`. A bare model, such as `haiku`, omits `effort`.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Agent `model`). Alias entries in a panel list still count toward its fan-out.
 # In a `/nstack:n-mode` run, the chat stays at the root and works in each worktree by absolute path, per the n-mode Worktree section. It never calls EnterWorktree.
-# budget: large (xhigh)
+# budget: large (defaults)
 feature, refactoring: sonnet high
 bug-fix: sonnet high
 perf-issue: sonnet high
