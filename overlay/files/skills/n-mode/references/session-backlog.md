@@ -4,7 +4,7 @@ The chat that runs n-mode owns the backlog. Delegates never write it.
 
 ## Where it lives
 
-`<root>/.claude/worktrees/backlog.md`, where `<root>` is the root checkout, holds the open rows. Done rows move to `backlog-done.md` beside it, so the file read each turn stays small. Before the first write, apply the ignore-file rule of the **Worktree** section in `SKILL.md`, so neither file reaches a commit. Outside a git repository, keep the paths and skip that rule. One backlog spans every branch of the session.
+`<root>/.nstack/backlog.md`, where `<root>` is the root checkout, holds the open rows. Done rows move to `backlog-done.md` beside it, so the file read each turn stays small. Before the first write, apply the **nstack folder** section of `SKILL.md`, so neither file reaches a commit. One backlog spans every branch of the session.
 
 ## A row
 
@@ -16,14 +16,14 @@ The chat that runs n-mode owns the backlog. Delegates never write it.
   - Done when: on /orders in the dev server, Export downloads a file whose rows match the table.
 - [ ] R6 Settle the other export formats (queued, after R3, discuss)
   - Ask: "once CSV is done, let's talk through the other export formats"
-  - Touches: docs/intents/orders-export.md
+  - Touches: .nstack/intents/orders-export.md
   - Work: decide which formats come next and whether they share the CSV code path.
   - Done when: the user's answers are in the intent or split into new rows.
 ```
 
 - The title line carries what a grep needs: the ID, the state (queued, in progress, or done), any tags, and the branch once there is one. Number rows past the highest number in both files and never reuse one. A confirmed row has a todo with the same ID.
 - **Ask** quotes the user. **Touches** lists what the work will change, one path, glob, or module each, so an overlap is a grep. **Work** says concretely what will change and how, not the ask restated, and **Done when** names the check that proves it. Fill **Touches** during the check and the rest when the row is confirmed. Rewrite them when the work changes course.
-- Past about three lines, **Work** keeps a one-line summary and points at the row's intent file, or else `<root>/.claude/worktrees/backlog/R<n>.md`.
+- Past about three lines, **Work** keeps a one-line summary and points at the row's intent file, or else `<root>/.nstack/backlog/R<n>.md`.
 - Tick `[x]` only with an **Evidence** line: a commit SHA, a verify result, or a PR link. A dropped row is ticked and done too, with `dropped: <reason>` as its **Evidence**, its todo closes, and the reply says so. Then move the row to `backlog-done.md` with only its title line, **Ask**, and **Evidence**. Undoing a drop makes a new row that quotes the archived **Ask**.
 
 ## Order and tags
