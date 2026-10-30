@@ -7,7 +7,7 @@ The session backlog lets several rows run at once, each on its own worktree and 
 ## Outcome
 
 - Patch `170-root-coordinator` rewrites the **Worktree** section of `n-mode/SKILL.md`. The chat that runs n-mode stays at the root for the whole run. Nobody in the run calls `EnterWorktree`. This chat and its delegates edit by absolute path under the worktree, run git as `git -C <worktree>`, and run a command that needs the worktree as its working directory as `cd <worktree> && ...` in one Bash call. Each delegate brief names its worktree path and branch.
-- **Merging back** starts at the root, with no `ExitWorktree`.
+- **Merging back** starts at the root. A session that is inside a worktree anyway, because the user asked or a step slipped, leaves it with `ExitWorktree` first.
 - The `/setup-nstack` rule line names this instead of `EnterWorktree`.
 - `node scripts/build.mjs` passes, the check included.
 
