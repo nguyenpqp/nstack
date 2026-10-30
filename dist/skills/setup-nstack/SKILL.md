@@ -44,7 +44,7 @@ Write `~/.claude/rules/nstack-models.md` with no frontmatter: the comment lines,
 # nstack model configuration. One line per role. Delete a line to fall back to the skill default.
 # A value `<model> <effort>`, such as `opus high`, means Agent `model: "opus"` and `effort: "high"`. A bare model, such as `haiku`, omits `effort`.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Agent `model`). Alias entries in a panel list still count toward its fan-out.
-# In a `/nstack:n-mode` run, the n-mode Worktree section is the instruction to work in a worktree. Enter one with EnterWorktree `path`, and leave it with ExitWorktree `action: "keep"`.
+# In a `/nstack:n-mode` run, the chat stays at the root and works in each worktree by absolute path, per the n-mode Worktree section. It never calls EnterWorktree.
 # budget: large (xhigh)
 feature, refactoring: sonnet high
 bug-fix: sonnet high

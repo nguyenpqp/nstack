@@ -17,7 +17,7 @@ The user asked to "hoàn thiện bộ skill để có workflow hoàn thiện, hi
 - `node scripts/build.mjs` passes, and `check.mjs` fails on any frontmatter field that the Claude Code skill or subagent docs do not list. It also runs `claude plugin validate` when the CLI is on PATH.
 - Agents set `background: true`. One `n-agent` replaces the three effort tiers, and n-mode sets the Agent `effort` per job.
 - A request that states the change asks only what is still open and would change the diff. When nothing is, the round is one confirm-or-correct message. Process is never a question.
-- Worktrees live under `.claude/worktrees/`, the one place `EnterWorktree` enters without a prompt. `.claude/worktrees/.gitignore` ignores them, and the merge lock is `.claude/worktrees/merge.lock`, so nothing commits on `main` and nothing writes under `.git/`. A missing control skill is offered in the reply, not built.
+- Worktrees live under `.claude/worktrees/`, the one place `EnterWorktree` enters without a prompt (superseded by `root-coordinator.md`: the chat stays at the root and never enters one). `.claude/worktrees/.gitignore` ignores them, and the merge lock is `.claude/worktrees/merge.lock`, so nothing commits on `main` and nothing writes under `.git/`. A missing control skill is offered in the reply, not built.
 - `diagnosing-bugs` is explicit-only.
 
 ## Surfaces
@@ -61,7 +61,7 @@ Made for them:
 ## Follow-up
 
 - A sync to pstack `8b3326d` ran on top of these commits. Every patch applied unchanged, and the new `statechart` skill shipped without an overlay change.
-- `EnterWorktree` guards itself to calls the user, CLAUDE.md, or memory asks for. The `/setup-nstack` rule now names the Worktree section as that instruction, and the section exits a worktree before it enters the next one.
+- `EnterWorktree` guards itself to calls the user, CLAUDE.md, or memory asks for. The `/setup-nstack` rule now names the Worktree section as that instruction, and the section exits a worktree before it enters the next one. Superseded by `root-coordinator.md`, where nothing enters a worktree.
 - A third eval round on the autonomy case, after the tier merge, scored 6 of 6. Its code delegate was `subagent_type: "nstack:n-agent"` with `effort: "high"`, and no tier name appeared. Wall time rose to 537s from 426s on one run each, so time is still unsolved.
 - Round 4, two runs per case. `interview.md` reads one axes row through `grep`, which cuts it from 3,180 to 1,748 words. Stepped-away work that one playbook covers stays out of figure-it-out. Autonomy scored 6 of 6 twice, at 265s and 428s (mean 346s, against 426s, 436s, and 537s before). Bug runs stopped at one confirm question each, at 195s and 166s, about level with 182s, because their time goes to reproducing and reading principle leaves.
 - Two real headless runs (`claude -p --plugin-dir`, one feature with full autonomy, each on a fresh fixture repo).

@@ -1,0 +1,36 @@
+diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
+index 5909081..465a41b 100644
+--- a/skills/n-mode/SKILL.md
++++ b/skills/n-mode/SKILL.md
+@@ -103,15 +103,15 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
+ 
+ ## Worktree
+ 
+-**Every playbook that writes files to the repo opens a worktree before its first edit.** Create it at `<root>/.claude/worktrees/<branch>` with `git worktree add`, and name the branch per Conventional Commits from the task. That is the one place `EnterWorktree` enters without asking the user, so anywhere else stalls the run on a prompt. Before the first worktree exists, write `<root>/.claude/worktrees/.gitignore` holding the one line `*` with the Write tool, unless `git -C <root> check-ignore -q .claude/worktrees/x` already passes. That file ignores the folder and itself, so no worktree reaches a commit and the root checkout gets no commit. It also keeps the run out of `.git/`, where Claude Code asks permission for every edit. The root checkout stays on the integration branch and never holds feature work. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
++**Every playbook that writes files to the repo opens a worktree before its first edit.** Create it at `<root>/.claude/worktrees/<branch>` with `git worktree add`, and name the branch per Conventional Commits from the task. Every worktree then sits inside the root, so the chat that runs n-mode reaches all of them from there. Before the first worktree exists, write `<root>/.claude/worktrees/.gitignore` holding the one line `*` with the Write tool, unless `git -C <root> check-ignore -q .claude/worktrees/x` already passes. That file ignores the folder and itself, so no worktree reaches a commit and the root checkout gets no commit. It also keeps the run out of `.git/`, where Claude Code asks permission for every edit. The root checkout stays on the integration branch and never holds feature work. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
+ 
+-**`EnterWorktree` and `ExitWorktree` own the session's directory.** A shell `cd` does not move the session, so call `EnterWorktree` with `path` at the worktree you created. Pass `path`, never `name`, because `name` names the branch `worktree-<name>` instead of the task's branch. When the repo sits outside the session's launch directory, `EnterWorktree` refuses it. Then address the worktree with absolute paths and `git -C <worktree>`, and say so once in the reply.
++**The chat that runs n-mode stays at the root.** It coordinates every row and worktree from one place, and from inside a worktree Claude Code would treat the root, the backlog included, as outside the session and ask before each write there. Nobody in the run calls `EnterWorktree`. This chat and each delegate it briefs read and edit files by absolute path under the worktree, run git as `git -C <worktree>`, and run a command that needs the worktree as its working directory in one Bash call that starts with `cd <worktree> &&`. Each delegate brief names its worktree path and branch.
+ 
+ **Who skips it.** Read-only playbooks, Babysit, Pause safely, Worktree cleanup, Prototype (its sketch lives in a scratch dir), Eval, and Shipping. Session pickup adopts the prior worktree instead of opening one. Coordinators that only write briefs (Orchestrate, Autopilot-full, Autopilot-stack, Multi-phase plan) skip it, and their workers carry `isolation: "worktree"`. Spec build is the exception. Its coordinator edits no code either, but it opens the spec branch worktree, because the intent and every landed ticket live there.
+ 
+ **Outside a git repository, skip this section.** If `git rev-parse --is-inside-work-tree` fails, edit in place and do not run `git init`. Run delegates that could write the same files one at a time.
+ 
+-**Merging back.** Leave the worktree first with `ExitWorktree` and `action: "keep"`, because from inside it Claude Code treats the root as outside the session and asks before each root command. Confirm `git merge-base --is-ancestor <integration> <branch>` and an empty `git -C <root> status --porcelain`. Take the lock with `mkdir <root>/.claude/worktrees/merge.lock`, run `git -C <root> merge --ff-only <branch>`, then `rmdir` the lock. A refused fast-forward means another session moved the base, so rebase in your own worktree and retry. Never force. Set `git -C <root> config merge.ff only` once so the root enforces this itself. If the root command is still refused, work down this ladder and stop at the first rung that lands.
++**Merging back.** Merge from the root. Confirm `git merge-base --is-ancestor <integration> <branch>` and an empty `git -C <root> status --porcelain`. Take the lock with `mkdir <root>/.claude/worktrees/merge.lock`, run `git -C <root> merge --ff-only <branch>`, then `rmdir` the lock. A refused fast-forward means another session moved the base, so rebase in your own worktree and retry. Never force. Set `git -C <root> config merge.ff only` once so the root enforces this itself. If the root command is still refused, work down this ladder and stop at the first rung that lands.
+ 
+ 1. Run `git -C <root> config receive.denyCurrentBranch updateInstead` once, then `git -C <worktree> push . HEAD:<integration>`. Git refuses the push when the root is dirty or the update is not a fast-forward, which keeps the same guarantee.
+ 2. Hand the operator the exact command with the reason in one sentence. They run it from the prompt with a leading `!`.
+diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
+index 4c5ca16..492fa57 100644
+--- a/skills/setup-nstack/SKILL.md
++++ b/skills/setup-nstack/SKILL.md
+@@ -44,7 +44,7 @@ Write `~/.claude/rules/nstack-models.md` with no frontmatter: the comment lines,
+ # nstack model configuration. One line per role. Delete a line to fall back to the skill default.
+ # A value `<model> <effort>`, such as `opus high`, means Task `model: "opus"` and `effort: "high"`. A bare model, such as `haiku`, omits `effort`.
+ # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`). Alias entries in a panel list still count toward its fan-out.
+-# In a `/nstack:n-mode` run, the n-mode Worktree section is the instruction to work in a worktree. Enter one with EnterWorktree `path`, and leave it with ExitWorktree `action: "keep"`.
++# In a `/nstack:n-mode` run, the chat stays at the root and works in each worktree by absolute path, per the n-mode Worktree section. It never calls EnterWorktree.
+ # budget: large (xhigh)
+ feature, refactoring: sonnet high
+ bug-fix: sonnet high
