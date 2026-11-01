@@ -4,27 +4,27 @@ The chat that runs n-mode owns the backlog. Delegates never write it.
 
 ## Where it lives
 
-`<root>/.nstack/backlog.md`, where `<root>` is the root checkout, holds the open rows. Done rows move to `backlog-done.md` beside it, so the file read each turn stays small. Before the first write, apply the **nstack folder** section of `SKILL.md`, so neither file reaches a commit. One backlog spans every branch of the session.
+`<root>/.nstack/backlog.md`, where `<root>` is the root checkout, holds the open rows. Done rows move to `backlog-done.md` beside it, so the file read each turn stays small, and **Clean up** moves old done rows to `backlog-archive/`. Before the first write, apply the **nstack folder** section of `SKILL.md`, so neither file reaches a commit. One backlog spans every branch of the session.
 
 ## A row
 
 ```
-- [ ] R3 Export order CSV (in progress, feat/export-csv)
+- [ ] R3 Export order CSV (in progress, feat/export-csv) · added 2026-11-01
   - Ask: "add a CSV export to the orders table"
   - Touches: src/orders/OrdersTable.tsx, src/lib/format.ts
   - Work: an Export button on OrdersTable downloads the filtered rows as UTF-8 CSV with a BOM, reusing the table's formatters.
   - Done when: on /orders in the dev server, Export downloads a file whose rows match the table.
-- [ ] R6 Settle the other export formats (queued, after R3, discuss)
+- [ ] R6 Settle the other export formats (queued, after R3, discuss) · added 2026-11-02
   - Ask: "once CSV is done, let's talk through the other export formats"
   - Touches: .nstack/intents/orders-export.md
   - Work: decide which formats come next and whether they share the CSV code path.
   - Done when: the user's answers are in the intent or split into new rows.
 ```
 
-- The title line carries what a grep needs: the ID, the state (queued, in progress, or done), any tags, and the branch once there is one. Number rows past the highest number in both files and never reuse one. A confirmed row has a todo with the same ID.
+- The title line carries what a grep needs: the ID, the state (queued, in progress, or done), any tags, the branch once there is one, and after the parentheses, `· added <YYYY-MM-DD>` with the local date the row was written, since `.nstack/` has no git history. Tags stay inside the parentheses, so a date never reads as one. Number rows past the highest number in both files and `backlog-archive/`, and never reuse one. A confirmed row has a todo with the same ID.
 - **Ask** quotes the user. **Touches** lists what the work will change, one path, glob, or module each, so an overlap is a grep. **Work** says concretely what will change and how, not the ask restated, and **Done when** names the check that proves it. Fill **Touches** during the check and the rest when the row is confirmed. Rewrite them when the work changes course.
 - Past about three lines, **Work** keeps a one-line summary and points at the row's intent file, or else `<root>/.nstack/backlog/R<n>.md`.
-- Tick `[x]` only with an **Evidence** line: a commit SHA, a verify result, or a PR link. A dropped row is ticked and done too, with `dropped: <reason>` as its **Evidence**, its todo closes, and the reply says so. Then move the row to `backlog-done.md` with only its title line, **Ask**, and **Evidence**. Undoing a drop makes a new row that quotes the archived **Ask**.
+- Tick `[x]` only with an **Evidence** line: a commit SHA, a verify result, or a PR link. A dropped row is ticked and done too, with `dropped: <reason>` as its **Evidence**, its todo closes, and the reply says so. Then set its title line's state to done, keeping its branch, append ` · closed <YYYY-MM-DD>`, and move the row to `backlog-done.md` with only its title line, **Ask**, and **Evidence**. Delete its `backlog/R<n>.md` if it has one, since the moved row no longer points at it. Undoing a drop makes a new row that quotes the archived **Ask**.
 
 ## Order and tags
 
@@ -45,6 +45,7 @@ Only a message the user types after the run's opening request, and only one that
 - A message that changes the work of a row still queued, with no branch or delegate on it, updates that row instead: add the quote to its **Ask**, tag it `draft`, and check it again. It keeps its number, place, todo, and file.
 - A message that changes the work of a row in progress, or asks for other work, makes its own row.
 - A message that only reorders, holds, frees, or drops rows, such as "do R5 first", "leave R4 for later", or "drop R2", makes no row and skips the check. Move, tag, or drop those rows at once and show the change at the end of the reply, so the user can undo it. Ask only when it names no row clearly.
+- A message that asks to clean up the backlog makes no row and skips the check. Follow **Clean up**.
 
 ## Check, then confirm
 
@@ -52,7 +53,7 @@ Right after the turn's grep, write each new ask as a row tagged `draft`, plus an
 
 1. **Check it.** Find where the work lands and fill **Touches**. Search the code yourself for a narrow ask, and send a broad one to an `Explore` subagent that returns only the files and the finding (the **principle-guard-the-context-window** skill). Then check it against:
    - the open rows: grep their **Touches** lines for each path, and read only the rows that match;
-   - the archive: grep `backlog-done.md` for the ask's key terms, since a dropped ask asked again meets a decision already made;
+   - the archive: grep `backlog-done.md` and `backlog-archive/` for the ask's key terms, since a dropped ask asked again meets a decision already made;
    - the intent: its **Outcome**, **Out of scope**, and the user's **Decisions**;
    - work in flight: `git diff --stat` of each in-progress row's branch against its base, for the same paths;
    - shipped work: `git log --oneline -5 --` on each path, to see whether the ask undoes a recent commit.
@@ -73,4 +74,8 @@ When the run keeps no intent file, sort against the design its reply confirmed.
 
 ## Show it
 
-End a reply with the title lines of the rows that changed this turn, plus every row tagged `waiting`, so an unanswered question never drops out of sight. Skip the block when it would be empty. List every title line from both files when the user asks for progress and in the run's final reply. Orchestrate drain turns and the Multi-phase plan tick keep their own status rules instead.
+End a reply with the title lines of the rows that changed this turn, plus every row tagged `waiting`, so an unanswered question never drops out of sight. Skip the block when it would be empty. When the user asks for progress and in the run's final reply, list every title line from both files, plus a count of the rows in `backlog-archive/`. List archived rows only when the user asks for history. Orchestrate drain turns and the Multi-phase plan tick keep their own status rules instead.
+
+## Clean up
+
+Only when the user asks. Move each row in `backlog-done.md` closed before the current month, or before the cutoff the user names, to `<root>/.nstack/backlog-archive/YYYY-MM.md` for its closed month, whole and in order. Append to an archive file that already exists, and take rows out of `backlog-done.md` only after the append, so a stop midway leaves a duplicate and never a lost row. A row already in its archive file only comes out of `backlog-done.md`, so a rerun does not archive it twice. Never delete a row's last copy: numbering and the archive grep both read these files. A row with no `closed` date stays where it is, since its age is unknown. Report how many rows moved and how many stayed. Leave open rows alone, and name each one added before the cutoff, so the user can drop it.

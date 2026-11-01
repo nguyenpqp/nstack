@@ -7,11 +7,12 @@ The user "thường hay add feature và feedback liên tục trong phiên" and w
 ## Outcome
 
 - Patch `150-session-backlog` adds a short **Session backlog** section after **Sticky mode** in `n-mode/SKILL.md`. The rules live in `references/session-backlog.md`, which only the chat that runs n-mode reads, so delegates do not pay for them.
-- Every message the user types after the run's opening request that asks for a change or gives feedback becomes a numbered checkbox row in `<root>/.claude/worktrees/backlog.md` before any other step, and a todo once confirmed. The opening request goes through Interview. Each new turn with an open row first greps the open title lines and reads in full only the rows it touches and their intents.
+- Every message the user types after the run's opening request that asks for a change or gives feedback becomes a numbered checkbox row in `<root>/.nstack/backlog.md` before any other step, and a todo once confirmed. The opening request goes through Interview. Each new turn with an open row first greps the open title lines and reads in full only the rows it touches and their intents.
 - Session pickup reads the backlog as open work, and the Pause safely resume note points at it. The **Session backlog** section says so, so a pickup with no new message still finds it.
 - An ask inside the intent's **Outcome** folds in. One that contradicts the confirmed design amends the intent and restarts the affected step on a fresh delegate. One outside the **Outcome** is its own unit: a short row starts as soon as no tag holds it and its **Touches** miss every row in progress, and a larger one gets its own Interview round and intent.
 - Each ask is written as a draft row at once, then checked against the code, the open rows' **Touches**, the in-flight branches, recent commits on those paths, and the intent. A low-risk row n-mode confirms itself and restates in the reply. A row with an open call or a high risk waits on the user, asked after the startable rows go to background delegates, and is prepared read-only meanwhile. A row is checked again, more cheaply, when it starts.
-- A row is ticked only with evidence or a stated drop reason. A reply ends with the title lines of the rows that changed that turn and of every row still tagged `waiting`, and lists every title line when the user asks for progress and at the end of the run, from both files. A done row moves to `<root>/.claude/worktrees/backlog-done.md` with its title line, **Ask**, and **Evidence**, so `backlog.md` holds only open work.
+- A row is ticked only with evidence or a stated drop reason. A reply ends with the title lines of the rows that changed that turn and of every row still tagged `waiting`, and lists every title line from both files, plus a count of the archived rows, when the user asks for progress and at the end of the run. A done row moves to `<root>/.nstack/backlog-done.md` with its title line, **Ask**, and **Evidence**, so `backlog.md` holds only open work.
+- Title lines carry `· added <date>`, and done rows also `· closed <date>`. When the user asks to clean up, old done rows move to `<root>/.nstack/backlog-archive/YYYY-MM.md`, and nothing is deleted.
 - The file order is the queue. Title-line tags hold a row (`after R<n>`, `later`), mark it as waiting on the user (`waiting: <question>`), or make it a conversation (`discuss`). A message that only reorders, holds, or drops rows edits them at once. A new run names any open rows left from an earlier one in its first reply.
 - `node scripts/build.mjs` passes, the check included.
 
@@ -71,11 +72,12 @@ Context:
 
 - A growing backlog must not cost context each turn. Each turn reads only the open title lines and the rows it touches, and done rows move to an archive file that keeps the **Ask**.
 - The full progress list need not end every reply.
+- Rows carry dates "vừa có lịch sử và dễ dọn dẹp khi đã quá nhiều". Cleanup runs only when the user asks.
 
 Made for them:
 
 - A row carries **Ask** in the user's words, **Work** with the behavior, files or surfaces, and approach, **Done when** with the check, and **Evidence** once done.
-- **Work** moves to a file past about three lines. That file is the row's intent when it has one, else `.claude/worktrees/backlog/R<n>.md`, so a design never lives in two places.
+- **Work** moves to a file past about three lines. That file is the row's intent when it has one, else `.nstack/backlog/R<n>.md`, so a design never lives in two places.
 - A row waiting on the user names the question on its title line, and a row in progress stays in progress while it waits. An unchecked row carries `draft`, which never outlives the turn. A dropped row is done with its reason in place of the evidence.
 - Checkbox rows numbered `R<n>`, since the user asked whether Claude supports checkbox lists.
 - Put the pickup and pause pointers in the `SKILL.md` section rather than patching those playbooks, so the concern stays in one patch and a pickup that has not read the reference still finds the backlog.
@@ -96,6 +98,16 @@ Made for them:
 - A confirmed row that extends a line the intent records amends that line in its own commit, since a test run widened a **Decisions** line and left the intent behind the code.
 - Free rows start at the end of every turn and whenever a row closes, since test runs left startable rows idle when no rule named the moment.
 - Five scenario runs (a clear ask, an overlap with a row in progress, a reorder and drop, an ask that undoes shipped work, a `discuss` after another row) passed 39 of 40 checks on the first version and 40 of 40 after these fixes.
+- Dates, not times. `R<n>` already orders creation and append order already orders closing, so a time adds a `date` call for nothing. `.nstack/` has no git history, and **Evidence** is not always a SHA, so nothing else records when a row closed.
+- A closed row keeps its branch on the title line, since a test run dropped it and the archive lost the link to that history.
+- The date sits outside the parentheses, since everything inside them reads as a state or a tag that holds the row.
+- Cleanup moves rows and never deletes them, since row numbering and the archive grep both read them. An undated row from before this rule stays put rather than get a guessed date.
+- Cleanup appends to an existing archive file and removes rows from `backlog-done.md` only afterward, since a second cleanup can reach the same month and a plain move could overwrite it.
+- A row already in its archive file only comes out of `backlog-done.md`, so a cleanup rerun after a stop does not archive it twice.
+- A closed row's `backlog/R<n>.md` is deleted, since the moved row no longer points at it and no other rule removed it.
+- The final reply lists every row in `backlog-done.md`, and the user bounds that file by asking for cleanup. A date filter with a `Run started:` line in `backlog.md` was built and removed: the line went stale when a new run only closed a carried-over row, and it needed extra rules for compaction and for a named cutoff, while the filter still read every title line. The user chose this simpler form after a review found that.
+- A progress list and the final reply count the archive without listing it, so history stays visible at no context cost.
+- Cleanup names open rows added before its cutoff and leaves them open, since the user may mean those by "dọn" and only they can drop one.
 - The check runs before any question, so its risks join the same question round instead of opening a second one. A broad code search goes to an `Explore` subagent that returns only the finding.
 - Shipped work is found with `git log` on the touched paths, so the archive stays small.
 - A shared path with a row in progress is handled as `after R<n>`, so two delegates never meet in a merge.
