@@ -137,6 +137,9 @@ After the merge lands, remove the worktree with `git -C <root> worktree remove <
 | Hard implementation: a new background worker, a change wired through several layers, a migration of the user's saved config or data | `hard tasks` | `opus medium` |
 | Hardest implementation: cross-cutting design, gnarly concurrency, a subtle algorithm, whether the intent is vague or the steps are exact | `hardest tasks` | `fable xhigh` |
 | Explore and search | `swarm workers` | `sonnet medium` |
+| Explorer in `how` | `how explorer` | `sonnet medium` |
+| Explainer in `how` | `how explainer` | `opus high` |
+| Investigator in `why` | `why investigators` | `sonnet medium` |
 | Verify | `swarm workers` | `sonnet high` |
 | Independent verdict that gates a landing, such as a Shipping verifier's | `swarm workers` | `sonnet high` |
 | Per-task diff review | `judgment and prose` | `opus high` |
@@ -145,7 +148,7 @@ After the merge lands, remove the worktree with `git -C <root> worktree remove <
 | Final branch review when the branch touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm | `hardest tasks` | `fable high` |
 | Panel runners and reviewers (arena, architect, interrogate) | the panel's line | `opus xhigh` and `fable high` |
 
-Fable costs the most, so only the hardest implementation runs it at `xhigh`. These pairs hold at the `large` budget. Another budget moves every effort in the table by the steps it moves the role lines. A role line replaces the model in every row of its role. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. Never raise or lower an effort the table and the role lines give. A role on `auto` or `inherit-parent` stays on the parent model. If the Agent tool rejects the effort, do not try another. Use the role's line or default and say so.
+Fable costs the most, so only the hardest implementation runs it at `xhigh`. These pairs hold at the `large` budget. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. Never raise or lower an effort the table and the role lines give. A role on `auto` or `inherit-parent` stays on the parent model. If the Agent tool rejects the effort, do not try another. Use the role's line or default and say so.
 
 **Label every spawn.** The CLI line shows only the type and the `description`, and a `general-purpose` type reads `Agent`. So open the description with the model and effort, then two or three words for the task, as in `opus xhigh: review diff`. Write the `model` you pass, or `inherit` when you omit it. Write the `effort` you pass, else the session's. Spawns that routed skills make carry the label too.
 

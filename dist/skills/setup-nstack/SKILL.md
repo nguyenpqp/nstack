@@ -53,9 +53,9 @@ hillclimb: sonnet high
 judgment and prose: opus xhigh
 hard tasks: opus medium
 hardest tasks: fable xhigh
-how explorer: sonnet high
-how explainer: opus xhigh
-why investigators: sonnet high
+how explorer: sonnet medium
+how explainer: opus high
+why investigators: sonnet medium
 why synthesizer: opus xhigh
 reflect tooling: sonnet high
 reflect judgment, divergent, synthesizer: opus xhigh
