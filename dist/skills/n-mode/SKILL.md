@@ -132,7 +132,7 @@ After the merge lands, remove the worktree with `git -C <root> worktree remove <
 
 | Job | Role | Model and effort |
 |---|---|---|
-| Mechanical edit already specified step by step | the code playbook's line | `sonnet medium` |
+| Mechanical edit: the brief names each file and the exact change, and leaves no design choice | the code playbook's line | `sonnet medium` |
 | Implementation | the code playbook's line | `sonnet high` |
 | Hard implementation: a new background worker, a change wired through several layers, a migration of the user's saved config or data | `hard tasks` | `opus medium` |
 | Hardest implementation: cross-cutting design, gnarly concurrency, a subtle algorithm, whether the intent is vague or the steps are exact | `hardest tasks` | `fable xhigh` |
