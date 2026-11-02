@@ -144,6 +144,8 @@ After the merge lands, remove the worktree with `git -C <root> worktree remove <
 | Independent verdict that gates a landing, such as a Shipping verifier's | `swarm workers` | `sonnet high` |
 | Dedicated Orchestrate verifier when the worker runs on Sonnet or Opus | `hardest tasks` | `fable high` |
 | Dedicated Orchestrate verifier when the worker runs on Fable | `judgment and prose` | `opus high` |
+| Cross-model review of a `show-me-your-work` trail when the chat runs on Sonnet or Fable | `judgment and prose` | `opus high` |
+| Cross-model review of a `show-me-your-work` trail when the chat runs on Opus | `swarm workers` | `sonnet high` |
 | Comment review in `no-comments` | `swarm workers` | `sonnet medium` |
 | Transcript slice in `recall` | `recall workers` | `haiku` |
 | Per-task diff review | `judgment and prose` | `opus high` |
