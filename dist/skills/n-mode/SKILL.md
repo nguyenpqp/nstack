@@ -142,6 +142,10 @@ After the merge lands, remove the worktree with `git -C <root> worktree remove <
 | Investigator in `why` | `why investigators` | `sonnet medium` |
 | Verify | `swarm workers` | `sonnet high` |
 | Independent verdict that gates a landing, such as a Shipping verifier's | `swarm workers` | `sonnet high` |
+| Dedicated Orchestrate verifier when the worker runs on Sonnet | `judgment and prose` | `opus high` |
+| Dedicated Orchestrate verifier when the worker runs on another family | `swarm workers` | `sonnet high` |
+| Comment review in `no-comments` | `swarm workers` | `sonnet medium` |
+| Transcript slice in `recall` | `recall workers` | `haiku` |
 | Per-task diff review | `judgment and prose` | `opus high` |
 | Plan writing, hard debugging, design decisions | `judgment and prose` | `opus xhigh` |
 | Final branch review | `judgment and prose` | `opus xhigh` |

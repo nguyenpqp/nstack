@@ -62,6 +62,7 @@ reflect judgment, divergent, synthesizer: opus xhigh
 arena runners: opus xhigh, fable high
 arena cross-judge pool: opus xhigh, fable high
 swarm workers: sonnet high
+recall workers: haiku
 architect runners: opus xhigh, fable high
 interrogate reviewers: opus xhigh, fable high
 ```
