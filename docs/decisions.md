@@ -123,7 +123,6 @@ Each one names what would settle it.
 
 **Known gaps**
 
-- `dist/docs/guide/01-setup.md` is upstream text that still describes the old budget and names Grok.
 - `typescript-best-practices` pairs `paths` with `disable-model-invocation`, and the docs do not say how the two combine.
 - Whether nested subagents work as `orchestrate` describes. The playbook keeps its depth rule.
 
@@ -167,3 +166,4 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `240-unassigned-jobs` | Rows for the Orchestrate verifier, comment review, and `recall` |
 | `250-mechanical-row` | Defines the mechanical row by the brief |
 | `260-trail-review` | Rows for the `show-me-your-work` review |
+| `270-setup-guide-budget` | The setup guide describes the relative budget |

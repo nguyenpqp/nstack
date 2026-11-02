@@ -23,7 +23,7 @@ Run:
 
 [`/setup-nstack`](../../skills/setup-nstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `~/.claude/rules/nstack-models.md`, a small rule every pstack skill reads.
 
-The defaults run at `xhigh` reasoning, the same as the `large` budget. `unlimited` lifts each model to its highest tier, up to `max`. Opus goes to `max`. Grok tops out at `xhigh`, so it stays there. `medium` and `small` lower the reasoning and spend fewer tokens.
+`large` keeps the skill's defaults, which give each job its own effort, such as `sonnet high` for implementation and `opus xhigh` for planning. `unlimited` moves every effort one step above its default, `medium` one step below, and `small` two steps below, so implementation stays below planning and review at every budget. `medium` and `small` spend fewer tokens.
 
 You only override what you care about. A role with no line in the rule keeps the skill's default. To restore a default, delete that role's line. A rerun of `/setup-nstack` keeps any role whose model differs from the default. When a default changes, a rule written before the change still pins the old default, so delete those role lines, or delete the file, then run `/setup-nstack` again.
 
