@@ -1,0 +1,13 @@
+diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
+index c97a9d6..5a02e8a 100644
+--- a/skills/n-mode/SKILL.md
++++ b/skills/n-mode/SKILL.md
+@@ -33,7 +33,7 @@ Remaining triggers:
+ - Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing. A change crosses one when it adds or changes a signature, a type, or a module seam that a caller sees. An edit inside one function body does not, and neither does a branch added to an existing case.
+ - A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook. A slowness goes to the Perf issue playbook instead, not to the skill's perf branch.
+ - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
+-- Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
++- Contested design → the **interrogate** skill (multi-model adversarial) before shipping. A subagent that opens a PR runs it only for a contested design or a branch that touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm, whatever `playbooks/opening-a-pr.md` says. Otherwise it skips `interrogate` and says so. Either way, it runs Claude Code's built-in `/code-review` over the branch before it opens the PR.
+ - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
+ - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
+ - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
