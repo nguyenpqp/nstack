@@ -45,6 +45,7 @@ The per-decision intent files that came before this page are in git history, und
 
 ## Worktrees and run files
 
+- **The rules live in a reference file, and `n-mode/SKILL.md` keeps what a delegate needs.** (user) A delegate works in the worktree its brief names, so it needs only the absolute-path rules. This took `SKILL.md` from 4742 to 4109 words. `references/worktree.md`, patch `030`.
 - **The chat that runs n-mode stays at the root.** (user) The user coordinates from one place, and inside a worktree Claude Code treats the root, the backlog included, as outside the session. Nobody calls `EnterWorktree`. Everyone edits by absolute path and runs `git -C <worktree>`, and each delegate brief names its worktree and branch. Patch `170`.
 - **Worktrees live in `<root>/.claude/worktrees/`, ignored by a `.gitignore` inside that folder.** Nothing commits on `main`, and nothing writes under `.git/`, whose files Claude Code refuses as sensitive. Patch `030`.
 - **A run's own files live in `<root>/.nstack/`,** which holds its own `.gitignore`. (user) That covers the backlog and its archive, intents, and tickets files. Patch `190`.
@@ -143,7 +144,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `009-drop-ketchup-video` | Removes the links to the excluded skill |
 | `010-sticky-mode` | n-mode stays on for the conversation |
 | `020-interview-gate` | Every task opens with a sized Interview |
-| `030-worktree` | Worktree location, ignore file, and merge lock |
+| `030-worktree` | Points n-mode at `references/worktree.md` and states the rules a delegate needs |
 | `050-spec-build` | Routes parallel-ticket work to Spec build |
 | `060-pocock-routing` | Routes to `diagnosing-bugs` and to the built-in `/code-review` |
 | `065-diagnosis-loop` | Bug fix runs `diagnosing-bugs` phases 1 to 4 |
@@ -159,9 +160,9 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `140-no-ai-credit` | Commits and PRs credit no AI agent |
 | `150-session-backlog` | Points n-mode at the backlog rules |
 | `160-match-user-language` | Replies use the user's language |
-| `170-root-coordinator` | The chat stays at the root |
+| `170-root-coordinator` | The setup rule keeps the chat at the root |
 | `180-effort-by-model` | Role lines for efforts by job, and a budget that moves them relatively |
-| `190-nstack-dir` | Run files in `.nstack/`, intents uncommitted |
+| `190-nstack-dir` | Points n-mode and three playbooks at the `.nstack/` rules |
 | `200-hard-tier` | The `hard tasks` role line |
 | `210-fable-high` | Fable at `high` outside the hardest work |
 | `220-delegate-interrogate` | Limits a delegate's `interrogate`, always `/code-review` |

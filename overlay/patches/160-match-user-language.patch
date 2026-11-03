@@ -1,8 +1,8 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index d02557b..ca7f2e8 100644
+index 01a3057..f0dc10b 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -136,6 +136,7 @@ You own every subagent's work. Review the diff and write your own summary, don't
+@@ -123,6 +123,7 @@ You own every subagent's work. Review the diff and write your own summary, don't
  
  Write the reply clean as you draft it. A cleanup pass after drafting does not remove these patterns.
  

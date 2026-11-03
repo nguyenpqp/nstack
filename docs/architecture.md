@@ -62,7 +62,8 @@ The index in [decisions.md](decisions.md#patch-index) names each patch's concern
 | `overlay/files/skills/n-mode/playbooks/spec-build.md` | The Spec build playbook |
 | `overlay/files/skills/n-mode/references/session-backlog.md` | The backlog rules, read only by the chat that runs n-mode, so delegates do not pay for them |
 | `overlay/files/skills/n-mode/references/model-table.md` | The model and effort of every job, read only by an agent that spawns |
-| Patches to `skills/n-mode/SKILL.md` | Routing, sticky mode, the worktree and `.nstack` rules, and the pointer to the model table |
+| `overlay/files/skills/n-mode/references/worktree.md` | Run files, opening a worktree, and merging back, read only by the agent that does those |
+| Patches to `skills/n-mode/SKILL.md` | Routing, sticky mode, the worktree rules a delegate needs, and pointers to the reference files |
 | Patches to `skills/setup-nstack/SKILL.md` | The role lines and budget that write `~/.claude/rules/nstack-models.md` |
 
 Every delegate reads `n-mode/SKILL.md` in full, so text there costs context on every spawn. Put a rule that only the chat needs in a reference file.

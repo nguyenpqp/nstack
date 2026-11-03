@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index aa70b14..d02557b 100644
+index 25d1521..01a3057 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -16,6 +16,10 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
