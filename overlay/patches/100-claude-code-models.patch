@@ -21,7 +21,7 @@ index 009e7eb..619a88e 100644
  ## Phase D: Pick a base
  
 diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
-index 8a5bd54..039a1c4 100644
+index 8a5bd54..b9c10d7 100644
 --- a/skills/setup-nstack/SKILL.md
 +++ b/skills/setup-nstack/SKILL.md
 @@ -7,17 +7,17 @@ description: Configure which models nstack uses per role and at what reasoning b
@@ -45,7 +45,7 @@ index 8a5bd54..039a1c4 100644
  
  ### 3. Budget, map, and confirm
  
-@@ -28,43 +28,41 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
+@@ -28,43 +28,44 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
  - `medium — high reasoning`
  - `small — medium reasoning`
  
@@ -53,7 +53,7 @@ index 8a5bd54..039a1c4 100644
 +**(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by model, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` set the effort of every value that has one, panel entries included, to `max`, `xhigh`, `high`, or `medium`. The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. A bare model keeps no effort. If the target effort is not a detected effort, use the highest detected effort below it. `inherit-parent` and `auto` do not change. So `unlimited` turns `opus xhigh` into `opus max`, `large` keeps the defaults, and `small` turns them into `opus medium` and `sonnet medium`.
  
 -**(c) Show the roles and confirm.** Show every role with its model, marking any real slug not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model, which is how Auto users stay on Auto) as the options. Prefer AskQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values from a family other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
-+**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values on a model other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
++**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values on a model other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for a worker whose job has no row in n-mode's table, unless a race or comparison assigns another model per arm. It also drives helpers, Verify, comment review, and one trail review row, so changing it moves those jobs too.
  
  ### 4. Validate
  
@@ -74,7 +74,7 @@ index 8a5bd54..039a1c4 100644
 +# nstack model configuration. One line per role. Delete a line to fall back to the skill default.
 +# A value `<model> <effort>`, such as `opus high`, means Task `model: "opus"` and `effort: "high"`. A bare model, such as `haiku`, omits `effort`.
  # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`). Alias entries in a panel list still count toward its fan-out.
-+# In a `/nstack:n-mode` run, the n-mode Worktree section is the instruction to work in a worktree. Enter one with EnterWorktree `path`, and leave it with ExitWorktree `action: "keep"`.
++# In a `/nstack:n-mode` run, the chat stays at the root and works in each worktree by absolute path, per the n-mode Worktree section. It never calls EnterWorktree.
  # budget: large (xhigh)
 -feature, refactoring: grok-4.7-xhigh-fast
 -bug-fix: grok-4.7-xhigh-fast
@@ -98,18 +98,21 @@ index 8a5bd54..039a1c4 100644
 +perf-issue: sonnet high
 +hillclimb: sonnet high
 +judgment and prose: opus xhigh
-+hardest tasks: fable xhigh
-+how explorer: sonnet high
-+how explainer: opus xhigh
-+why investigators: sonnet high
++hard tasks: opus high
++hardest tasks: opus xhigh
++deep review: fable high
++how explorer: sonnet medium
++how explainer: opus high
++why investigators: sonnet medium
 +why synthesizer: opus xhigh
 +reflect tooling: sonnet high
 +reflect judgment, divergent, synthesizer: opus xhigh
-+arena runners: opus xhigh, fable xhigh
-+arena cross-judge pool: opus xhigh, fable xhigh
++arena runners: opus xhigh, sonnet xhigh
++arena cross-judge pool: opus xhigh, fable high
 +swarm workers: sonnet high
-+architect runners: opus xhigh, fable xhigh
-+interrogate reviewers: opus xhigh, fable xhigh
++recall workers: haiku
++architect runners: opus xhigh, fable high
++interrogate reviewers: opus xhigh, fable high
  ```
  
  ### 6. Confirm

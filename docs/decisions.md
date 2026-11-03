@@ -18,7 +18,7 @@ The per-decision intent files that came before this page are in git history, und
 - **`diagnosing-bugs` starts only when typed**, matching every other routed skill, so "debug this" runs the Bug fix playbook rather than the skill alone. Patch `067`.
 - **`ketchup-video` is excluded.** (user) Its reply embeds a video that a terminal cannot play. `/nstack:ketchup` still ships. Patch `009`.
 - **The HITL script runs in the user's terminal.** The agent's shell has no keyboard input, so the script dies at its first prompt there. Patch `066`.
-- **Entry points are renamed, nothing else.** (user) `poteto-mode` to `n-mode`, `poteto-agent` to `n-agent`, `setup-pstack` to `setup-nstack`, `poteto-help` to `nstack-help`. Patches `005`, `006`, `overlay/renames.json`.
+- **Entry points are renamed, nothing else.** (user) `poteto-mode` to `n-mode`, `poteto-agent` to `n-agent`, `setup-pstack` to `setup-nstack`, `poteto-help` to `nstack-help`. Patches `005`, `130`, `overlay/renames.json`.
 
 ## Claude Code adaptation
 
@@ -48,7 +48,7 @@ The per-decision intent files that came before this page are in git history, und
 ## Worktrees and run files
 
 - **The rules live in a reference file, and `n-mode/SKILL.md` keeps what a delegate needs.** (user) A delegate works in the worktree its brief names, so it needs only the absolute-path rules. This took `SKILL.md` from 4742 to 4109 words. All 6 answers on the new text matched the old text's, and the chat opened the file unprompted. `references/worktree.md`, patch `030`.
-- **The chat that runs n-mode stays at the root.** (user) The user coordinates from one place, and inside a worktree Claude Code treats the root, the backlog included, as outside the session. Nobody calls `EnterWorktree`. Everyone edits by absolute path and runs `git -C <worktree>`, and each delegate brief names its worktree and branch. Patch `170`.
+- **The chat that runs n-mode stays at the root.** (user) The user coordinates from one place, and inside a worktree Claude Code treats the root, the backlog included, as outside the session. Nobody calls `EnterWorktree`. Everyone edits by absolute path and runs `git -C <worktree>`, and each delegate brief names its worktree and branch. Patch `100`.
 - **Worktrees live in `<root>/.claude/worktrees/`, ignored by a `.gitignore` inside that folder.** Nothing commits on `main`, and nothing writes under `.git/`, whose files Claude Code refuses as sensitive. Patch `030`.
 - **A run's own files live in `<root>/.nstack/`,** which holds its own `.gitignore`. (user) That covers the backlog and its archive, intents, and tickets files. Patch `190`.
 - **Intents are never committed and are deleted once nothing open reads them.** (user) A committed intent grows the repo per task and goes stale. Opening a PR or merging back carries **Problem**, **Decisions**, and **Out of scope** into the PR body or last commit. A dropped row or an abandoned run keeps its intent for a pickup. Patch `190`. This covers target repos, and this repo records its own decisions on this page.
@@ -70,21 +70,21 @@ The per-decision intent files that came before this page are in git history, und
 
 - **The table lives in a reference file, and `n-mode/SKILL.md` keeps upstream's Subagents text plus a pointer.** (user) "n-mode giữ đúng upstream, sau đó các phần thêm vào là tối thiểu và cần thiết." Every delegate reads `SKILL.md` in full, and one that spawns nothing never uses the table. This took `SKILL.md` from 5787 to 4742 words, a measured saving of 1045 words for such a delegate. One that spawns reads the 1146 words of the reference on top. On the new text, 30 of 30 tabletop values matched the table, across a chat, a delegate that spawns, and a Spec build chat, and all three opened the reference unprompted. A code delegate told to open only what its work needs opened only `n-agent.md` and `SKILL.md`, though an earlier one read the table out of curiosity, so the saving is not yet observed in a real run. Only patches `110` and `290` touch the Subagents section now, and the older model patches hold only `setup-nstack` role lines. Patch `290`.
 
-- **Every job names its model and effort outright.** (user) The chat never raises or lowers what the table gives, and picks an implementation tier from the change, not to save cost. A rule that raised effort one step for the hardest work turned `opus medium` into `opus high` on its own. Patch `200`.
-- **Implementation tiers.** (user) `sonnet medium` for mechanical edits, `sonnet high` for implementation, `opus medium` for moderate work, `opus high` for hard work, and `opus xhigh` for the hardest. Patches `180`, `200`, `280`.
-- **A bug that review finds gets a stronger fix than the code that held it.** (user) The first fix climbs one step on the ladder `sonnet medium`, `sonnet high`, `opus medium`, `opus high`, `opus xhigh`, and the second fix one more, so two at most, and `opus xhigh` is the top. A bug that survives the second fix goes to Attack the Premise and the user. A failed **Verify** with no review keeps the ticket's tier. Patch `280`.
+- **Every job names its model and effort outright.** (user) The chat never raises or lowers what the table gives, and picks an implementation tier from the change, not to save cost. A rule that raised effort one step for the hardest work turned `opus medium` into `opus high` on its own. Patch `100`, `references/model-table.md`.
+- **Implementation tiers.** (user) `sonnet medium` for mechanical edits, `sonnet high` for implementation, `opus medium` for moderate work, `opus high` for hard work, and `opus xhigh` for the hardest. Patch `100`, `references/model-table.md`.
+- **A bug that review finds gets a stronger fix than the code that held it.** (user) The first fix climbs one step on the ladder `sonnet medium`, `sonnet high`, `opus medium`, `opus high`, `opus xhigh`, and the second fix one more, so two at most, and `opus xhigh` is the top. A bug that survives the second fix goes to Attack the Premise and the user. A failed **Verify** with no review keeps the ticket's tier. `references/model-table.md`.
 - **A mechanical edit is defined by the brief:** it names each file and the exact change and leaves no design choice. Two tabletop agents split on the old wording, and 2 of 2 agreed on the new. `references/model-table.md`.
-- **Explore and search run at `sonnet medium`, and verify at `sonnet high`.** (user) Spawn labels on 2026-10-30 showed 549 `sonnet high` spawns and only 41 `sonnet medium`, against the stated tiers. Patches `180`, `200`.
-- **Effort on Opus follows how much care the work needs.** (user) Hard work that needs little reasoning runs at `opus medium`, and work that needs care at `opus high`. The examples on each row are the chat's. Patch `280`.
-- **Every spawn resolves to one row.** When two rows fit, the higher wins. A helper that only reads, parses, or watches takes the Explore and search row, unless its skill names a role line. A conflicted merge or rebase takes the hard row, and a sub-coordinator `opus high`. The values are the chat's picks from existing rows. Rare cases stay out of the table on purpose: which model a third arena runner or race arm uses, and a role line that puts a verifier on its worker's family. Patch `280`.
-- **Reviews.** (user) Per-task diff review runs at `opus high`, and at `fable xhigh` for hardest implementation, for a different family's edge-case detection. An independent verdict that gates a landing runs at `opus high`, since "sonnet high hơi thấp" holds there too. The final branch review always runs at `opus xhigh`. A Feature run on a sensitive branch spawns that reviewer besides `/code-review`. Spec build drops its different-model requirement. Patches `180`, `280`.
-- **Fable reviews and evaluates, and never writes code.** (user) "fable high seems to be less intelligent than opus xhigh, fable is only good for edge-case detection." The user's impression, not measured, and the user keeps a Fable advisor on. Fable rows read the `deep review` role. Arena runners, which can write code, run on `opus xhigh` and `sonnet xhigh`, and the `architect` and `interrogate` panels keep `fable high` since they design and review. Patches `210`, `280`.
-- **Panels are `opus xhigh` and `fable high`.** (user) Sonnet and Haiku left every panel, since a Haiku seat could judge an arena. `interrogate` now runs `arena`'s fan-out, so it reads its line and needs no text of its own. Patches `100`, `210`, `overlay/renames.json`.
+- **Explore and search run at `sonnet medium`, and verify at `sonnet high`.** (user) Spawn labels on 2026-10-30 showed 549 `sonnet high` spawns and only 41 `sonnet medium`, against the stated tiers. Patch `100`, `references/model-table.md`.
+- **Effort on Opus follows how much care the work needs.** (user) Hard work that needs little reasoning runs at `opus medium`, and work that needs care at `opus high`. The examples on each row are the chat's. Patch `100`, `references/model-table.md`.
+- **Every spawn resolves to one row.** When two rows fit, the higher wins. A helper that only reads, parses, or watches takes the Explore and search row, unless its skill names a role line. A conflicted merge or rebase takes the hard row, and a sub-coordinator `opus high`. The values are the chat's picks from existing rows. Rare cases stay out of the table on purpose: which model a third arena runner or race arm uses, and a role line that puts a verifier on its worker's family. `references/model-table.md`.
+- **Reviews.** (user) Per-task diff review runs at `opus high`, and at `fable xhigh` for hardest implementation, for a different family's edge-case detection. An independent verdict that gates a landing runs at `opus high`, since "sonnet high hơi thấp" holds there too. The final branch review always runs at `opus xhigh`. A Feature run on a sensitive branch spawns that reviewer besides `/code-review`. Spec build drops its different-model requirement. Patch `060`, `references/model-table.md`.
+- **Fable reviews and evaluates, and never writes code.** (user) "fable high seems to be less intelligent than opus xhigh, fable is only good for edge-case detection." The user's impression, not measured, and the user keeps a Fable advisor on. Fable rows read the `deep review` role. Arena runners, which can write code, run on `opus xhigh` and `sonnet xhigh`, and the `architect` and `interrogate` panels keep `fable high` since they design and review. Patch `100`, `references/model-table.md`.
+- **Panels are `opus xhigh` and `fable high`.** (user) Sonnet and Haiku left every panel, since a Haiku seat could judge an arena. `interrogate` now runs `arena`'s fan-out, so it reads its line and needs no text of its own. Patch `100`, `overlay/renames.json`.
 - **The arena judge never runs on the chat's own model.** Upstream keys this on vendor family, and every nstack seat is a Claude model, so family means model here. With no entry left to run, the chat skips the judge and says so. Patches `100`, `110`.
 - **Upstream's fallback for a rejected model stays,** with `slug` written as `model`, since Claude Code's `model` field takes aliases. Patch `290`.
-- **A table row replaces the default a routed skill names for the same role.** `how` and `why` keep their upstream defaults. (user) Rows put explorers and investigators at `sonnet medium` and the explainer at `opus high`. Tabletops followed the old value in 2 of 2 runs until the row existed, and the new value in 2 of 2 after. Patch `230`.
-- **The Orchestrate verifier stays on a different family from its worker.** (user) `opus high` for a Sonnet worker and `fable high` for an Opus worker, because "sonnet high hơi thấp". Patches `240`, `280`.
-- **Comment review runs at `sonnet medium`, and a `recall` slice on `haiku` in its own role.** (user) Patch `240`.
+- **A table row replaces the default a routed skill names for the same role.** `how` and `why` keep their upstream defaults. (user) Rows put explorers and investigators at `sonnet medium` and the explainer at `opus high`. Tabletops followed the old value in 2 of 2 runs until the row existed, and the new value in 2 of 2 after. Patch `100`.
+- **The Orchestrate verifier stays on a different family from its worker.** (user) `opus high` for a Sonnet worker and `fable high` for an Opus worker, because "sonnet high hơi thấp". `references/model-table.md`.
+- **Comment review runs at `sonnet medium`, and a `recall` slice on `haiku` in its own role.** (user) Patch `100`.
 - **A `show-me-your-work` review reads the chat's model,** since the trail records the chat's decisions. A chat on Sonnet or Fable gets `opus high`. (user) A chat on Opus gets `sonnet xhigh`, and `automate-me` has no row for now. `references/model-table.md`.
 - **Spec build names its model and effort.** (user) It does so through a Tier per ticket. A ticket's first spawn, retry, and replay run on its Tier. The fix implementer runs on the highest Tier its findings touch, and the rebase agent on the hard implementation row, because it resolves conflicts across tickets. Before this, a bare `effort: "high"` left the model to inference. `overlay/files/.../spec-build.md`.
 - **The budget moves every effort by the same steps.** (user) `unlimited` one up, `large` none, `medium` one down, `small` two down. An old budget that flattened every role to one effort erased the gap between implementation and review. A role line whose effort differs from what the budget gives was set by hand and wins for that role. Patch `180`.
@@ -145,35 +145,28 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | Patch | Concern |
 | --- | --- |
 | `005-identity` | Names n-mode and setup-nstack as nstack's |
-| `006-install-source` | Install commands point at this repo |
 | `008-drop-make-bot-ui` | Removes the links to the excluded skill |
 | `009-drop-ketchup-video` | Removes the links to the excluded skill |
 | `010-sticky-mode` | n-mode stays on for the conversation |
 | `020-interview-gate` | Every task opens with a sized Interview |
 | `030-worktree` | Points n-mode at `references/worktree.md` and states the rules a delegate needs |
 | `050-spec-build` | Routes parallel-ticket work to Spec build |
-| `060-pocock-routing` | Routes to `diagnosing-bugs` and to the built-in `/code-review` |
+| `060-pocock-routing` | Routes to `diagnosing-bugs` and to the built-in `/code-review`, and adds the final reviewer of a sensitive Feature |
 | `065-diagnosis-loop` | Bug fix runs `diagnosing-bugs` phases 1 to 4 |
 | `066-hitl-terminal` | The user runs the HITL script |
 | `067-diagnosis-explicit` | `diagnosing-bugs` starts only when typed |
 | `075-stepped-away-routing` | Small stepped-away work keeps its playbook |
 | `085-architect-trigger` | Defines crossing a function boundary |
 | `090-verify-surface` | `/simplify` before commit, and the project's own control skill |
-| `100-claude-code-models` | Claude Code model values, `arena`'s panel and judge, and the setup rule |
+| `100-claude-code-models` | Claude Code model values, `arena`'s panel and judge, and the setup rule with its role lines |
 | `110-claude-code-agents` | Agent fields, and how cloud agents, read-only agents, and Orchestrate's store map |
 | `120-claude-code-tools` | Cursor-only tools and paths |
-| `130-claude-code-help` | `nstack-help` and the guide pages for Claude Code |
+| `130-claude-code-help` | `nstack-help`, the guide pages, and the install commands for Claude Code |
 | `140-no-ai-credit` | Commits and PRs credit no AI agent |
 | `150-session-backlog` | Points n-mode at the backlog rules |
 | `160-match-user-language` | Replies use the user's language |
-| `170-root-coordinator` | The setup rule keeps the chat at the root |
-| `180-effort-by-model` | Role lines for efforts by job, and a budget that moves them relatively |
+| `180-effort-by-model` | A budget that moves every effort by the same steps |
 | `190-nstack-dir` | Points n-mode and three playbooks at the `.nstack/` rules |
-| `200-hard-tier` | The `hard tasks` role line |
-| `210-fable-high` | Fable at `high` in the setup rule's panels |
 | `220-delegate-interrogate` | Limits a delegate's `interrogate`, always `/code-review` |
-| `230-routed-role-effort` | Role lines for `how` and `why` |
-| `240-unassigned-jobs` | Role lines for the jobs that had none, such as `recall` |
-| `270-setup-guide-budget` | The setup guide describes the relative budget |
-| `280-model-ladder` | Role lines for the coding tiers, the setup guide, and the final reviewer of a sensitive Feature |
+| `270-setup-guide-budget` | The setup guide describes the relative budget and what `swarm workers` drives |
 | `290-model-table` | Points the Subagents section at `references/model-table.md` |

@@ -14,7 +14,7 @@ index fb90a6a..16a88fd 100644
  
  Next: [Recipes and pitfalls](./10-recipes-and-pitfalls.md).
 diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
-index fb3c8dc..a3cb1c2 100644
+index d0062a8..5236d67 100644
 --- a/skills/nstack-help/SKILL.md
 +++ b/skills/nstack-help/SKILL.md
 @@ -99,7 +99,6 @@ The default answer is `/n-mode`, which runs most of the others when its steps ne

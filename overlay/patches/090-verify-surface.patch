@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 539be15..0a1dd20 100644
+index 1b3c104..f72eefe 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -34,9 +34,9 @@ Remaining triggers:
@@ -7,8 +7,8 @@ index 539be15..0a1dd20 100644
  - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
  - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
 -- Before commit → the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`).
-+- Before commit → Claude Code's built-in `/simplify` over the diff, as the adapter maps `/deslop`.
- - Before review, or before **Merging back** when no PR opens → the **no-comments** skill (`/no-comments`), then Claude Code's built-in `/code-review` over the branch. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
++- Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
+ - Before review, or before **Merging back** when no PR opens → the **no-comments** skill (`/no-comments`), then Claude Code's built-in `/code-review` over the branch. A Feature run on a branch that touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
 -- Shipping UI / IDE / CLI → the matching control skill. `cursor-team-kit` publishes `control-cli` (CLIs and TUIs) and `control-ui` (browser / Electron / web UIs). For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
 +- Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which. Building one with the **create-verification-skill** skill is a task of its own. Offer it in the reply when the project will keep changing that surface, and build it only when the user asks. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
  - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
