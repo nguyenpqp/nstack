@@ -63,7 +63,9 @@ The per-decision intent files that came before this page are in git history, und
 
 ## Models and effort
 
-The table under **Match the model to the job** in `n-mode/SKILL.md` is the source of truth for values. This section says why they are what they are.
+`references/model-table.md` in `n-mode` is the source of truth for values. This section says why they are what they are.
+
+- **The table lives in a reference file, and `n-mode/SKILL.md` keeps upstream's Subagents text plus a pointer.** (user) "n-mode giữ đúng upstream, sau đó các phần thêm vào là tối thiểu và cần thiết." Every delegate reads `SKILL.md` in full, and one that spawns nothing never uses the table. This took `SKILL.md` from 5787 to 4742 words, a measured saving of 1045 words for such a delegate. One that spawns reads the 1146 words of the reference on top. On the new text, 30 of 30 tabletop values matched the table, across a chat, a delegate that spawns, and a Spec build chat, and all three opened the reference unprompted. A code delegate said it would skip the file, though it had read the file during the tabletop, so the saving is not yet observed in a real run. Patch `290`.
 
 - **Every job names its model and effort outright.** (user) The chat never raises or lowers what the table gives, and picks an implementation tier from the change, not to save cost. A rule that raised effort one step for the hardest work turned `opus medium` into `opus high` on its own. Patch `200`.
 - **Implementation tiers.** (user) `sonnet medium` for mechanical edits, `sonnet high` for implementation, `opus medium` for moderate work, `opus high` for hard work, and `opus xhigh` for the hardest. Patches `180`, `200`, `280`.
@@ -171,3 +173,4 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `260-trail-review` | Rows for the `show-me-your-work` review |
 | `270-setup-guide-budget` | The setup guide describes the relative budget |
 | `280-model-ladder` | The coding tiers, the fix table, Fable as review only, and one row per spawn |
+| `290-model-table` | Moves the table to `references/model-table.md` and restores upstream's Subagents text |

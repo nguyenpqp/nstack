@@ -8,7 +8,7 @@ nstack is pstack plus one Matt Pocock skill plus a thin overlay. Your job is to 
 
 - **pstack is the baseline and wins every overlap.** A Pocock skill ships only when pstack has no equivalent skill, playbook, or principle, it runs without an issue tracker, and every skill it calls through the Skill tool also ships.
 - **The nstack layer stays**: the interview gate, worktree rules, the per-job model table, sticky mode, the session backlog, and dispatch labels. Keep it working on top of whatever upstream changes.
-- **Upstream skills stay as upstream wrote them.** New behavior goes in `overlay/files/`, in role values, or in `n-mode/SKILL.md` and `setup-nstack/SKILL.md`. Existing patches to other upstream skills stay. A patch that only repairs a sync does not break this rule.
+- **Upstream skills stay as upstream wrote them.** New behavior goes in `overlay/files/`, in role values, or in `setup-nstack/SKILL.md`. `n-mode/SKILL.md` stays close to upstream and takes only what every delegate needs, with a pointer to a reference file for the rest. Existing patches to other upstream skills stay. A patch that only repairs a sync does not break this rule.
 - **`upstream/` and `dist/` are generated.** Every change goes in `overlay/`: patches through `mkpatch`, whole new files in `overlay/files/`, ship decisions in `overlay/selection.json`.
 - **One concern per patch and per commit.** Every commit builds and passes the check.
 
@@ -27,7 +27,7 @@ nstack is pstack plus one Matt Pocock skill plus a thin overlay. Your job is to 
    - New frontmatter fields. Claude Code ignores a field it does not know, so the check fails on one. Map a Cursor field to its Claude Code name in `claudeCode`, as `is_background` maps to `background`. When Claude Code adds a field, add it to the list in `check.mjs` with the docs page that names it.
    - New Cursor-only skills. nstack targets Claude Code only, so a skill that works only in Cursor goes in `selection.json` `pstack.exclude`.
    - New or renamed model slugs. `claudeCode` maps each default slug to a Claude Code value such as `opus xhigh`, and patch `100-claude-code-models` holds the panels and the `setup-nstack` rule.
-   - New spawns in an upstream skill. A job with no row in the **Match the model to the job** table leaves the model to the chat, so add a row.
+   - New spawns in an upstream skill. A job with no row in `references/model-table.md` leaves the model to the chat, so add a row.
    - Edits to pstack's mode skill (`n-mode` in `dist/`, `poteto-mode` upstream) that contradict the nstack layer.
    - Renamed entry points, which `overlay/renames.json` must follow.
 4. Rebuild until `node scripts/build.mjs` passes, the check included. Fix a check failure at its cause. Use `overlay/check-allow.json` only for upstream example links and names that are not meant to resolve.

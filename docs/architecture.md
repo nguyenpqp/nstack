@@ -49,7 +49,7 @@ Patches sort as strings, so names keep three digits. The bands are a convention,
 | `01x`–`09x` | The first nstack layer: sticky mode, interview, worktree, routing, labels |
 | `10x`–`13x` | Claude Code adaptation, one concern each |
 | `14x`–`19x` | Later layer rules: no AI credit, backlog, language, root coordinator, efforts by job, the `.nstack` folder |
-| `20x` and up | The model table and its rows |
+| `20x` and up | The role lines behind the model table, and the pointer to it |
 
 The index in [decisions.md](decisions.md#patch-index) names each patch's concern.
 
@@ -61,7 +61,8 @@ The index in [decisions.md](decisions.md#patch-index) names each patch's concern
 | `overlay/files/skills/n-mode/references/interview-axes.md` | What each playbook's round must cover, read one row at a time |
 | `overlay/files/skills/n-mode/playbooks/spec-build.md` | The Spec build playbook |
 | `overlay/files/skills/n-mode/references/session-backlog.md` | The backlog rules, read only by the chat that runs n-mode, so delegates do not pay for them |
-| Patches to `skills/n-mode/SKILL.md` | Routing, sticky mode, the worktree and `.nstack` rules, and the model table |
+| `overlay/files/skills/n-mode/references/model-table.md` | The model and effort of every job, read only by an agent that spawns |
+| Patches to `skills/n-mode/SKILL.md` | Routing, sticky mode, the worktree and `.nstack` rules, and the pointer to the model table |
 | Patches to `skills/setup-nstack/SKILL.md` | The role lines and budget that write `~/.claude/rules/nstack-models.md` |
 
 Every delegate reads `n-mode/SKILL.md` in full, so text there costs context on every spawn. Put a rule that only the chat needs in a reference file.
