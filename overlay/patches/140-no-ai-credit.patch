@@ -1,8 +1,8 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 4134839..25d1521 100644
+index 43d5660..3cb6c8a 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -34,6 +34,7 @@ Remaining triggers:
+@@ -35,6 +35,7 @@ Remaining triggers:
  - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
  - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
  - Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
@@ -11,7 +11,7 @@ index 4134839..25d1521 100644
  - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which. Building one with the **create-verification-skill** skill is a task of its own. Offer it in the reply when the project will keep changing that surface, and build it only when the user asks. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
  - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
 diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
-index b2d3743..4a26dba 100644
+index f8f3508..58a8f9f 100644
 --- a/skills/n-mode/playbooks/opening-a-pr.md
 +++ b/skills/n-mode/playbooks/opening-a-pr.md
 @@ -4,7 +4,7 @@ Invoked at the end of every other playbook.

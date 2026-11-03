@@ -23,8 +23,8 @@ A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus
 | Bug investigation that runs or instruments code | the code playbook's line | `sonnet high` |
 | Orchestrate sub-coordinator | `judgment and prose` | `opus high` |
 | Independent verdict that gates a landing, such as a Shipping verifier's or a swarm verifier lane | `judgment and prose` | `opus high` |
-| Dedicated Orchestrate verifier when the worker runs on Sonnet | `judgment and prose` | `opus high` |
-| Dedicated Orchestrate verifier when the worker runs on Opus | `deep review` | `fable high` |
+| Orchestrate verifier when the worker runs on Sonnet | `judgment and prose` | `opus high` |
+| Orchestrate verifier when the worker runs on Opus | `deep review` | `fable high` |
 | Cross-model review of a `show-me-your-work` trail when the chat runs on Sonnet or Fable | `judgment and prose` | `opus high` |
 | Cross-model review of a `show-me-your-work` trail when the chat runs on Opus | `swarm workers` | `sonnet xhigh` |
 | Comment review in `no-comments` | `swarm workers` | `sonnet medium` |

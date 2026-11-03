@@ -69,7 +69,7 @@ index 96755ee..6c63902 100644
  For prose, `/unslop` takes a target and any extra rules you have:
  
 diff --git a/docs/guide/07-overnight.md b/docs/guide/07-overnight.md
-index 687c0ba..33ae4a1 100644
+index 3b377ff..f6ab757 100644
 --- a/docs/guide/07-overnight.md
 +++ b/docs/guide/07-overnight.md
 @@ -1,6 +1,6 @@
@@ -126,7 +126,7 @@ index 687c0ba..33ae4a1 100644
  **Pitfall:** a duration is not a finish condition. "work on this for 4 hours" gives the agent nothing to check, and you'll wake up to four hours of motion instead of a result. Give `/loop` a predicate that can pass or fail.
  
 diff --git a/docs/guide/10-recipes-and-pitfalls.md b/docs/guide/10-recipes-and-pitfalls.md
-index f41b51e..500a535 100644
+index 5fd6ea6..ba9d0ab 100644
 --- a/docs/guide/10-recipes-and-pitfalls.md
 +++ b/docs/guide/10-recipes-and-pitfalls.md
 @@ -165,7 +165,7 @@ That's the whole prompt. [`/bro`](../../skills/bro/SKILL.md) restates the last m
@@ -139,7 +139,7 @@ index f41b51e..500a535 100644
  - **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Run `/benchmark-checklist` before the number goes anywhere.
  - **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.
 diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
-index 61b7a51..bf60fe0 100644
+index a68cfcc..455af83 100644
 --- a/skills/nstack-help/SKILL.md
 +++ b/skills/nstack-help/SKILL.md
 @@ -10,9 +10,9 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
@@ -192,7 +192,7 @@ index 61b7a51..bf60fe0 100644
  | Have different models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
  | Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |
  | Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
-@@ -112,8 +108,8 @@ Close calls:
+@@ -113,8 +109,8 @@ Close calls:
  
  Not in nstack:
  
@@ -203,8 +203,8 @@ index 61b7a51..bf60fe0 100644
  - pstack has no `/orchestrate` skill. Orchestrate is a `/n-mode` playbook. If the slash menu shows `/orchestrate`, another plugin provides it.
  
  ## Playbooks and principles
-@@ -127,9 +123,9 @@ Playbooks are step lists inside `/n-mode`, not skills, so they have no slash com
- - "full autopilot on this queue" runs Autopilot-full. "stack them, don't ship" runs Autopilot-stack.
+@@ -128,9 +124,9 @@ Playbooks are step lists inside `/n-mode`, not skills, so they have no slash com
+ - "full autopilot on this queue" runs Autopilot-full. "autopilot, don't merge" runs Autopilot-stack.
  - "run the eval playbook" runs Eval.
  
 -Without `/n-mode`, a phrase such as "babysit this pr" can start Cursor's own skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
@@ -215,7 +215,7 @@ index 61b7a51..bf60fe0 100644
  
  Principles are one-rule skills that `/n-mode` reads and cites in its replies. The user rarely invokes one. They steer with the names instead, as in "apply prove it works. show me the real output." Typing `/principle-<name>` still loads one on demand. [Guide page 8](../../docs/guide/08-principles.md) lists them.
  
-@@ -137,12 +133,12 @@ Principles are one-rule skills that `/n-mode` reads and cites in its replies. Th
+@@ -138,12 +134,12 @@ Principles are one-rule skills that `/n-mode` reads and cites in its replies. Th
  
  | Symptom | Fix |
  |---|---|

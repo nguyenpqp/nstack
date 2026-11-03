@@ -12,7 +12,7 @@ index f229392..83ff1b0 100644
  ## Pick your models
  
 diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
-index 70c3636..4a00a20 100644
+index d0062a8..fb3c8dc 100644
 --- a/skills/nstack-help/SKILL.md
 +++ b/skills/nstack-help/SKILL.md
 @@ -45,7 +45,7 @@ Installing changes nothing until the user invokes a skill. Only `/setup-nstack`

@@ -1,17 +1,17 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 6c14274..224988f 100644
+index e70cde9..53a3f06 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -26,7 +26,7 @@ The Principles section below grounds every trigger. In your reply, name each pri
- 
+@@ -27,7 +27,7 @@ The Principles section below grounds every trigger. In your reply, name each pri
  Remaining triggers:
  
+ - Your first message on a task → tell the user, in your own words, their goal, the problem they are solving, and, if the task ships a change, the smallest change you expect to meet it. Don't wait for confirmation. If the evidence rules out the change the user asked for, show it and stop. Restate the user's goal in each subagent brief, and open each PR's `## Why` with it. Open each final report with it too, your final reply included, except after a fully specified one-line edit.
 -- **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `docs/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
 +- **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `<root>/.nstack/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
  - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
  - About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. Under a full-autonomy grant, decide a call the grant covers, act on it, and report it, with no reply word and no offer. Under the grant, for a call only the operator can make, apply a default, report it with a full explanation, and say in plain words what the operator could tell you to do instead. The operator answers in their own words. Never give a shorthand token to type back. Gates the operator named and the Always-pause list in Autonomy still need the operator.
  - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
-@@ -101,6 +101,10 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
+@@ -102,6 +102,10 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
  
  **No is an acceptable answer.** Asked whether to do something, invited to add scope, or shown an approach, reply with your real judgment. Decline, push back, or say "this doesn't earn its place" when true. A recommendation is a judgment, not a validation. Agreement is not the default, candor over sycophancy.
  
@@ -22,7 +22,7 @@ index 6c14274..224988f 100644
  ## Worktree
  
  **Every playbook that writes files to the repo opens a worktree before its first edit.** Read `references/worktree.md` before you open one and before **Merging back**. It also names the playbooks that skip this. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
-@@ -140,7 +144,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
+@@ -141,7 +145,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
  
  ## Playbooks
  
@@ -32,7 +32,7 @@ index 6c14274..224988f 100644
  A large or cross-cutting effort (a migration across many call sites, an ambitious multi-part change) routes to the **figure-it-out** skill even when a narrower playbook like Feature fits. So does work the user steps away from to trust later, unless one bundled playbook covers it whole, as a stated change with one owner does. Such work keeps its playbook and adds the decision trail the Non-negotiables ask for. Use **figure-it-out** whenever no bundled playbook fits. It designs a bespoke, rigorous playbook for the task. A spec that splits into several tickets, some able to build in parallel, routes to **Spec build** instead, whose Interview row drafts the ticket graph when the request has none. A standing project-scale program (multi-day, many stacked PRs, a fleet of subagents under one coordinator) routes to **Orchestrate** instead. figure-it-out designs one bespoke run, orchestrate runs the program.
  
 diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
-index 4a26dba..2f28ccf 100644
+index 67a699d..3e4844b 100644
 --- a/skills/n-mode/playbooks/opening-a-pr.md
 +++ b/skills/n-mode/playbooks/opening-a-pr.md
 @@ -10,7 +10,7 @@ Invoked at the end of every other playbook.

@@ -1,8 +1,8 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index d568d08..00be938 100644
+index 539be15..0a1dd20 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -33,9 +33,9 @@ Remaining triggers:
+@@ -34,9 +34,9 @@ Remaining triggers:
  - Nontrivial multi-step → write the throughput checkpoint (Feature step 3).
  - Any prose surface, your reply to the user included → the **unslop** skill. Write the reply per **Writing the reply**. Agent-facing prose also follows the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
  - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).

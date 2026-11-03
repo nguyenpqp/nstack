@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 0380e6c..6c3b8e3 100644
+index 80b8ee9..0d1b323 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -1,6 +1,6 @@
@@ -11,7 +11,7 @@ index 0380e6c..6c3b8e3 100644
  icon: crown
  color: yellow
 diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
-index a9eb3a9..42a453a 100644
+index 68ff6bf..8a5bd54 100644
 --- a/skills/setup-nstack/SKILL.md
 +++ b/skills/setup-nstack/SKILL.md
 @@ -1,9 +1,9 @@

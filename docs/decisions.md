@@ -10,6 +10,7 @@ The per-decision intent files that came before this page are in git history, und
 
 ## What ships
 
+- **`statechart` ships whole.** Upstream's TypeScript rewrite took it to 407 files and 4.2 MB, of which 376 files and 4.0 MB are its test corpus. pstack is the baseline, and the size costs no context. `pstack.exclude` can only drop the whole skill, so keeping the skill without its corpus would need a build change.
 - **Vendor plus overlay, synced by hand.** (user) A hand port drifts, so one command pulls both upstreams and lists only what needs a human. The repo is its own marketplace with `dist/` committed. There is no scheduled sync.
 - **Claude Code only.** (user) No Cursor or Codex build. `make-bot-ui` is excluded, since it serves a Cursor product. Patch `008`.
 - **pstack wins every overlap.** Pocock's spec pipeline conflicted with n-mode: it merges in a way `merge.ff only` refuses, calls skills by names that resolve elsewhere, blocks on the user, and keeps a second copy of the requirements. `overlay/selection.json` records each pair.
@@ -23,7 +24,7 @@ The per-decision intent files that came before this page are in git history, und
 
 - **The adapter does not ship.** (user) Compaction dropped it from context, "once per session" stopped agents from rereading it, and subagents never read it. `dist/` holds Claude Code names only, and the check fails on a Cursor name that a sync brings back. Patches `100`, `110`, `120`, `130`.
 - **One-to-one swaps go in `renames.json` `claudeCode`, and changes of meaning go in patches**, so most upstream edits need no patch repair.
-- **Cursor concepts map as follows.** A cloud agent is a subagent with `isolation: "worktree"`. A read-only agent is `subagent_type: "Explore"` with a brief that says not to edit. `/deslop` is the built-in `/simplify` plus the strip list. The control skill is the project's own under `.claude/skills/`. `create-skill` is `skill-creator`.
+- **Cursor concepts map as follows.** A cloud agent is a subagent with `isolation: "worktree"`. A read-only agent is `subagent_type: "Explore"` with a brief that says not to edit. `/deslop` is the built-in `/simplify` plus the strip list. The control skill is the project's own under `.claude/skills/`. Orchestrate's Project tracker and store are `.nstack/orchestrate/<slug>/notes.md`. `create-skill` is `skill-creator`.
 - **Bugbot text stays.** It is a GitHub app that comments on PRs whatever editor opened them.
 - **The check fails on frontmatter Claude Code does not read.** The old `is_background` field passed the check, because Claude Code ignores an unknown field and the check did not read frontmatter. Agents now set `background: true`.
 - **`icon` and `color` left the `n-mode` frontmatter**, because the Claude Code skill docs list neither. One `claudeCode` row strips them.
@@ -32,6 +33,7 @@ The per-decision intent files that came before this page are in git history, und
 ## The n-mode workflow
 
 - **Every task opens with an Interview sized by its playbook.** The user confirms a design before code exists and can opt out per request. A request that states the change asks only what is still open and would change the diff, because a diagnosed one-line bug once drew 6 questions. Process is never a question. Patch `020`, `overlay/files/.../interview.md`.
+- **Upstream's first-message rule stays word for word beside the Interview gate.** Its "Don't wait for confirmation" covers the goal statement, not code. A sentence that said so was tested and dropped, because tabletop agents held the gate in 2 of 2 runs with it and 2 of 2 without it. Both agents without it noted that a skim could misread the line, and neither did. Patch `020`.
 - **A design doc in hand limits the Interview to its gaps.** `overlay/files/.../interview.md`.
 - **Sticky mode is a rule in the skill, not a hook.** Claude Code has no frontmatter flag for it, and a session-start hook was ruled out. Patch `010`.
 - **Spec build is self-contained.** (user) No issue tracker, tickets land fast-forward or by cherry-pick after their verify command passes, one review at the end, and nothing asks the user mid-run. A shape shared across a process boundary lands as its own blocking ticket. Patch `050`, `overlay/files/.../spec-build.md`.
@@ -39,7 +41,7 @@ The per-decision intent files that came before this page are in git history, und
 - **Crossing a function boundary means a change a caller sees:** a signature, type, or module seam. An edit inside one function body does not count. Patch `085`.
 - **A missing control skill is offered in the reply, not built**, because a one-flag change once grew a control-skill commit. Patch `090`.
 - **Review runs the built-in `/code-review`**, then the lead checks the diff against the intent's **Outcome** and **Out of scope**. (user) `interrogate` stays for contested designs. Patch `060`.
-- **A delegate that opens a PR always runs `/code-review`, and runs `interrogate` only on a contested design or a sensitive branch.** (user) `opening-a-pr.md` told every delegate to run it, which spent an `opus xhigh` and a `fable high` reviewer on a 6-line PR in 4 of 4 tabletops. On the new text, 4 of 4 skipped it on that PR and 4 of 4 ran it on an auth change. Sensitive means security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm. Patch `220`.
+- **A delegate that opens a PR always runs `/code-review`, and runs `interrogate` only on a contested design or a sensitive branch.** (user) `opening-a-pr.md` used to tell every delegate to run it, which spent an `opus xhigh` and a `fable high` reviewer on a 6-line PR in 4 of 4 tabletops. Upstream has since dropped that line, and this rule stays for sensitive branches and `/code-review`. On the new text, 4 of 4 skipped it on that PR and 4 of 4 ran it on an auth change. Sensitive means security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm. Patch `220`.
 - **Replies use the user's language.** Files keep the repo's language. Patch `160`.
 - **Commits and PRs from an n-mode run credit no AI agent.** (user) The commit author stays the configured git user. A skill line can lose to a harness reminder, and only `"attribution": {"commit": "", "pr": ""}` in the user's settings turns the harness's line off. Patch `140`.
 
@@ -77,7 +79,9 @@ The per-decision intent files that came before this page are in git history, und
 - **Every spawn resolves to one row.** When two rows fit, the higher wins. A helper that only reads, parses, or watches takes the Explore and search row, unless its skill names a role line. A conflicted merge or rebase takes the hard row, and a sub-coordinator `opus high`. The values are the chat's picks from existing rows. Rare cases stay out of the table on purpose: which model a third arena runner or race arm uses, and a role line that puts a verifier on its worker's family. Patch `280`.
 - **Reviews.** (user) Per-task diff review runs at `opus high`, and at `fable xhigh` for hardest implementation, for a different family's edge-case detection. An independent verdict that gates a landing runs at `opus high`, since "sonnet high hơi thấp" holds there too. The final branch review always runs at `opus xhigh`. A Feature run on a sensitive branch spawns that reviewer besides `/code-review`. Spec build drops its different-model requirement. Patches `180`, `280`.
 - **Fable reviews and evaluates, and never writes code.** (user) "fable high seems to be less intelligent than opus xhigh, fable is only good for edge-case detection." The user's impression, not measured, and the user keeps a Fable advisor on. Fable rows read the `deep review` role. Arena runners, which can write code, run on `opus xhigh` and `sonnet xhigh`, and the `architect` and `interrogate` panels keep `fable high` since they design and review. Patches `210`, `280`.
-- **Panels are `opus xhigh` and `fable high`.** (user) Sonnet and Haiku left every panel, since a Haiku seat could judge an arena. Patches `100`, `210`, `overlay/renames.json`.
+- **Panels are `opus xhigh` and `fable high`.** (user) Sonnet and Haiku left every panel, since a Haiku seat could judge an arena. `interrogate` now runs `arena`'s fan-out, so it reads its line and needs no text of its own. Patches `100`, `210`, `overlay/renames.json`.
+- **The arena judge never runs on the chat's own model.** Upstream keys this on vendor family, and every nstack seat is a Claude model, so family means model here. With no entry left to run, the chat skips the judge and says so. Patches `100`, `110`.
+- **Upstream's fallback for a rejected model stays,** with `slug` written as `model`, since Claude Code's `model` field takes aliases. Patch `290`.
 - **A table row replaces the default a routed skill names for the same role.** `how` and `why` keep their upstream defaults. (user) Rows put explorers and investigators at `sonnet medium` and the explainer at `opus high`. Tabletops followed the old value in 2 of 2 runs until the row existed, and the new value in 2 of 2 after. Patch `230`.
 - **The Orchestrate verifier stays on a different family from its worker.** (user) `opus high` for a Sonnet worker and `fable high` for an Opus worker, because "sonnet high hơi thấp". Patches `240`, `280`.
 - **Comment review runs at `sonnet medium`, and a `recall` slice on `haiku` in its own role.** (user) Patch `240`.
@@ -131,6 +135,8 @@ Each one names what would settle it.
 
 - `typescript-best-practices` pairs `paths` with `disable-model-invocation`, and the docs do not say how the two combine.
 - Whether nested subagents work as `orchestrate` describes. The playbook keeps its depth rule.
+- When the Agent tool rejects an effort and the role's default is the same value, as on the final branch review, the rule names no next step. A tabletop agent omitted `effort`, which is the inferred reading.
+- An Orchestrate worker that must use this checkout runs with no isolation, but the root never holds feature work, and nothing says where that worker edits. Upstream's wording.
 
 ## Patch index
 
@@ -153,8 +159,8 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `075-stepped-away-routing` | Small stepped-away work keeps its playbook |
 | `085-architect-trigger` | Defines crossing a function boundary |
 | `090-verify-surface` | `/simplify` before commit, and the project's own control skill |
-| `100-claude-code-models` | Claude Code model values, panels, and the setup rule |
-| `110-claude-code-agents` | Agent fields, and how cloud and read-only agents map |
+| `100-claude-code-models` | Claude Code model values, `arena`'s panel and judge, and the setup rule |
+| `110-claude-code-agents` | Agent fields, and how cloud agents, read-only agents, and Orchestrate's store map |
 | `120-claude-code-tools` | Cursor-only tools and paths |
 | `130-claude-code-help` | `nstack-help` and the guide pages for Claude Code |
 | `140-no-ai-credit` | Commits and PRs credit no AI agent |
@@ -164,7 +170,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `180-effort-by-model` | Role lines for efforts by job, and a budget that moves them relatively |
 | `190-nstack-dir` | Points n-mode and three playbooks at the `.nstack/` rules |
 | `200-hard-tier` | The `hard tasks` role line |
-| `210-fable-high` | Fable at `high` outside the hardest work |
+| `210-fable-high` | Fable at `high` in the setup rule's panels |
 | `220-delegate-interrogate` | Limits a delegate's `interrogate`, always `/code-review` |
 | `230-routed-role-effort` | Role lines for `how` and `why` |
 | `240-unassigned-jobs` | Role lines for the jobs that had none, such as `recall` |
