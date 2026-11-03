@@ -4,7 +4,7 @@ The chat that runs n-mode owns the backlog. Delegates never write it.
 
 ## Where it lives
 
-`<root>/.nstack/backlog.md`, where `<root>` is the root checkout, holds the open rows. Done rows move to `backlog-done.md` beside it, so the file read each turn stays small, and **Clean up** moves old done rows to `backlog-archive/`. Before the first write, apply the **nstack folder** section of `SKILL.md`, so neither file reaches a commit. One backlog spans every branch of the session.
+`<root>/.nstack/backlog.md`, where `<root>` is the root checkout, holds the open rows. Done rows move to `backlog-done.md` beside it, so the file read each turn stays small, and **Clean up** moves old done rows to `backlog-archive/`. Before the first write, apply the **nstack folder** section of `worktree.md`, so neither file reaches a commit. One backlog spans every branch of the session.
 
 ## Each turn
 
