@@ -1,8 +1,8 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 0945a36..ccde195 100644
+index c0024b4..10ad457 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -149,7 +149,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
+@@ -148,7 +148,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
  
  Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md`, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Copy its steps in verbatim. The order before step 1 is fixed: the Interview round, then the worktree, then the intent commit.
  
@@ -11,7 +11,7 @@ index 0945a36..ccde195 100644
  
  - **Interview.** The opening round of every other playbook, not an alternative to them. Frontier rounds through `AskUserQuestion`, sized by the matched playbook's row in its axes table, ending in a confirmed intent file.
  - **Investigation.** Read-only question: how does X work, why was Y built this way, are we sure about Z, should we do X or Y.
-@@ -159,6 +159,7 @@ A large or cross-cutting effort (a migration across many call sites, an ambitiou
+@@ -158,6 +158,7 @@ A large or cross-cutting effort (a migration across many call sites, an ambitiou
  - **Runtime forensics.** Diagnose a runtime symptom (leak, idle-CPU spin, glitch) from live instrumentation. The deliverable is a diagnosis, not a fix.
  - **Trace forensics.** Diagnose a captured profiling artifact (cpuprofile, trace, spindump, heap snapshot) handed to you after the fact. The deliverable is a diagnosis, not a fix.
  - **Feature.** New or changed behavior, built from a named data shape.

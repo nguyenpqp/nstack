@@ -1,8 +1,8 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 6ec61b0..23ea68e 100644
+index 7484fb3..b65c4d9 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -150,7 +150,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
+@@ -149,7 +149,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
  
  Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md`, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Copy its steps in verbatim. The order before step 1 is fixed: the Interview round, then the worktree, then the intent commit.
  

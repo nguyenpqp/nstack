@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 7233fc4..a069b49 100644
+index f60c540..f4d3f84 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -18,7 +18,7 @@ Once invoked, n-mode stays on for the rest of the conversation. Claude Code has
@@ -52,7 +52,7 @@ index 7233fc4..a069b49 100644
  
  ## Subagents
  
-@@ -155,7 +159,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
+@@ -153,7 +157,7 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
  
  ## Playbooks
  
