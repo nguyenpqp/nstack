@@ -6,6 +6,10 @@ The chat that runs n-mode owns the backlog. Delegates never write it.
 
 `<root>/.nstack/backlog.md`, where `<root>` is the root checkout, holds the open rows. Done rows move to `backlog-done.md` beside it, so the file read each turn stays small, and **Clean up** moves old done rows to `backlog-archive/`. Before the first write, apply the **nstack folder** section of `SKILL.md`, so neither file reaches a commit. One backlog spans every branch of the session.
 
+## Each turn
+
+At the start of each turn while a row is open, list the open title lines with `grep -n '^- \[ \]'` on the backlog and read in full only the rows the turn touches. A new message then goes into the backlog before any other work. When a new run starts on a backlog with open rows, name them in its first reply. Session pickup reads the backlog as open work at its step 2, along with this file, and the resume note of Pause safely points at it.
+
 ## A row
 
 ```

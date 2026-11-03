@@ -54,7 +54,7 @@ The per-decision intent files that came before this page are in git history, und
 ## Session backlog
 
 - **Each mid-session ask becomes a row in `.nstack/backlog.md` before any other step.** (user) Only what the user types counts. The opening request goes through Interview, and work n-mode finds itself goes in the todo list. Patch `150`, `overlay/files/.../session-backlog.md`.
-- **The rules live in a reference file.** An inline section cost every delegate 493 words it never used.
+- **The rules live in a reference file.** An inline section cost every delegate 493 words it never used, and `SKILL.md` now keeps only the trigger, which took it from 4109 to 4021 words. The chat rereads the file for any message when it is no longer in context, so a compaction does not drop the turn's grep.
 - **Asks are sorted against the intent.** (user) Inside the **Outcome**, an ask folds in. One that contradicts the design amends the intent and redoes the step. One outside it is its own unit, and a larger one gets its own Interview.
 - **n-mode confirms low-risk rows itself and restates them in the reply.** (user) A row waits on the user only for an open product or preference call or a high risk: undoing shipped work, overriding a user decision, clashing with another row, or an Always-pause action. Under full autonomy, only high risks wait. Startable rows go to background delegates before the question is asked, so work continues.
 - **File order is the queue, and tags on the title line hold a row.** (user) `after R<n>`, `later`, `waiting: <question>`, and `discuss`. A shared path with a row in progress becomes `after R<n>`, so two delegates never meet in a merge.

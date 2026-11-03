@@ -16,7 +16,7 @@ Once invoked, n-mode stays on for the rest of the conversation. Claude Code has 
 
 ## Session backlog
 
-A sticky session collects asks one turn at a time, and an ask that lives only in the chat gets dropped. The chat that runs n-mode, never a delegate, keeps a backlog of the user's mid-session messages in `<root>/.nstack/backlog.md`, per `references/session-backlog.md`, which you read when the first message after the opening request arrives. The opening request goes through Interview instead. At the start of each turn while a row is open, list the open title lines with `grep -n '^- \[ \]'` on the backlog and read in full only the rows the turn touches. A new message then goes into the backlog before any other work. End a reply with the title lines of the rows that changed that turn and of every row tagged `waiting`. When a new run starts on a backlog with open rows, name them in its first reply. Session pickup reads the backlog as open work at its step 2, along with that reference, and the resume note of Pause safely points at it.
+A sticky session collects asks one turn at a time, and an ask that lives only in the chat gets dropped. The chat that runs n-mode, never a delegate, keeps a backlog of the user's mid-session messages in `<root>/.nstack/backlog.md`. The opening request goes through Interview instead. Read `references/session-backlog.md` before you act on a message after the opening request, and when a new run, Session pickup, or Pause safely meets a backlog with open rows, unless that file is already in your context.
 
 ## Non-negotiables
 
