@@ -14,7 +14,7 @@ index 6114319..3e033e2 100644
  
  **Every playbook that writes files to the repo opens a worktree before its first edit.** Read `references/worktree.md` before you open one and before **Merging back**. It also names the playbooks that skip this. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
 diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
-index 67a699d..3e4844b 100644
+index 6868715..e4b6918 100644
 --- a/skills/n-mode/playbooks/opening-a-pr.md
 +++ b/skills/n-mode/playbooks/opening-a-pr.md
 @@ -10,7 +10,7 @@ Invoked at the end of every other playbook.

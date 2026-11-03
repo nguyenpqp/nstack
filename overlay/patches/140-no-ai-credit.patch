@@ -11,12 +11,12 @@ index 46f78ac..6afcba9 100644
  - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which. Building one with the **create-verification-skill** skill is a task of its own. Offer it in the reply when the project will keep changing that surface, and build it only when the user asks. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
  - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
 diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
-index f8f3508..58a8f9f 100644
+index ac763ad..6868715 100644
 --- a/skills/n-mode/playbooks/opening-a-pr.md
 +++ b/skills/n-mode/playbooks/opening-a-pr.md
 @@ -4,7 +4,7 @@ Invoked at the end of every other playbook.
  
- **Worktree.** Work from a git worktree off main. Subagents inherit it. Multiple `Task` calls on the same branch each get their own worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
+ **Worktree.** Work from a git worktree off main. A subagent works in the worktree its brief names, or in its own with `isolation: "worktree"`. Multiple `Task` calls on the same branch each get their own worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
  
 -**Commits.** Commit liberally. Rebase into small, ordered commits before opening PRs. Each commit is a future PR: landable, ordered to tell the story. Amend when the fix belongs in a just-made commit. New commit when separable. Commit bodies don't restate the subject.
 +**Commits.** Commit liberally. Rebase into small, ordered commits before opening PRs. Each commit is a future PR: landable, ordered to tell the story. Amend when the fix belongs in a just-made commit. New commit when separable. Commit bodies don't restate the subject. Commits and PR descriptions credit no AI agent: no `Co-Authored-By` trailer that names an agent, and no "Generated with" or "Authored by" line.

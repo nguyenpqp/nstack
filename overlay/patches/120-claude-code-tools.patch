@@ -74,7 +74,7 @@ index a9e96c4..ac8c0f1 100644
  - [ ] `git fetch origin <head-branch> && git checkout <head SHA>`.
  - [ ] <Start the backend and the surface. Wait for ready.>
 diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
-index 38306cc..4b9026c 100644
+index 18a7d44..ac763ad 100644
 --- a/skills/n-mode/playbooks/opening-a-pr.md
 +++ b/skills/n-mode/playbooks/opening-a-pr.md
 @@ -6,7 +6,7 @@ Invoked at the end of every other playbook.

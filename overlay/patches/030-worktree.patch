@@ -15,3 +15,16 @@ index 74cbeba..fcd8494 100644
  ## Subagents
  
  **Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
+diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
+index 38306cc..18a7d44 100644
+--- a/skills/n-mode/playbooks/opening-a-pr.md
++++ b/skills/n-mode/playbooks/opening-a-pr.md
+@@ -2,7 +2,7 @@
+ 
+ Invoked at the end of every other playbook.
+ 
+-**Worktree.** Work from a git worktree off main. Subagents inherit it. Multiple `Task` calls on the same branch each get their own worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
++**Worktree.** Work from a git worktree off main. A subagent works in the worktree its brief names, or in its own with `isolation: "worktree"`. Multiple `Task` calls on the same branch each get their own worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
+ 
+ **Commits.** Commit liberally. Rebase into small, ordered commits before opening PRs. Each commit is a future PR: landable, ordered to tell the story. Amend when the fix belongs in a just-made commit. New commit when separable. Commit bodies don't restate the subject.
+ 

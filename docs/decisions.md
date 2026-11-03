@@ -32,7 +32,7 @@ The per-decision intent files that came before this page are in git history, und
 
 ## The n-mode workflow
 
-- **Every task opens with an Interview sized by its playbook.** The user confirms a design before code exists and can opt out per request. A request that states the change asks only what is still open and would change the diff, because a diagnosed one-line bug once drew 6 questions. Process is never a question. Patch `020`, `overlay/files/.../interview.md`.
+- **Every task opens with an Interview sized by its playbook.** The user confirms a design before code exists and can opt out per request. A request that states the change asks only what is still open and would change the diff, because a diagnosed one-line bug once drew 6 questions. Process is never a question. An opt-out skips the round and the confirmation but not the intent file. `how` in step 1 finishes before the first round, and the todo list opens at step 9, after the confirmation. A tabletop agent had to guess all three on the old text, and 2 of 2 got all 6 questions right on the new text. Patch `020`, `overlay/files/.../interview.md`.
 - **Upstream's first-message rule stays word for word beside the Interview gate.** Its "Don't wait for confirmation" covers the goal statement, not code. A sentence that said so was tested and dropped, because tabletop agents held the gate in 2 of 2 runs with it and 2 of 2 without it. Both agents without it noted that a skim could misread the line, and neither did. Patch `020`.
 - **A design doc in hand limits the Interview to its gaps.** `overlay/files/.../interview.md`.
 - **Sticky mode is a rule in the skill, not a hook.** Claude Code has no frontmatter flag for it, and a session-start hook was ruled out. Patch `010`.
@@ -49,6 +49,8 @@ The per-decision intent files that came before this page are in git history, und
 
 - **The rules live in a reference file, and `n-mode/SKILL.md` keeps what a delegate needs.** (user) A delegate works in the worktree its brief names, so it needs only the absolute-path rules. This took `SKILL.md` from 4742 to 4109 words. All 6 answers on the new text matched the old text's, and the chat opened the file unprompted. `references/worktree.md`, patch `030`.
 - **The chat that runs n-mode stays at the root.** (user) The user coordinates from one place, and inside a worktree Claude Code treats the root, the backlog included, as outside the session. Nobody calls `EnterWorktree`. Everyone edits by absolute path and runs `git -C <worktree>`, and each delegate brief names its worktree and branch. Patch `100`.
+- **A subagent gets its worktree from its brief or from `isolation: "worktree"`.** Upstream's "Subagents inherit it" is false here, because the chat stays at the root. Patch `030`.
+- **A worker with no isolation still edits in a worktree.** Upstream's Orchestrate lets a worker share this checkout to use a dev server, but the root never holds feature work. Its brief names a worktree, and it starts its own copy when its edits must show. 2 of 2 tabletops placed the edits there. Patch `110`.
 - **Worktrees live in `<root>/.claude/worktrees/`, ignored by a `.gitignore` inside that folder.** Nothing commits on `main`, and nothing writes under `.git/`, whose files Claude Code refuses as sensitive. Patch `030`.
 - **A run's own files live in `<root>/.nstack/`,** which holds its own `.gitignore`. (user) That covers the backlog and its archive, intents, and tickets files. Patch `190`.
 - **Intents are never committed and are deleted once nothing open reads them.** (user) A committed intent grows the repo per task and goes stale. Opening a PR or merging back carries **Problem**, **Decisions**, and **Out of scope** into the PR body or last commit. A dropped row or an abandoned run keeps its intent for a pickup. Patch `190`. This covers target repos, and this repo records its own decisions on this page.
@@ -135,7 +137,6 @@ Each one names what would settle it.
 
 - `typescript-best-practices` pairs `paths` with `disable-model-invocation`, and the docs do not say how the two combine.
 - Whether nested subagents work as `orchestrate` describes. The playbook keeps its depth rule.
-- An Orchestrate worker that must use this checkout runs with no isolation, but the root never holds feature work, and nothing says where that worker edits. Upstream's wording.
 
 ## Patch index
 
@@ -148,7 +149,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `009-drop-ketchup-video` | Removes the links to the excluded skill |
 | `010-sticky-mode` | n-mode stays on for the conversation |
 | `020-interview-gate` | Every task opens with a sized Interview |
-| `030-worktree` | Points n-mode at `references/worktree.md` and states the rules a delegate needs |
+| `030-worktree` | Points n-mode at `references/worktree.md`, states the rules a delegate needs, and says where a subagent's worktree comes from |
 | `050-spec-build` | Routes parallel-ticket work to Spec build |
 | `060-pocock-routing` | Routes to `diagnosing-bugs` and to the built-in `/code-review`, and adds the final reviewer of a sensitive Feature |
 | `065-diagnosis-loop` | Bug fix runs `diagnosing-bugs` phases 1 to 4 |
@@ -158,7 +159,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `085-architect-trigger` | Defines crossing a function boundary |
 | `090-verify-surface` | `/simplify` before commit, and the project's own control skill |
 | `100-claude-code-models` | Claude Code model values, the `arena` and `interrogate` panels, `arena`'s judge, and the setup rule with its role lines |
-| `110-claude-code-agents` | Agent fields, and how cloud agents, read-only agents, and Orchestrate's store map |
+| `110-claude-code-agents` | Agent fields, how cloud agents, read-only agents, and Orchestrate's store map, and where a worker with no isolation edits |
 | `120-claude-code-tools` | Cursor-only tools and paths |
 | `130-claude-code-help` | `nstack-help`, the guide pages, and the install commands for Claude Code |
 | `140-no-ai-credit` | Commits and PRs credit no AI agent |
@@ -166,6 +167,6 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `160-match-user-language` | Replies use the user's language |
 | `180-effort-by-model` | A budget that moves every effort by the same steps |
 | `190-nstack-dir` | Points n-mode and three playbooks at the `.nstack/` rules |
-| `220-delegate-interrogate` | Limits a delegate's `interrogate`, always `/code-review` |
+| `220-delegate-interrogate` | Limits a delegate's `interrogate`, always `/code-review`, in `SKILL.md` and `opening-a-pr.md` |
 | `270-setup-guide-budget` | The setup guide describes the relative budget and what `swarm workers` drives |
 | `290-model-table` | Takes the model values out of the Subagents section and points it at `references/model-table.md` |
