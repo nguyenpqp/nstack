@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 6114319..3e033e2 100644
+index 2acd6cb..e80aafd 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -102,6 +102,10 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
@@ -13,6 +13,32 @@ index 6114319..3e033e2 100644
  ## Worktree
  
  **Every playbook that writes files to the repo opens a worktree before its first edit.** Read `references/worktree.md` before you open one and before **Merging back**. It also names the playbooks that skip this. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
+diff --git a/skills/n-mode/playbooks/autopilot-full.md b/skills/n-mode/playbooks/autopilot-full.md
+index 10f34b3..1889c3a 100644
+--- a/skills/n-mode/playbooks/autopilot-full.md
++++ b/skills/n-mode/playbooks/autopilot-full.md
+@@ -9,7 +9,7 @@ A verdict covers one patch and green CI covers one head. Step 4 runs a full swar
+ 
+    Open the PR early so CI and bots run alongside the work. The code is ready only after the slop-strip (Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits) and the `/no-comments` pass, so the full swarm runs on finished code. Then rebase onto current trunk and report the code-ready head before self-proof, so verification runs on the base the patch lands on. Report every later head, and merge-ready once self-proof, CI, and babysit are done. Fix rounds stay on that base unless trunk conflicts, breaks CI, or lands a known concurrent change to the same files, because each rebase restarts CI. Run the repo's checks for the touched paths on the committed head before the code-ready push and before a later push that needs a verifier.
+ 
+-   Assume the VM dies. Soon after starting, push and start a decision trail in the root agent's store (path in the system prompt) per the **show-me-your-work** skill, then push each finished unit before you start the next. Whoever spawns a subagent records its id, state, and a stuck-after runtime from past runs of its kind in that store, so the root can probe it if the parent dies. Force-push only your own branch, with `--force-with-lease` pinned to the SHA you last pushed or took over, and on any push you did not make, stop and report to the root.
++   Assume the VM dies. Soon after starting, push and start a decision trail in `<root>/.nstack/autopilot/<slug>/`, one file per owner, per the **show-me-your-work** skill, then push each finished unit before you start the next. Whoever spawns a subagent records its id, state, and a stuck-after runtime from past runs of its kind in its file there, so the root can probe it if the parent dies. Force-push only your own branch, with `--force-with-lease` pinned to the SHA you last pushed or took over, and on any push you did not make, stop and report to the root.
+ 3. **Run owners in parallel off trunk, never stacked,** so each PR lands on its own.
+ 4. **Swarm-verify once.** A full swarm runs once, at the code-ready head. Another full swarm runs only for new behavior, a redesign, or a large new diff. A rebase, a merge-conflict resolution, or a minor fix gets a single verifier at the new head, and a wording-only change gets none. Fan out independent verifiers at the code-ready SHA per the **swarm** skill. They re-run the gates, prove the load-bearing behavior live on the real surface through its control skill (the project's own skill under `.claude/skills/` that drives the app the way a user does) or a named driver, and audit the diff. The verdict is not clean without the live lane, or before you audit the merge-ready report's receipts, because no lane trusts a claim it has not checked.
+ 
+diff --git a/skills/n-mode/playbooks/multi-phase-plan.md b/skills/n-mode/playbooks/multi-phase-plan.md
+index 798fd3c..d99a67e 100644
+--- a/skills/n-mode/playbooks/multi-phase-plan.md
++++ b/skills/n-mode/playbooks/multi-phase-plan.md
+@@ -5,7 +5,7 @@
+ 1. When the change is one or two files with an obvious approach, skip the plan. Say so and stop.
+ 2. Settle open questions by prototype before you write. Run `playbooks/prototype.md` for each. Keep the branch, the SHA, and the screenshots for Appendix A. Ask the operator only about a product or preference call that no run can settle. Give options (the **never-block-on-the-human** principle skill).
+ 3. Explore in subagents with `subagent_type: "n-agent"` and an explicit model per the Subagents section (the **guard-the-context-window** principle skill). Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section. Each returns file pointers, conventions, test commands, and entry points. No inlined dumps.
+-4. Copy the skeleton below into the plan file and fill every placeholder. Unless the operator names a path, write the file under the agent store's `docs/`. Keep every heading and every sub-block in the order shown. One section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Name the execution playbook in **How to read this**. Pick `playbooks/autopilot-full.md` when the run may merge. Pick `playbooks/autopilot-stack.md` when the operator lands the PRs. A standing program takes `playbooks/orchestrate.md`.
++4. Copy the skeleton below into the plan file and fill every placeholder. Unless the operator names a path, write the file to `<root>/.nstack/plans/<slug>.md`, per the **nstack folder** section of `../references/worktree.md`. Keep every heading and every sub-block in the order shown. One section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Name the execution playbook in **How to read this**. Pick `playbooks/autopilot-full.md` when the run may merge. Pick `playbooks/autopilot-stack.md` when the operator lands the PRs. A standing program takes `playbooks/orchestrate.md`.
+ 5. Write under `/technical-writing` in full, then `/unslop`. The body is one Diátaxis mode, how-to. Appendices hold explanation and reference. Each heading states the task or the finding. No long dashes. No mid-sentence colons.
+ 6. Run `node <n-mode dir>/scripts/check-plan.mjs <plan.md>`, where `<n-mode dir>` is the folder that holds n-mode's `SKILL.md`, and fix every line it prints (the **encode-lessons-in-structure** principle skill).
+ 7. Hand back. Post the plan path and the script's output, then stop. Execution starts on the operator's explicit go, under the execution playbook the plan names.
 diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
 index 6868715..e4b6918 100644
 --- a/skills/n-mode/playbooks/opening-a-pr.md

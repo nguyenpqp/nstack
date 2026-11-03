@@ -31,7 +31,7 @@ A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus
 | Transcript slice in `recall` | `recall workers` | `haiku` |
 | Per-task diff review | `judgment and prose` | `opus high` |
 | Per-task diff review of hardest implementation | `deep review` | `fable xhigh` |
-| Plan writing, finding the cause of a bug that a first investigation did not explain, testing a premise under **Attack the Premise**, design decisions | `judgment and prose` | `opus xhigh` |
+| Plan writing that you delegate, finding the cause of a bug that a first investigation did not explain, testing a premise under **Attack the Premise**, design decisions | `judgment and prose` | `opus xhigh` |
 | Final branch review | `judgment and prose` | `opus xhigh` |
 | Arena runners | `arena runners` | `opus xhigh` and `sonnet xhigh` |
 | Arena or eval judge | `arena cross-judge pool` | `fable high`, or `opus xhigh` when the chat runs on Fable |

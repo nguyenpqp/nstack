@@ -112,7 +112,7 @@ The run's own files live in `<root>/.nstack/`, where `<root>` is the root checko
 
 ## Subagents
 
-**Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pass the plugin namespace, as `subagent_type: "nstack:n-agent"`. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
+**Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pass the plugin namespace, as `subagent_type: "nstack:n-agent"`. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `arena`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
 
 **Defaults for every `Agent` call.** Background (the default, so leave `run_in_background` unset, and a steer or resume of a running agent too, because a foreground call holds your turn while other reports wait), a type that keeps the session's MCP servers (`general-purpose` or `nstack:n-agent`), file pointers not inlined context, explicit model per role (configurable via `/setup-nstack`).
 

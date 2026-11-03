@@ -9,7 +9,7 @@ index e727fe5..76ba5d1 100644
 -You are operating as n-mode's full agent style. The chat that receives `/n-mode` owns the playbook, the todo list, and every Task spawn. You are one of its delegates. Read the `n-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Use the absolute path your parent gave you. With no path, before any other work, search `~/.cursor/plugins/` for a file whose path ends in `skills/n-mode/SKILL.md`. If more than one file matches, use the copy whose `.cursor-plugin/plugin.json` has the highest `version`. Your skill catalog hides this skill, so a missing catalog entry does not mean pstack is absent. If no such file exists, stop and tell your parent. Navigate to a leaf `principle-*` skill whenever you apply that principle.
 +You are operating as n-mode's full agent style. The chat that receives `/n-mode` owns the playbook, the todo list, and every Task spawn. You are one of its delegates. Read the `n-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Use the absolute path your parent gave you. With no path, before any other work, search `~/.claude/plugins/` for a file whose path ends in `skills/n-mode/SKILL.md` under an `nstack` folder. If more than one file matches, prefer a copy under `~/.claude/plugins/cache/`, and among those use the most recently modified. Your skill catalog hides this skill, so a missing catalog entry does not mean pstack is absent. If no such file exists, stop and tell your parent. Navigate to a leaf `principle-*` skill whenever you apply that principle.
 diff --git a/skills/arena/SKILL.md b/skills/arena/SKILL.md
-index f50fcd3..1247eba 100644
+index f50fcd3..605b1a4 100644
 --- a/skills/arena/SKILL.md
 +++ b/skills/arena/SKILL.md
 @@ -21,13 +21,13 @@ Every candidate gets the same prompt, so the prompt is the contract.
@@ -17,7 +17,7 @@ index f50fcd3..1247eba 100644
  ## Phase B: Fan out
  
 -Spawn all N subagents in one message with `run_in_background: true`, each with the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected.
-+Spawn all N subagents in one message, each with the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected.
++Spawn all N subagents as `nstack:n-agent` in one message, each with the task, the path to the shared grounding, its own output path, and instructions to produce the artifact and a short rationale naming the alternatives it considered and what it rejected.
  
  If a candidate produces no output, proceed with N-1 and note the dropout.
  
@@ -41,8 +41,28 @@ index 2ed42dd..8c02351 100644
  
  ## 1. Assess complexity
  
+diff --git a/skills/interrogate/SKILL.md b/skills/interrogate/SKILL.md
+index d5a9166..3f5248b 100644
+--- a/skills/interrogate/SKILL.md
++++ b/skills/interrogate/SKILL.md
+@@ -16,13 +16,13 @@ The scope is what the user names. Otherwise it is the branch diff from its merge
+ 
+ ## Fan out
+ 
+-Run Phase A steps 3 and 4 and Phase B of the **arena** skill, with four changes. Read the `interrogate reviewers` line in place of `arena runners`, with `opus xhigh` and `fable high` as its default. Copy the scope's uncommitted changes into each worktree. Spawn each adversary as `generalPurpose`. In place of the arena task and rationale, give each adversary the scope, the intent, and this brief:
++Run Phase A steps 3 and 4 and Phase B of the **arena** skill, with four changes. Read the `interrogate reviewers` line in place of `arena runners`, with `opus xhigh` and `fable high` as its default. Open each worktree yourself with `git worktree add --detach`, per `../n-mode/references/worktree.md`, copy the scope's uncommitted changes into it, and name its path in the brief, because `isolation: "worktree"` starts from a clean checkout. Spawn each adversary as `generalPurpose`. In place of the arena task and rationale, give each adversary the scope, the intent, and this brief:
+ 
+ > Break this change. Prove each finding with a run against the real code, such as a failing test, a repro script, or command output that shows the wrong behavior. For a design or plan, run a prototype or probe the current tree. Keep repros in your own worktree. Report each finding with a title, the exact command, the output it printed, and the output the intent requires. Leave out anything you did not run. That covers style, naming, structure, and risks that need a future change to matter. No findings is a valid result.
+ 
+ ## Verify
+ 
+-Verify each finding per arena Phase F by rerunning its command. Keep a finding when the output shows the failure and the failure breaks the intent. Drop the rest. Merge findings that share a root cause.
++Verify each finding per arena Phase F by rerunning its command. Keep a finding when the output shows the failure and the failure breaks the intent. Drop the rest. Merge findings that share a root cause. Then remove each adversary's worktree with `git worktree remove --force`.
+ 
+ Skip arena Phases C, D, and E. Adversaries find different failures, so the verdict keeps every verified finding, not one adversary's list.
+ 
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index f72eefe..46f78ac 100644
+index f72eefe..d2629da 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -105,9 +105,9 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
@@ -50,7 +70,7 @@ index f72eefe..46f78ac 100644
  ## Subagents
  
 -**Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
-+**Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pass the plugin namespace, as `subagent_type: "nstack:n-agent"`. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
++**Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pass the plugin namespace, as `subagent_type: "nstack:n-agent"`. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `arena`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
  
 -**Defaults for every `Task` call.** `run_in_background: true` (a steer or resume of a running agent too, because a foreground call holds your turn while other reports wait), agent mode (readonly strips MCP), file pointers not inlined context, explicit model per role (configurable via `/setup-nstack`. Defaults `grok-4.7-xhigh-fast` for code, `claude-opus-5-5-xhigh` for prose and judgment). Code delegates tier by difficulty. The hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms) go to your strongest judgment model (`claude-opus-5-5-xhigh`), whether the task needs judgment on vague intent or is a precisely specified sequence of steps to execute to the letter. Trivial mechanical edits go to your fast code model. Per-role lines in the `/setup-nstack` rule override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role line of `inherit-parent` or `auto` runs that role on the parent chat model (omit Task `model`). Each code playbook's configured model comes from its line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), and the hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.
 +**Defaults for every `Task` call.** Background (the default, so leave `run_in_background` unset, and a steer or resume of a running agent too, because a foreground call holds your turn while other reports wait), a type that keeps the session's MCP servers (`general-purpose` or `nstack:n-agent`), file pointers not inlined context, explicit model per role (configurable via `/setup-nstack`. Defaults `grok-4.7-xhigh-fast` for code, `claude-opus-5-5-xhigh` for prose and judgment). Code delegates tier by difficulty. The hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms) go to your strongest judgment model (`claude-opus-5-5-xhigh`), whether the task needs judgment on vague intent or is a precisely specified sequence of steps to execute to the letter. Trivial mechanical edits go to your fast code model. Per-role lines in the `/setup-nstack` rule override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role line of `inherit-parent` or `auto` runs that role on the parent chat model (omit Task `model`). Each code playbook's configured model comes from its line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), and the hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.
