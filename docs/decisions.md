@@ -66,12 +66,12 @@ The per-decision intent files that came before this page are in git history, und
 The table under **Match the model to the job** in `n-mode/SKILL.md` is the source of truth for values. This section says why they are what they are.
 
 - **Every job names its model and effort outright.** (user) The chat never raises or lowers what the table gives, and picks an implementation tier from the change, not to save cost. A rule that raised effort one step for the hardest work turned `opus medium` into `opus high` on its own. Patch `200`.
-- **Implementation tiers.** (user) `sonnet medium` for mechanical edits, `sonnet high` for implementation, `opus medium` for hard work, and `fable xhigh` for the hardest. Patches `180`, `200`.
-- **A bug that review finds gets a stronger fix than the code that held it.** (user) A mechanical edit on `sonnet medium` gets a fix on `sonnet high`, implementation on `sonnet high` gets `opus medium`, hard implementation on `opus medium` gets `opus high`, and the hardest work stays on `fable xhigh`, the top of the table. A failed **Verify** with no review keeps the ticket's tier. Patch `280`.
+- **Implementation tiers.** (user) `sonnet medium` for mechanical edits, `sonnet high` for implementation, `opus medium` for hard work, and `fable high` for the hardest. Patches `180`, `200`.
+- **A bug that review finds gets a stronger fix than the code that held it.** (user) A mechanical edit on `sonnet medium` gets a fix on `sonnet high`, implementation on `sonnet high` gets `opus medium`, hard implementation on `opus medium` gets `opus high`, and hardest implementation on `fable high` gets `fable xhigh`. A failed **Verify** with no review keeps the ticket's tier. Patch `280`.
 - **A mechanical edit is defined by the brief:** it names each file and the exact change and leaves no design choice. Two tabletop agents split on the old wording, and 2 of 2 agreed on the new. Patch `250`.
 - **Explore and search run at `sonnet medium`, and verify at `sonnet high`.** (user) Spawn labels on 2026-10-30 showed 549 `sonnet high` spawns and only 41 `sonnet medium`, against the stated tiers. Patches `180`, `200`.
 - **Reviews.** (user) Per-task diff review runs at `opus high`. The final branch review runs at `opus xhigh`, and at `fable high` only on a sensitive branch. Spec build drops its different-model requirement. Patch `180`.
-- **Fable is scarce.** (user) "fable rất tốn." `hardest tasks` stays `fable xhigh`, and every other Fable use runs at `high`. Patch `210`.
+- **Fable is scarce.** (user) "fable rất tốn." Only the fix of a bug that review found in hardest implementation runs Fable at `xhigh`, and every other Fable use runs at `high`. Patches `210`, `290`.
 - **Panels are `opus xhigh` and `fable high`.** (user) Sonnet and Haiku left every panel, since a Haiku seat could judge an arena. Patches `100`, `210`, `overlay/renames.json`.
 - **A table row replaces the default a routed skill names for the same role.** `how` and `why` keep their upstream defaults. (user) Rows put explorers and investigators at `sonnet medium` and the explainer at `opus high`. Tabletops followed the old value in 2 of 2 runs until the row existed, and the new value in 2 of 2 after. Patch `230`.
 - **The Orchestrate verifier stays on a different family from its worker.** (user) `opus high` for a Sonnet worker, `fable high` for an Opus worker, and `opus xhigh` for a Fable worker, because "sonnet high hơi thấp". Patch `240`.
@@ -169,3 +169,4 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `260-trail-review` | Rows for the `show-me-your-work` review |
 | `270-setup-guide-budget` | The setup guide describes the relative budget |
 | `280-review-fix-tiers` | Rows for a fix of a bug that review found |
+| `290-hardest-fable-high` | Hardest implementation runs at `fable high` |
