@@ -1,5 +1,5 @@
 diff --git a/skills/arena/SKILL.md b/skills/arena/SKILL.md
-index 009e7eb..619a88e 100644
+index 009e7eb..f50fcd3 100644
 --- a/skills/arena/SKILL.md
 +++ b/skills/arena/SKILL.md
 @@ -16,7 +16,7 @@ Every candidate gets the same prompt, so the prompt is the contract.
@@ -7,7 +7,7 @@ index 009e7eb..619a88e 100644
  1. State the artifact each candidate is producing.
  2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
 -3. Pick the runners. Use the `arena runners` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, default to one each on `claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`. An `auto` or `inherit-parent` entry in this line means the parent model, so omit `model` for it. If the Task tool rejects a configured entry, run that seat on its family's default and say so. Families go by prefix: `claude-*`, and `grok-*` with `cursor-grok-*` and `composer-*`. A refused `composer-*` entry runs on `grok-4.7-xhigh-fast`. If the family has no default, or the Task tool rejects that default, use the closest valid slug of the same family from its error message, or drop the seat and say so when there is none. If dropped seats leave fewer than two runners, add runners until there are two, or one when the line has one entry. Run each added runner on a remaining runner's model, or omit `model` so it runs on the parent model when none remain, and say so. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
-+3. Pick the runners. Use the `arena runners` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, default to one each on `claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`. An `auto` or `inherit-parent` entry in this line means the parent model, so omit `model` for it. An entry such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`, and an entry with no effort omits `effort`. If the Task tool rejects a configured entry, run that seat on the default at the same position and say so. `model` takes only `opus`, `sonnet`, `haiku`, or `fable`, so an entry that names another vendor's model counts as rejected. If it rejects a default, omit `model` so that seat runs on the parent model, and say so. Every seat runs a Claude model, so say in the writeup that the spread of views is narrower than a mixed-vendor arena gives. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
++3. Pick the runners. Use the `arena runners` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, default to one each on `opus xhigh` and `sonnet xhigh`. An `auto` or `inherit-parent` entry in this line means the parent model, so omit `model` for it. An entry such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`, and an entry with no effort omits `effort`. If the Task tool rejects a configured entry, run that seat on the default at the same position and say so. `model` takes only `opus`, `sonnet`, `haiku`, or `fable`, so an entry that names another vendor's model counts as rejected. If it rejects a default, omit `model` so that seat runs on the parent model, and say so. Every seat runs a Claude model, so say in the writeup that the spread of views is narrower than a mixed-vendor arena gives. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
  4. Give each candidate its own output location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
  
  ## Phase B: Fan out
@@ -16,12 +16,38 @@ index 009e7eb..619a88e 100644
  ## Phase C: Cross-judge
  
 -After all Phase B candidates complete, choose one model from the `arena cross-judge pool` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, choose from `claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`. Spawn one readonly judge subagent. The judge is never from the parent's family, as Phase A step 3 defines families. Try only the entries from another family, in pool order. An `auto` or `inherit-parent` entry is the parent model, so it never judges. With the default pool, a Claude parent gets `grok-4.7-xhigh-fast`. A parent from any other family gets `claude-opus-5-5-xhigh` first. If the Task tool rejects an entry, use a valid slug of the same model at the closest level or speed from the error message, or move to the next entry when there is none. If no entry from another family runs, try the default pool's entries from another family the same way. If none of those runs, skip the judge, pick the base alone in Phase D, and say so. If you do not know the parent's model, try the pool's real slugs in pool order and say that the family check did not run. The judge sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with your reading in Phase D. Don't spawn it while candidates are still writing.
-+After all Phase B candidates complete, choose one model from the `arena cross-judge pool` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, choose from `claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`. Spawn one readonly judge subagent. The judge is never on the parent's model. Try only the entries on another model, in pool order. An `auto` or `inherit-parent` entry is the parent model, so it never judges. If the Task tool rejects an entry, move to the next one. If no entry runs, skip the judge, pick the base alone in Phase D, and say so. If you do not know the parent's model, try the pool's entries in pool order and say that the check did not run. The judge sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with your reading in Phase D. Don't spawn it while candidates are still writing.
++After all Phase B candidates complete, choose one model from the `arena cross-judge pool` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, the pool is `fable high`, then `opus xhigh`. Spawn one readonly judge subagent. The judge is never on the parent's model. Try only the entries on another model, in pool order. An `auto` or `inherit-parent` entry is the parent model, so it never judges. If the Task tool rejects an entry, move to the next one. If no entry runs, skip the judge, pick the base alone in Phase D, and say so. If you do not know the parent's model, try the pool's entries in pool order and say that the check did not run. The judge sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with your reading in Phase D. Don't spawn it while candidates are still writing.
  
  ## Phase D: Pick a base
  
+diff --git a/skills/how/SKILL.md b/skills/how/SKILL.md
+index 507f48a..2ed42dd 100644
+--- a/skills/how/SKILL.md
++++ b/skills/how/SKILL.md
+@@ -10,7 +10,7 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
+ 
+ Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
+ 
+-Every spawn is a Task subagent with `subagent_type: generalPurpose` and `readonly: true`. Explorers use the `how explorer` line in the `nstack-models.mdc` rule (default `grok-4.7-xhigh-fast`), and every explainer uses the `how explainer` line (default `claude-opus-5-5-xhigh`). Set `model` to that line's value, or to the default if the rule or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If the Task tool rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
++Every spawn is a Task subagent with `subagent_type: generalPurpose` and `readonly: true`. Explorers use the `how explorer` line in the `nstack-models.mdc` rule (default `sonnet medium`), and every explainer uses the `how explainer` line (default `opus high`). Set `model` to that line's value, or to the default if the rule or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If the Task tool rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
+ 
+ ## 1. Assess complexity
+ 
+diff --git a/skills/interrogate/SKILL.md b/skills/interrogate/SKILL.md
+index 3e70013..d5a9166 100644
+--- a/skills/interrogate/SKILL.md
++++ b/skills/interrogate/SKILL.md
+@@ -16,7 +16,7 @@ The scope is what the user names. Otherwise it is the branch diff from its merge
+ 
+ ## Fan out
+ 
+-Run Phase A steps 3 and 4 and Phase B of the **arena** skill, with four changes. Read the `interrogate reviewers` line in place of `arena runners`. Copy the scope's uncommitted changes into each worktree. Spawn each adversary as `generalPurpose`. In place of the arena task and rationale, give each adversary the scope, the intent, and this brief:
++Run Phase A steps 3 and 4 and Phase B of the **arena** skill, with four changes. Read the `interrogate reviewers` line in place of `arena runners`, with `opus xhigh` and `fable high` as its default. Copy the scope's uncommitted changes into each worktree. Spawn each adversary as `generalPurpose`. In place of the arena task and rationale, give each adversary the scope, the intent, and this brief:
+ 
+ > Break this change. Prove each finding with a run against the real code, such as a failing test, a repro script, or command output that shows the wrong behavior. For a design or plan, run a prototype or probe the current tree. Keep repros in your own worktree. Report each finding with a title, the exact command, the output it printed, and the output the intent requires. Leave out anything you did not run. That covers style, naming, structure, and risks that need a future change to matter. No findings is a valid result.
+ 
 diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
-index 8a5bd54..b9c10d7 100644
+index 8a5bd54..fc38cdb 100644
 --- a/skills/setup-nstack/SKILL.md
 +++ b/skills/setup-nstack/SKILL.md
 @@ -7,17 +7,17 @@ description: Configure which models nstack uses per role and at what reasoning b
@@ -108,7 +134,7 @@ index 8a5bd54..b9c10d7 100644
 +reflect tooling: sonnet high
 +reflect judgment, divergent, synthesizer: opus xhigh
 +arena runners: opus xhigh, sonnet xhigh
-+arena cross-judge pool: opus xhigh, fable high
++arena cross-judge pool: fable high, opus xhigh
 +swarm workers: sonnet high
 +recall workers: haiku
 +architect runners: opus xhigh, fable high
@@ -116,3 +142,16 @@ index 8a5bd54..b9c10d7 100644
  ```
  
  ### 6. Confirm
+diff --git a/skills/why/SKILL.md b/skills/why/SKILL.md
+index 0fbd7df..6534bba 100644
+--- a/skills/why/SKILL.md
++++ b/skills/why/SKILL.md
+@@ -48,7 +48,7 @@ Map each available MCP to one evidence category:
+ 
+ Source control is always available through git and `gh`. For the other six, classify using the MCP name, server instructions, tool names, and resource descriptors. If an MCP could fit more than one category, choose the one matching its primary evidence. Record ambiguous cases in the coverage map.
+ 
+-Spawn one investigator per category that has a matching MCP, all in a single message so they run concurrently, each owning exactly one tool or MCP. Don't ask one agent to cover multiple MCPs. `model`: the `why investigators` line, default `grok-4.7-xhigh-fast`.
++Spawn one investigator per category that has a matching MCP, all in a single message so they run concurrently, each owning exactly one tool or MCP. Don't ask one agent to cover multiple MCPs. `model`: the `why investigators` line, default `sonnet medium`.
+ 
+ Each investigator's prompt is `references/investigator-prompt.md` filled in, plus:
+ - the category playbook `references/sources/<source>.md` for the selected MCP, adapted from the examples in `references/source-playbook.md`

@@ -192,7 +192,7 @@ index 127c1f4..7e1ac06 100644
  - Check that every row maps to a real decision or action.
  - Check that each row's evidence resolves and shows what the row claims.
 diff --git a/skills/why/SKILL.md b/skills/why/SKILL.md
-index 9cd7cd0..cf91e67 100644
+index e4637ff..29b4bd4 100644
 --- a/skills/why/SKILL.md
 +++ b/skills/why/SKILL.md
 @@ -34,7 +34,7 @@ Before spawning investigators, build the seed context inline: file paths and lin

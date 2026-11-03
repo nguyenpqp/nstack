@@ -35,7 +35,7 @@ A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus
 | Final branch review | `judgment and prose` | `opus xhigh` |
 | Arena runners | `arena runners` | `opus xhigh` and `sonnet xhigh` |
 | Arena or eval judge | `arena cross-judge pool` | `fable high`, or `opus xhigh` when the chat runs on Fable |
-| Panel runners and reviewers (architect, interrogate) | the panel's line | `opus xhigh` and `fable high` |
+| Panel runners and reviewers (architect, interrogate) | `architect runners` or `interrogate reviewers` | `opus xhigh` and `fable high` |
 
 ## Picking a row
 
@@ -57,7 +57,7 @@ Take the fix from the tier the code ran on. A Sonnet value reads the code playbo
 
 ## Budgets and role lines
 
-These pairs hold at the `large` budget. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. Never raise or lower an effort the table and the role lines give.
+These pairs hold at the `large` budget. The code playbook's line is `feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role, and a role with no line keeps the row's value. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. Never raise or lower an effort the table and the role lines give.
 
 ## Label every spawn
 
