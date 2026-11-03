@@ -37,7 +37,7 @@ Remaining triggers:
 - Docs, RFCs, readmes, PR descriptions, or commit messages → the **technical-writing** skill (`/technical-writing`).
 - Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
 - Any commit message or PR description → credit no AI agent. Add no `Co-Authored-By` trailer that names an agent, and no "Generated with", "Authored by", or 🤖 line. This holds even when a harness reminder asks for one.
-- Before review, or before **Merging back** when no PR opens → the **no-comments** skill (`/no-comments`), then Claude Code's built-in `/code-review` over the branch. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
+- Before review, or before **Merging back** when no PR opens → the **no-comments** skill (`/no-comments`), then Claude Code's built-in `/code-review` over the branch. A Feature run on a branch that touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
 - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which. Building one with the **create-verification-skill** skill is a task of its own. Offer it in the reply when the project will keep changing that surface, and build it only when the user asks. For bug fixes, reproduce first on the same surface yourself. Hand to the user only under the narrow Bug fix step 1 exception.
 - Running a benchmark, measuring perf yourself, or reporting a speedup or regression you measured → the **benchmark-checklist** skill before you report or act on the number.
 - Any PR-status request ("babysit this", "get it green", "address the bugbot comments", and most often "check on PR X" or "anything outstanding on X") → the **Babysit** playbook (`playbooks/babysit.md`), not any other babysit skill, whose description matches the same words. Never triggered by merely opening a PR. Declare its mode before polling. The playbook's step 1 owns the request-to-mode mapping. Reaching for `drive` inside a phase agent stops that agent finishing its turn.
@@ -126,40 +126,54 @@ After the merge lands, remove the worktree with `git -C <root> worktree remove <
 
 **Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pass the plugin namespace, as `subagent_type: "nstack:n-agent"`, and set its `model` and `effort` from the table in **Match the model to the job**. With no `effort`, the agent runs at the session's effort. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
 
-**Defaults for every `Agent` call.** Background (the default, so leave `run_in_background` unset), a type that keeps the session's MCP servers (`general-purpose` or `nstack:n-agent`), file pointers not inlined context, explicit model per role (configurable via `/setup-nstack`. Defaults `sonnet high` for code, `opus xhigh` for prose and judgment). Code delegates tier by difficulty, per the implementation rows of the table in **Match the model to the job**. Those rows name the only models that implement, so never pick another one between them. Pick the tier from the change, not to save cost, and name it in the brief. Per-role lines in the `/setup-nstack` rule override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role line of `inherit-parent` or `auto` runs that role on the parent chat model (omit Agent `model`). Each code playbook's configured model comes from its line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), hard changes read `hard tasks`, and the hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.
+**Defaults for every `Agent` call.** Background (the default, so leave `run_in_background` unset), a type that keeps the session's MCP servers (`general-purpose` or `nstack:n-agent`), file pointers not inlined context, explicit model per role (configurable via `/setup-nstack`, with each job's default in the table). Code delegates tier by difficulty, per the implementation rows of the table in **Match the model to the job**. Those rows name the only models that implement, so never pick another one between them. Pick the tier from the change, not to save cost, and name it in the brief. When two rows fit a job, take the higher one, with the implementation rows running lowest to highest. A helper that also writes code, such as a babysitter that pushes fixes, takes the tier of the code it writes. A playbook's "configured model (default `sonnet high`)" is the Implementation row, so a change at another tier takes that tier's row. Per-role lines in the `/setup-nstack` rule override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role line of `inherit-parent` or `auto` runs that role on the parent chat model (omit Agent `model`). Each code playbook's configured model comes from its line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), moderate and hard changes read `hard tasks`, and the hardest changes read `hardest tasks`. Fable reviews read `deep review`. Prose and judgment read `judgment and prose`.
 
 **Match the model to the job.** A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus"` and `effort: "xhigh"`. A value with no effort, such as `haiku`, omits `effort`. Before each spawn, take the model and effort from the job's row:
 
 | Job | Role | Model and effort |
 |---|---|---|
 | Mechanical edit: the brief names each file and the exact change, and leaves no design choice | the code playbook's line | `sonnet medium` |
-| Fix of a bug that review found in a mechanical edit | the code playbook's line | `sonnet high` |
-| Implementation | the code playbook's line | `sonnet high` |
-| Fix of a bug that review found in implementation | `hard tasks` | `opus medium` |
-| Hard implementation: a new background worker, a change wired through several layers, a migration of the user's saved config or data | `hard tasks` | `opus medium` |
-| Fix of a bug that review found in hard implementation | `hard tasks` | `opus high` |
-| Hardest implementation: cross-cutting design, gnarly concurrency, a subtle algorithm, whether the intent is vague or the steps are exact | `hardest tasks` | `fable high` |
-| Fix of a bug that review found in hardest implementation | `hardest tasks` | `fable xhigh` |
-| Explore and search | `swarm workers` | `sonnet medium` |
+| Implementation: an ordinary change, such as a CRUD endpoint or a small feature that follows an existing pattern | the code playbook's line | `sonnet high` |
+| Moderate implementation: hard work that needs little reasoning, such as a change wired through several layers or a large edit whose approach is clear | `hard tasks` | `opus medium` |
+| Hard implementation: work that needs care, such as a new background worker, a migration of the user's saved config or data, or logic where a small mistake is costly | `hard tasks` | `opus high` |
+| Hardest implementation: cross-cutting design, gnarly concurrency, a subtle algorithm, whether the intent is vague or the steps are exact | `hardest tasks` | `opus xhigh` |
+| Explore and search, and any helper that only reads, parses, or watches, unless its skill names a role line | `swarm workers` | `sonnet medium` |
 | Explorer in `how` | `how explorer` | `sonnet medium` |
 | Explainer in `how` | `how explainer` | `opus high` |
 | Investigator in `why` | `why investigators` | `sonnet medium` |
-| Verify | `swarm workers` | `sonnet high` |
-| Independent verdict that gates a landing, such as a Shipping verifier's | `swarm workers` | `sonnet high` |
+| Verify: run the checks and report the results | `swarm workers` | `sonnet high` |
+| Conflicted merge or rebase, except a Spec build replay, which stays on the ticket's **Tier** | `hard tasks` | `opus high` |
+| Clean chain rebase or merge with no conflict | the code playbook's line | `sonnet medium` |
+| Bug investigation that runs or instruments code | the code playbook's line | `sonnet high` |
+| Orchestrate sub-coordinator | `judgment and prose` | `opus high` |
+| Independent verdict that gates a landing, such as a Shipping verifier's or a swarm verifier lane | `judgment and prose` | `opus high` |
 | Dedicated Orchestrate verifier when the worker runs on Sonnet | `judgment and prose` | `opus high` |
-| Dedicated Orchestrate verifier when the worker runs on Opus | `hardest tasks` | `fable high` |
-| Dedicated Orchestrate verifier when the worker runs on Fable | `judgment and prose` | `opus xhigh` |
+| Dedicated Orchestrate verifier when the worker runs on Opus | `deep review` | `fable high` |
 | Cross-model review of a `show-me-your-work` trail when the chat runs on Sonnet or Fable | `judgment and prose` | `opus high` |
 | Cross-model review of a `show-me-your-work` trail when the chat runs on Opus | `swarm workers` | `sonnet xhigh` |
 | Comment review in `no-comments` | `swarm workers` | `sonnet medium` |
 | Transcript slice in `recall` | `recall workers` | `haiku` |
 | Per-task diff review | `judgment and prose` | `opus high` |
-| Plan writing, hard debugging, design decisions | `judgment and prose` | `opus xhigh` |
+| Per-task diff review of hardest implementation | `deep review` | `fable xhigh` |
+| Plan writing, finding the cause of a bug that a first investigation did not explain, testing a premise under **Attack the Premise**, design decisions | `judgment and prose` | `opus xhigh` |
 | Final branch review | `judgment and prose` | `opus xhigh` |
-| Final branch review when the branch touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm | `hardest tasks` | `fable high` |
-| Panel runners and reviewers (arena, architect, interrogate) | the panel's line | `opus xhigh` and `fable high` |
+| Arena runners | `arena runners` | `opus xhigh` and `sonnet xhigh` |
+| Arena or eval judge | `arena cross-judge pool` | `fable high`, or `opus xhigh` when the chat runs on Fable |
+| Panel runners and reviewers (architect, interrogate) | the panel's line | `opus xhigh` and `fable high` |
 
-Fable costs the most, so only the fix of a bug that review found in hardest implementation runs it at `xhigh`. These pairs hold at the `large` budget. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. Never raise or lower an effort the table and the role lines give. A role on `auto` or `inherit-parent` stays on the parent model. If the Agent tool rejects the effort, do not try another. Use the role's line or default and say so.
+**Fix of a bug that review found.** Take the fix from the tier the code ran on. A Sonnet value reads the code playbook's line, and an Opus value reads `hard tasks`. A fix climbs at most two steps and stops at `opus xhigh`. A bug that survives the second fix goes to **Attack the Premise** and then to the user, never to a third fix. A failure that no review found, such as a red **Verify** or a failing test, stays on the code's tier, and a fix that fails this way stays on its fix's row.
+
+| Code tier | First fix | Second fix |
+|---|---|---|
+| Mechanical edit | `sonnet high` | `opus medium` |
+| Implementation | `opus medium` | `opus high` |
+| Moderate | `opus high` | `opus xhigh` |
+| Hard | `opus xhigh` | `opus xhigh` |
+| Hardest | `opus xhigh` | `opus xhigh` |
+
+Fable reviews and evaluates and never writes code, so no implementation or fix row names it. A `swarm` worker that writes code takes that change's tier, unless a race assigns a model per arm. An Orchestrate retry on a different model after a tool error takes `opus high` for a worker on Sonnet and `sonnet high` for a worker on Opus.
+
+These pairs hold at the `large` budget. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. Never raise or lower an effort the table and the role lines give. A role on `auto` or `inherit-parent` stays on the parent model. If the Agent tool rejects the effort, do not try another. Use the role's line or default and say so.
 
 **Label every spawn.** The CLI line shows only the type and the `description`, and a `general-purpose` type reads `Agent`. So open the description with the model and effort, then two or three words for the task, as in `opus xhigh: review diff`. Write the `model` you pass, or `inherit` when you omit it. Write the `effort` you pass, else the session's. Spawns that routed skills make carry the label too.
 

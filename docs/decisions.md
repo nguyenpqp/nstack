@@ -66,15 +66,17 @@ The per-decision intent files that came before this page are in git history, und
 The table under **Match the model to the job** in `n-mode/SKILL.md` is the source of truth for values. This section says why they are what they are.
 
 - **Every job names its model and effort outright.** (user) The chat never raises or lowers what the table gives, and picks an implementation tier from the change, not to save cost. A rule that raised effort one step for the hardest work turned `opus medium` into `opus high` on its own. Patch `200`.
-- **Implementation tiers.** (user) `sonnet medium` for mechanical edits, `sonnet high` for implementation, `opus medium` for hard work, and `fable high` for the hardest. Patches `180`, `200`.
-- **A bug that review finds gets a stronger fix than the code that held it.** (user) A mechanical edit on `sonnet medium` gets a fix on `sonnet high`, implementation on `sonnet high` gets `opus medium`, hard implementation on `opus medium` gets `opus high`, and hardest implementation on `fable high` gets `fable xhigh`. A failed **Verify** with no review keeps the ticket's tier. Patch `280`.
+- **Implementation tiers.** (user) `sonnet medium` for mechanical edits, `sonnet high` for implementation, `opus medium` for moderate work, `opus high` for hard work, and `opus xhigh` for the hardest. Patches `180`, `200`, `280`.
+- **A bug that review finds gets a stronger fix than the code that held it.** (user) The first fix climbs one step on the ladder `sonnet medium`, `sonnet high`, `opus medium`, `opus high`, `opus xhigh`, and the second fix one more, so two at most, and `opus xhigh` is the top. A bug that survives the second fix goes to Attack the Premise and the user. A failed **Verify** with no review keeps the ticket's tier. Patch `280`.
 - **A mechanical edit is defined by the brief:** it names each file and the exact change and leaves no design choice. Two tabletop agents split on the old wording, and 2 of 2 agreed on the new. Patch `250`.
 - **Explore and search run at `sonnet medium`, and verify at `sonnet high`.** (user) Spawn labels on 2026-10-30 showed 549 `sonnet high` spawns and only 41 `sonnet medium`, against the stated tiers. Patches `180`, `200`.
-- **Reviews.** (user) Per-task diff review runs at `opus high`. The final branch review runs at `opus xhigh`, and at `fable high` only on a sensitive branch. Spec build drops its different-model requirement. Patch `180`.
-- **Fable is scarce.** (user) "fable rất tốn." Only the fix of a bug that review found in hardest implementation runs Fable at `xhigh`, and every other Fable use runs at `high`. Patches `210`, `290`.
+- **Effort on Opus follows how much care the work needs.** (user) Hard work that needs little reasoning runs at `opus medium`, and work that needs care at `opus high`. The examples on each row are the chat's. Patch `280`.
+- **Every spawn resolves to one row.** When two rows fit, the higher wins. A helper that only reads, parses, or watches takes the Explore and search row, unless its skill names a role line. A conflicted merge or rebase takes the hard row, and a sub-coordinator `opus high`. The values are the chat's picks from existing rows. Rare cases stay out of the table on purpose: which model a third arena runner or race arm uses, and a role line that puts a verifier on its worker's family. Patch `280`.
+- **Reviews.** (user) Per-task diff review runs at `opus high`, and at `fable xhigh` for hardest implementation, for a different family's edge-case detection. An independent verdict that gates a landing runs at `opus high`, since "sonnet high hơi thấp" holds there too. The final branch review always runs at `opus xhigh`. A Feature run on a sensitive branch spawns that reviewer besides `/code-review`. Spec build drops its different-model requirement. Patches `180`, `280`.
+- **Fable reviews and evaluates, and never writes code.** (user) "fable high seems to be less intelligent than opus xhigh, fable is only good for edge-case detection." The user's impression, not measured, and the user keeps a Fable advisor on. Fable rows read the `deep review` role. Arena runners, which can write code, run on `opus xhigh` and `sonnet xhigh`, and the `architect` and `interrogate` panels keep `fable high` since they design and review. Patches `210`, `280`.
 - **Panels are `opus xhigh` and `fable high`.** (user) Sonnet and Haiku left every panel, since a Haiku seat could judge an arena. Patches `100`, `210`, `overlay/renames.json`.
 - **A table row replaces the default a routed skill names for the same role.** `how` and `why` keep their upstream defaults. (user) Rows put explorers and investigators at `sonnet medium` and the explainer at `opus high`. Tabletops followed the old value in 2 of 2 runs until the row existed, and the new value in 2 of 2 after. Patch `230`.
-- **The Orchestrate verifier stays on a different family from its worker.** (user) `opus high` for a Sonnet worker, `fable high` for an Opus worker, and `opus xhigh` for a Fable worker, because "sonnet high hơi thấp". Patch `240`.
+- **The Orchestrate verifier stays on a different family from its worker.** (user) `opus high` for a Sonnet worker and `fable high` for an Opus worker, because "sonnet high hơi thấp". Patches `240`, `280`.
 - **Comment review runs at `sonnet medium`, and a `recall` slice on `haiku` in its own role.** (user) Patch `240`.
 - **A `show-me-your-work` review reads the chat's model,** since the trail records the chat's decisions. A chat on Sonnet or Fable gets `opus high`. (user) A chat on Opus gets `sonnet xhigh`, and `automate-me` has no row for now. Patch `260`.
 - **Spec build names its model and effort.** (user) It does so through a Tier per ticket. A ticket's first spawn, retry, and replay run on its Tier. The fix implementer runs on the highest Tier its findings touch, and the rebase agent on the hard implementation row, because it resolves conflicts across tickets. Before this, a bare `effort: "high"` left the model to inference. `overlay/files/.../spec-build.md`.
@@ -96,7 +98,7 @@ Each one names what would settle it.
 **Effort and model values**
 
 - Does Opus at `medium` need more fix rounds than Sonnet at `high`? Fix-round counts from real runs.
-- Does `opus medium` resolve a spec rebase as well as `sonnet high` did? A rebase that needs a second attempt.
+- Does `opus high` resolve a spec rebase as well as `sonnet high` did? A rebase that needs a second attempt.
 - Does `fable high` catch what `fable xhigh` caught on panels? A finding that only the Opus seat raises.
 - Is `fable high` worth 2.5 times Opus's price per token as a verifier? Verdicts and cost from a run with dedicated verifiers.
 - Do two panel seats give enough spread? A run where both agree on a wrong answer.
@@ -168,5 +170,4 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `250-mechanical-row` | Defines the mechanical row by the brief |
 | `260-trail-review` | Rows for the `show-me-your-work` review |
 | `270-setup-guide-budget` | The setup guide describes the relative budget |
-| `280-review-fix-tiers` | Rows for a fix of a bug that review found |
-| `290-hardest-fable-high` | Hardest implementation runs at `fable high` |
+| `280-model-ladder` | The coding tiers, the fix table, Fable as review only, and one row per spawn |

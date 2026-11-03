@@ -28,9 +28,9 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
 - `medium — one step below the defaults`
 - `small — two steps below the defaults`
 
-**(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by model, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` move the effort of every value that has one, panel entries included, one step up, not at all, one step down, or two steps down from its default. The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`, and a move past either end stops there. Moving every value by the same steps keeps the gap between jobs, so implementation stays below planning and review. A bare model keeps no effort. If the resulting effort is not a detected effort, use the highest detected effort below it. `inherit-parent` and `auto` do not change. So `unlimited` turns `opus xhigh` into `opus max` and `sonnet high` into `sonnet xhigh`, `large` keeps the defaults, and `small` turns them into `opus medium` and `sonnet low`.
+**(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by model, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` move the effort of every value that has one, panel entries included, one step up, not at all, one step down, or two steps down from its default. The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`, and a move past either end stops there. Moving every value by the same steps keeps the gap between jobs, until a value stops at an end of the ladder, which can bring two tiers level at `small`. A bare model keeps no effort. If the resulting effort is not a detected effort, use the highest detected effort below it. `inherit-parent` and `auto` do not change. So `unlimited` turns `opus xhigh` into `opus max` and `sonnet high` into `sonnet xhigh`, `large` keeps the defaults, and `small` turns them into `opus medium` and `sonnet low`.
 
-**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskUserQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it that differs from the parent's model when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskUserQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it that differs from the parent's model when possible. `swarm workers` is the default model for a worker whose job has no row in n-mode's table, unless a race or comparison assigns another model per arm. It also drives helpers, Verify, comment review, and one trail review row, so changing it moves those jobs too.
 
 ### 4. Validate
 
@@ -51,15 +51,16 @@ bug-fix: sonnet high
 perf-issue: sonnet high
 hillclimb: sonnet high
 judgment and prose: opus xhigh
-hard tasks: opus medium
-hardest tasks: fable high
+hard tasks: opus high
+hardest tasks: opus xhigh
+deep review: fable high
 how explorer: sonnet medium
 how explainer: opus high
 why investigators: sonnet medium
 why synthesizer: opus xhigh
 reflect tooling: sonnet high
 reflect judgment, divergent, synthesizer: opus xhigh
-arena runners: opus xhigh, fable high
+arena runners: opus xhigh, sonnet xhigh
 arena cross-judge pool: opus xhigh, fable high
 swarm workers: sonnet high
 recall workers: haiku
