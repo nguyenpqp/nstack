@@ -24,6 +24,7 @@ The per-decision intent files that came before this page are in git history, und
 
 - **The adapter does not ship.** (user) Compaction dropped it from context, "once per session" stopped agents from rereading it, and subagents never read it. `dist/` holds Claude Code names only, and the check fails on a Cursor name that a sync brings back. Patches `100`, `110`, `120`, `130`.
 - **One-to-one swaps go in `renames.json` `claudeCode`, and changes of meaning go in patches**, so most upstream edits need no patch repair.
+- **A multi-phase plan names skills by the plugin's folder.** Upstream's `pstack/skills/...` paths resolve only in a repo that vendors pstack, so its `check-plan.mjs` command could not run on a plugin install. `git show origin/main:` stays for the control skill, which the project owns, and `check-plan.mjs` requires that marker. A tabletop agent found the script from the new path, and the checker still accepts the playbook's skeleton apart from its unfilled model placeholder. Patch `120`.
 - **Cursor concepts map as follows.** A cloud agent is a subagent with `isolation: "worktree"`. A read-only agent is `subagent_type: "Explore"` with a brief that says not to edit. `/deslop` is the built-in `/simplify` plus the strip list. The control skill is the project's own under `.claude/skills/`. Orchestrate's Project tracker and store are `.nstack/orchestrate/<slug>/notes.md`. `create-skill` is `skill-creator`.
 - **Bugbot text stays.** It is a GitHub app that comments on PRs whatever editor opened them.
 - **The check fails on frontmatter Claude Code does not read.** The old `is_background` field passed the check, because Claude Code ignores an unknown field and the check did not read frontmatter. Agents now set `background: true`.
@@ -39,7 +40,7 @@ The per-decision intent files that came before this page are in git history, und
 - **Spec build is self-contained.** (user) No issue tracker, tickets land fast-forward or by cherry-pick after their verify command passes, one review at the end, and nothing asks the user mid-run. A shape shared across a process boundary lands as its own blocking ticket. Patch `050`, `overlay/files/.../spec-build.md`.
 - **Small stepped-away work stays in its playbook.** Only large or cross-cutting work routes to `figure-it-out`, because a one-flag change once got a bespoke playbook. Patch `075`.
 - **Crossing a function boundary means a change a caller sees:** a signature, type, or module seam. An edit inside one function body does not count. Patch `085`.
-- **A missing control skill is offered in the reply, not built**, because a one-flag change once grew a control-skill commit. Patch `090`.
+- **A missing control skill is offered in the reply, not built**, because a one-flag change once grew a control-skill commit. `multi-phase-plan.md` told the plan's author to build one, so it now drives the surface through the project's runner. Patches `090`, `120`.
 - **Review runs the built-in `/code-review`**, then the lead checks the diff against the intent's **Outcome** and **Out of scope**. (user) `interrogate` stays for contested designs. Patch `060`.
 - **A delegate that opens a PR always runs `/code-review`, and runs `interrogate` only on a contested design or a sensitive branch.** (user) `opening-a-pr.md` used to tell every delegate to run it, which spent an `opus xhigh` and a `fable high` reviewer on a 6-line PR in 4 of 4 tabletops. Upstream has since dropped that line, and this rule stays for sensitive branches and `/code-review`. On the new text, 4 of 4 skipped it on that PR and 4 of 4 ran it on an auth change. Sensitive means security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm. Patch `220`.
 - **Replies use the user's language.** Files keep the repo's language. Patch `160`.
@@ -137,6 +138,7 @@ Each one names what would settle it.
 
 - `typescript-best-practices` pairs `paths` with `disable-model-invocation`, and the docs do not say how the two combine.
 - Whether nested subagents work as `orchestrate` describes. The playbook keeps its depth rule.
+- "The agent store" is a Cursor concept with no Claude Code path. `multi-phase-plan.md` writes a plan under its `docs/`, and `autopilot-full.md` starts a decision trail in it. Orchestrate's store already maps to `<root>/.nstack/`, and these two do not yet.
 
 ## Patch index
 
@@ -160,7 +162,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `090-verify-surface` | `/simplify` before commit, and the project's own control skill |
 | `100-claude-code-models` | Claude Code model values, the `arena` and `interrogate` panels, `arena`'s judge, and the setup rule with its role lines |
 | `110-claude-code-agents` | Agent fields, how cloud agents, read-only agents, and Orchestrate's store map, and where a worker with no isolation edits |
-| `120-claude-code-tools` | Cursor-only tools and paths |
+| `120-claude-code-tools` | Cursor-only tools and paths, including a multi-phase plan's skill paths |
 | `130-claude-code-help` | `nstack-help`, the guide pages, and the install commands for Claude Code |
 | `140-no-ai-credit` | Commits and PRs credit no AI agent |
 | `150-session-backlog` | Points n-mode at the backlog rules |
