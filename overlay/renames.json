@@ -32,7 +32,6 @@
     ["Task spawn", "Agent spawn"],
     ["Task `model`", "Agent `model`"],
     ["Task `model:", "Agent `model:"],
-    ["Task schema", "Agent schema"],
     ["In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.", "To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`."],
     ["`claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`", "`opus xhigh` and `fable high`"],
     ["claude-opus-5-5-xhigh", "opus xhigh"],
@@ -56,6 +55,6 @@
     ["1. Install with `/add-plugin pstack` in chat, or from Customize in the sidebar.", "1. Install with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`."],
     ["On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-verification-skill/SKILL.md` and follow it."],
     ["On yes, invoke `/create-formal-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-formal-verification-skill/SKILL.md` and follow it."],
-    ["Trivial mechanical edits go to your fast code model.", "Trivial mechanical edits go to the code model with its effort lowered."]
+    ["cloud-agent URL", "session URL"]
   ]
 }

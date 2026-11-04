@@ -48,7 +48,7 @@ Patches sort as strings, so names keep three digits. The bands are a convention,
 | `00x` | Identity, install source, and dropped skills |
 | `01x`–`09x` | The first nstack layer: sticky mode, interview, worktree, routing |
 | `10x`–`13x` | Claude Code adaptation, one concern each |
-| `14x`–`19x` | Later layer rules: no AI credit, backlog, language, root coordinator, efforts by job, the `.nstack` folder |
+| `14x`–`19x` | Later layer rules: no AI credit, backlog, language, effort budgets, the `.nstack` folder |
 | `20x` and up | The role lines behind the model table, and the pointer to it |
 
 The index in [decisions.md](decisions.md#patch-index) names each patch's concern.

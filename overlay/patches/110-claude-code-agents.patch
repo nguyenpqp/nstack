@@ -113,7 +113,7 @@ index 68f5b19..a9e96c4 100644
  - [ ] `git fetch origin <head-branch> && git checkout <head SHA>`.
  - [ ] <Start the backend and the surface. Wait for ready.>
 diff --git a/skills/n-mode/playbooks/orchestrate.md b/skills/n-mode/playbooks/orchestrate.md
-index b6e5f56..86a0519 100644
+index b6e5f56..4f86f21 100644
 --- a/skills/n-mode/playbooks/orchestrate.md
 +++ b/skills/n-mode/playbooks/orchestrate.md
 @@ -2,12 +2,12 @@
@@ -121,7 +121,7 @@ index b6e5f56..86a0519 100644
  **You run the program, never the code. Decide which agent does each piece of work, then check what each one produces.** For a standing project handed to one coordinator chat: multi-day, many stacked PRs, dozens to hundreds of subagents, few human turns. One task driven to a predicate is Autonomous run. One ambitious run that needs a bespoke workflow is figure-it-out. Work that one agent could finish inside the session's budget is not a program.
  
 -Run it with your own tools. Spawn workers with `Task`. Keep the program's state in the Project tracker (`notes.md`) and the Project store. Watch each PR with PR and CI event subscriptions when your harness has them. Call no scripts, run no polling loops, and never relay messages or status between agents.
-+Run it with your own tools. Spawn workers with `Task`. Keep the program's state in `<root>/.nstack/orchestrate/<slug>/notes.md`, per the **nstack folder** section of `SKILL.md`, and delete it when the program ends. Watch each PR with PR and CI event subscriptions when your harness has them. Call no scripts, run no polling loops, and never relay messages or status between agents.
++Run it with your own tools. Spawn workers with `Task`. Keep the program's state in `<root>/.nstack/orchestrate/<slug>/notes.md`, per the **nstack folder** section of `../references/worktree.md`, and delete it when the program ends. Watch each PR with PR and CI event subscriptions when your harness has them. Call no scripts, run no polling loops, and never relay messages or status between agents.
  
  #### Topology
  

@@ -79,7 +79,7 @@ When the run keeps no intent file, sort against the design its reply confirmed.
 
 ## Show it
 
-End a reply with the title lines of the rows that changed this turn, plus every row tagged `waiting`, so an unanswered question never drops out of sight. Skip the block when it would be empty. When the user asks for progress and in the run's final reply, list every title line from both files, plus a count of the rows in `backlog-archive/`. List archived rows only when the user asks for history. Orchestrate drain turns and the Multi-phase plan tick keep their own status rules instead.
+End a reply with the title lines of the rows that changed this turn, plus every row tagged `waiting`, so an unanswered question never drops out of sight. Skip the block when it would be empty. When the user asks for progress and in the run's final reply, list every title line from both files, plus a count of the rows in `backlog-archive/`. List archived rows only when the user asks for history. The Multi-phase plan tick keeps its own status rule instead.
 
 ## Clean up
 

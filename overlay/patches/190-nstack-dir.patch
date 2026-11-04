@@ -53,7 +53,7 @@ index 6868715..e4b6918 100644
  - `## Why`: the problem and approach, 1–3 short sentences. No SHAs, rebase genealogy, or "based on main" preamble.
  - `## What changed`: 1–3 short bullets. Name a real symbol or path only when it carries the change. Name both sides of a rename or retarget.
 diff --git a/skills/n-mode/playbooks/shipping.md b/skills/n-mode/playbooks/shipping.md
-index 2990c70..945c6dd 100644
+index 2990c70..f190b03 100644
 --- a/skills/n-mode/playbooks/shipping.md
 +++ b/skills/n-mode/playbooks/shipping.md
 @@ -7,6 +7,6 @@
@@ -61,11 +61,11 @@ index 2990c70..945c6dd 100644
  4. **Land bottom-up, one PR at a time.** Always merge the run's lowest unmerged PR, with `origin pr merge <pr>` or `gh pr merge <pr> --squash`. On Origin the plain command also merges every PR below the one you name, and on GitHub a PR whose base is still its parent's branch merges into that branch, not trunk. Read the PR back for the result (`origin pr view <pr>` or `gh pr view <pr> --json state,mergedAt,baseRefName`), because a merge command can report success when a merge queue only queued the PR, and a requested auto-merge is not a merge. A landed PR reads merged with trunk as its base, not its parent's branch. Arm `--auto` (Origin merge-when-ready or GitHub auto-merge) only on a PR whose verdict covers its current head, because it lands whatever head is ready. After a merge lands, retarget the PR whose base was the merged branch to trunk (`origin pr edit <pr> --base <trunk>` or `gh pr edit <pr> --base <trunk>`), move its patch onto the merge result, and push with `--force-with-lease`. The verdict covers the patch, not its commits, so step 3's patch-id rule decides whether the verdict survives. Merge it once its checks pass and its verdict survives.
  5. **Leave the stack alone while it lands.** Step 4's move of the next PR is the only change to a branch or base, because a merge lands whatever its branch and base hold at that moment, verdict or not. On GitHub, watch the run with the queued watcher from `playbooks/babysit.md` (`scripts/watch-pr/watch-pr --queued-stack --stack-prs <bottom-to-top>`) under `/loop` until it reports `COMPLETE` at the ceiling. On Origin, re-read the current PR with `origin pr view <pr> --checks` each time `origin pr checks <pr> --watch` returns, until the ceiling reads merged. A base that moves to trunk when its parent merges is expected, not damage to repair. If a merge stalls, find out why before you change anything.
 -6. **Stop at the ceiling.** Extending the run takes new verdicts, so it is a new pass through step 1.
-+6. **Stop at the ceiling.** Extending the run takes new verdicts, so it is a new pass through step 1. Delete the intent files of each landed PR per the **nstack folder** section of `SKILL.md`, since its PR body now holds what outlives the run.
++6. **Stop at the ceiling.** Extending the run takes new verdicts, so it is a new pass through step 1. Delete the intent files of each landed PR per the **nstack folder** section of `../references/worktree.md`, since its PR body now holds what outlives the run.
  
  **Reply:** the verified run and its ceiling, each PR's verdict and who produced it, what landed and how you confirmed it, and what the next gap needs.
 diff --git a/skills/n-mode/playbooks/worktree-cleanup.md b/skills/n-mode/playbooks/worktree-cleanup.md
-index 09bb028..32b89e8 100644
+index 09bb028..095c090 100644
 --- a/skills/n-mode/playbooks/worktree-cleanup.md
 +++ b/skills/n-mode/playbooks/worktree-cleanup.md
 @@ -4,7 +4,7 @@
@@ -73,7 +73,7 @@ index 09bb028..32b89e8 100644
  3. Verify usage before deleting. For every `verify-recent-chat` row, or anything you doubt, fan subagents out to read the transcripts and report whether the chat is pinned or ongoing and which worktrees it touches (principle-guard-the-context-window, transcripts are bulk). A pinned chat spawns arena and repro trees into sibling worktrees via background subagents, and those are in use even when their names never hit the sidebar. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section.
  4. Pause on irreversible loss. `wip:N` is N tracked uncommitted edits. Show the diff and get a decision first, since removing a clean worktree is recoverable from its branch but uncommitted work is gone. `scratch:N` is untracked throwaway, safe to drop, but name the files. Per Autonomy, clean and merged and not-in-use proceeds. `wip` and in-use pause.
 -5. Prune the confirmed set. Per path, `git worktree remove --force <path>`. If the dir survives on ignored build artifacts, `rm -rf` it, then `git worktree prune`. Branch refs survive, so no commits are lost. Confirm with `df -h /` and re-list.
-+5. Prune the confirmed set. Per path, `git worktree remove --force <path>`. If the dir survives on ignored build artifacts, `rm -rf` it, then `git worktree prune`. Branch refs survive, so no commits are lost. For a merged branch, also delete its intent files per the **nstack folder** section of `SKILL.md`. Confirm with `df -h /` and re-list.
++5. Prune the confirmed set. Per path, `git worktree remove --force <path>`. If the dir survives on ignored build artifacts, `rm -rf` it, then `git worktree prune`. Branch refs survive, so no commits are lost. For a merged branch, also delete its intent files per the **nstack folder** section of `../references/worktree.md`. Confirm with `df -h /` and re-list.
  6. Simulators and other reclaimers. Simulators are usually the next-biggest win. `xcrun simctl --set testing delete all` (XCTestDevices clones), `xcrun simctl delete unavailable`, and `xcrun simctl runtime list` then `runtime delete <id>` for old runtimes. More when needed: Xcode `DerivedData` and `iOS DeviceSupport`, package caches (pnpm, uv, brew, yarn). Clear only caches the user has not said to keep.
  
  This is the one playbook that deletes user state with no code review to catch a slip, so the gates above are the review.
