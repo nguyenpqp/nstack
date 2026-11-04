@@ -8,13 +8,13 @@ The chat that runs n-mode owns the backlog. Delegates never write it.
 
 ## Each turn
 
-At the start of each turn while a row is open, list the open title lines with `grep -n '^- \[ \]'` on the backlog and read in full only the rows the turn touches. A new message then goes into the backlog before any other work. When a new run starts on a backlog with open rows, name them in its first reply. Session pickup reads the backlog as open work at its step 2, along with this file, and the resume note of Pause safely points at it.
+At the start of each turn while a row is open, list the open title lines with `grep -n '^- \[ \]'` on the backlog and read in full only the rows the turn touches. A new message then goes into the backlog before any other work. When a new run starts on a backlog with open rows, name them in its first reply. Session pickup counts the open rows as open work, and the resume note of Pause safely points at the backlog.
 
 ## A row
 
 ```
 - [ ] R3 Export order CSV (in progress, feat/export-csv) · added 2026-11-01
-  - Ask: "add a CSV export to the orders table"
+  - Ask: "also export the orders table as CSV"
   - Touches: src/orders/OrdersTable.tsx, src/lib/format.ts
   - Work: an Export button on OrdersTable downloads the filtered rows as UTF-8 CSV with a BOM, reusing the table's formatters.
   - Done when: on /orders in the dev server, Export downloads a file whose rows match the table.
@@ -32,13 +32,14 @@ At the start of each turn while a row is open, list the open title lines with `g
 
 ## Order and tags
 
-The file order is the queue, and a new row goes below the other open rows. A row can start when it is queued, no tag holds it, and its **Touches** share no path with a row in progress. At the end of every turn and whenever a row closes, start each such row in file order, on its own branch, worktree, and delegate, alongside the work already running, so no free row sits idle. A started row follows its matched playbook, with the row as its answer sheet. A row in progress keeps going unless the user says to stop it, and a stopped row goes back to queued with its branch. When a row starts, rerun the backlog and in-flight parts of the check, since the code may have moved, and raise any new conflict before you brief its delegate.
+The file order is the queue, and a new row goes below the other open rows. A row can start when it is queued, no tag holds it, and its **Touches** share no path with a row in progress or the opening request's branch. At the end of every turn and whenever a row closes, start each such row in file order, on its own branch, worktree, and delegate, alongside the work already running, so no free row sits idle. A started row follows its matched playbook, with the row as its answer sheet. A row in progress keeps going unless the user says to stop it, and a stopped row goes back to queued with its branch. When a row starts, rerun the backlog and in-flight parts of the check, since the code may have moved, and raise any new conflict before you brief its delegate.
 
 Tags combine, and each one holds the row:
 
 - `draft`: not checked yet. It never outlives the turn.
 - `waiting: <question>`: waits on the user. Meanwhile prepare it read-only: find the code and sketch the plan for each answer, so it starts the moment they reply. Write no code for it until then.
 - `after R<n>`: waits for R<n> to close. When you close a row, grep the open rows for `after R<n>`, drop the tag, and move those rows to the top of the queue, since "after R3" means right after it.
+- `after <branch>`: waits for the opening request's branch, named in full, since that request has no row. When the branch lands, treat it as a closed row: grep the open rows for the tag, drop it, and move those rows to the top of the queue.
 - `later`: waits until the user calls it. The run's final reply asks about each one.
 - `discuss`: the work is a conversation, not code. **Work** lists the decisions to settle, and **Done when** is the answers recorded in the intent or split into new rows. When it comes up, run its Interview round with the user, even under a full-autonomy grant, since they asked to talk it through.
 
@@ -59,10 +60,10 @@ Right after the turn's grep, write each new ask as a row tagged `draft`, plus an
    - the open rows: grep their **Touches** lines for each path, and read only the rows that match;
    - the archive: grep `backlog-done.md` and `backlog-archive/` for the ask's key terms, since a dropped ask asked again meets a decision already made;
    - the intent: its **Outcome**, **Out of scope**, and the user's **Decisions**;
-   - work in flight: `git diff --stat` of each in-progress row's branch against its base, for the same paths;
+   - work in flight: `git diff --stat` of each in-progress row's branch and the opening request's branch against its base, for the same paths;
    - shipped work: `git log --oneline -5 --` on each path, to see whether the ask undoes a recent commit.
 
-   Pair each risk with the handling you recommend. A path shared with a row in progress becomes `after R<n>`, so the two never meet in a merge. A clash with a queued row asks which one wins and updates the loser in place. A wide ask splits into rows.
+   Pair each risk with the handling you recommend. A path shared with a row in progress becomes `after R<n>`, and one shared with the opening request's branch becomes `after <branch>`, so the two never meet in a merge. A clash with a queued row asks which one wins and updates the loser in place. A wide ask splits into rows.
 2. **Decide whether it needs the user.** It does when its words leave open a product or preference call that would change the **Work**, or when step 1 found a high risk: it undoes shipped work, overrides a decision the user made, clashes with another row so one must win, or hits the Always-pause list in **Autonomy** in `SKILL.md`. Under a full-autonomy grant, an open call the grant covers gets your default, reported in the reply, and only the high risks wait.
 3. **When it does not, confirm it yourself.** Restate the row in the reply with its **Touches**, **Work**, **Done when**, tags, place in the queue, and each risk with its handling, or none. Drop `draft`, add or update its todo, and go on. A correction from the user later updates the row in place.
 4. **When it does, ask without stalling.** Swap `draft` for `waiting: <question>`. First hand every row that can start to a background delegate, since `AskUserQuestion` holds this chat until the user answers while delegates keep working. Then ask per the Interview playbook (`../playbooks/interview.md`): the facts, the row as you would write it, the risk and its handling, and your recommended answer first. Every waiting row of the turn shares that call, one question per row and up to four, with more in a second call. On the answer, fill the row, drop `waiting`, and add its todo. A correction loops back to step 1.
