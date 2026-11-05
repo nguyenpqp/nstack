@@ -56,7 +56,7 @@ index e65939e..1f59dbe 100644
  ```text
  /n-mode new task. branch off <base> in a fresh worktree, then port the parser change there.
 diff --git a/docs/guide/05-build-and-clean.md b/docs/guide/05-build-and-clean.md
-index 96755ee..6c63902 100644
+index 96755ee..89e1a06 100644
 --- a/docs/guide/05-build-and-clean.md
 +++ b/docs/guide/05-build-and-clean.md
 @@ -56,7 +56,7 @@ In context, that's enough. [`/tdd`](../../skills/tdd/SKILL.md) writes the smalle
@@ -68,6 +68,17 @@ index 96755ee..6c63902 100644
  
  For prose, `/unslop` takes a target and any extra rules you have:
  
+@@ -76,8 +76,8 @@ Comments need their own pass, and not from the agent that wrote them. An author
+ 
+ [`/no-comments`](../../skills/no-comments/SKILL.md) spawns [Comment Sicko](../../agents/comment-sicko.md), a read-only reviewer with a short keep list: license headers, doc comments on a public API, links that explain what code can't, behavior forced by an external dependency you can't reshape. Everything else goes. A surprise in your own code gets no such pass. The comment comes back as a refactor flag, and `/no-comments` fixes the flags it accepts at the root cause. When a comment claims a constraint, "do not remove", the skill offers to encode the claim as a type, test, or lint. Either way, the comment comes out.
+ 
+-The division of labor is worth keeping straight. `/deslop` cleans slop out of the code, `/unslop` cleans it out of prose, and `/no-comments` hands the comments to a reviewer who didn't write them.
++The division of labor is worth keeping straight. `/simplify` cleans slop out of the code, `/unslop` cleans it out of prose, and `/no-comments` hands the comments to a reviewer who didn't write them.
+ 
+-**Pitfall:** cleanup is not optional polish. A diff with narrating comments and defensive dead weight reads as unfinished to reviewers, and the extra code is where the next bug hides. If the diff feels padded, say `deslop it` before you commit, not after review calls it out.
++**Pitfall:** cleanup is not optional polish. A diff with narrating comments and defensive dead weight reads as unfinished to reviewers, and the extra code is where the next bug hides. If the diff feels padded, say `simplify it` before you commit, not after review calls it out.
+ 
+ Next: [Verify and ship](./06-verify-and-ship.md).
 diff --git a/docs/guide/07-overnight.md b/docs/guide/07-overnight.md
 index 3b377ff..f6ab757 100644
 --- a/docs/guide/07-overnight.md
