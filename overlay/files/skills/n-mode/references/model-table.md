@@ -10,8 +10,8 @@ A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus
 |---|---|---|
 | Mechanical edit: the brief names each file and the exact change, and leaves no design choice | the code playbook's line | `sonnet medium` |
 | Implementation: an ordinary change, such as a CRUD endpoint or a small feature that follows an existing pattern | the code playbook's line | `sonnet high` |
-| Moderate implementation: hard work that needs little reasoning, such as a change wired through several layers or a large edit whose approach is clear | `hard tasks` | `opus medium` |
-| Hard implementation: work that needs care, such as a new background worker, a migration of the user's saved config or data, or logic where a small mistake is costly | `hard tasks` | `opus high` |
+| Moderate implementation: the brief or plan settles the approach and leaves the delegate no design decision, but the change is broad, such as a change wired through several layers, a large edit, or docs written from code after a sample passed | `hard tasks` | `opus medium` |
+| Hard implementation: the delegate still has a design decision to make, or the change is a new background worker or a migration of the user's saved config or data | `hard tasks` | `opus high` |
 | Hardest implementation: cross-cutting design, gnarly concurrency, a subtle algorithm, whether the intent is vague or the steps are exact | `hardest tasks` | `opus xhigh` |
 | Explore and search, and any helper that only reads, parses, or watches, unless its skill names a role line | `swarm workers` | `sonnet medium` |
 | Explorer in `how` | `how explorer` | `sonnet medium` |
@@ -39,7 +39,7 @@ A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus
 
 ## Picking a row
 
-Pick an implementation tier from the change, not to save cost, and name it in the brief. The implementation rows name the only models that implement, so never pick another one between them. When two rows fit a job, take the higher one, with the implementation rows running lowest to highest. A helper that also writes code, such as a babysitter that pushes fixes, takes the tier of the code it writes. A playbook's "configured model (default `sonnet high`)" is the Implementation row, so a change at another tier takes that tier's row.
+Pick an implementation tier from the change, not to save cost, and name it in the spawn label. The implementation rows name the only models that implement, so never pick another one between them. Moderate and Hard split on one question: does the delegate still have a design decision to make? A costly mistake alone never lifts a job above Moderate, because the review rows carry that risk. Payment code whose brief or plan settles the approach takes Moderate even when the change is small or mechanical, unless a higher row names the work. Otherwise, when two rows fit a job, take the higher one, with the implementation rows running lowest to highest. A helper that also writes code, such as a babysitter that pushes fixes, takes the tier of the code it writes. A playbook's "configured model (default `sonnet high`)" is the Implementation row, so a change at another tier takes that tier's row.
 
 Fable reviews and evaluates and never writes code, so no implementation or fix row names it. A `swarm` worker that writes code takes that change's tier, unless a race assigns a model per arm. An Orchestrate retry on a different model after a tool error takes `opus high` for a worker on Sonnet and `sonnet high` for a worker on Opus.
 
@@ -61,4 +61,4 @@ These pairs hold at the `large` budget. The code playbook's line is `feature, re
 
 ## Label every spawn
 
-The CLI line shows only the type and the `description`, and a `general-purpose` type reads `Agent`. So open the description with the model and effort, then two or three words for the task, as in `opus xhigh: review diff`. Write the `model` you pass, or `inherit` when you omit it. Write the `effort` you pass, else the session's. Spawns that routed skills make carry the label too.
+The CLI line shows only the type and the `description`, and a `general-purpose` type reads `Agent`. So open the description with the model and effort, then two or three words for the task, as in `opus xhigh: review diff`. A job on an implementation row adds its tier in parentheses, as in `opus medium (moderate): add channel`. Write the `model` you pass, or `inherit` when you omit it. Write the `effort` you pass, else the session's. Spawns that routed skills make carry the label too.
