@@ -6,6 +6,7 @@
 // A patch is always diffed against the patches that sort before it, so later patches never leak into its context.
 
 import { execFileSync, spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, rel, walk } from "./lib.mjs";
@@ -21,10 +22,14 @@ const PRISTINE = join(ROOT, ".cache", "pristine");
 const STARTED = join(ROOT, ".cache", "mkpatch-start");
 const BUILD = join(ROOT, "scripts", "build.mjs");
 const out = join(ROOT, "overlay", "patches", `${name}.patch`);
+const BASELINE = join(ROOT, ".cache", "mkpatch-baseline.json");
 const build = (...args) => execFileSync(process.execPath, [BUILD, ...args], { stdio: "inherit" });
+const fingerprint = (dir) =>
+  Object.fromEntries([...walk(dir)].map((f) => [rel(dir, f), createHash("sha256").update(readFileSync(f)).digest("hex")]));
 
 if (command === "start") {
   build("--until", name, "--lenient");
+  const baseline = fingerprint(DIST);
   if (existsSync(out)) {
     const applied = spawnSync("git", ["apply", "--whitespace=nowarn", "--reject", `--directory=${rel(ROOT, DIST)}`, out], {
       cwd: ROOT,
@@ -34,12 +39,13 @@ if (command === "start") {
   }
   mkdirSync(join(ROOT, ".cache"), { recursive: true });
   writeFileSync(STARTED, name);
+  writeFileSync(BASELINE, JSON.stringify(baseline));
   console.log(`edit dist/, then run: node scripts/mkpatch.mjs save ${name}`);
   process.exit(0);
 }
 
 const started = existsSync(STARTED) ? readFileSync(STARTED, "utf8") : undefined;
-if (started !== name) {
+if (started !== name || !existsSync(BASELINE)) {
   console.error(
     `run "node scripts/mkpatch.mjs start ${name}" first${started ? ` (the last start was ${started})` : ""}; a dist/ built with later patches leaks them into this one`,
   );
@@ -53,6 +59,17 @@ if (leftovers.length) {
 }
 
 build("--out", PRISTINE, "--until", name, "--lenient");
+
+const before = JSON.parse(readFileSync(BASELINE, "utf8"));
+const now = fingerprint(PRISTINE);
+const moved = [...new Set([...Object.keys(before), ...Object.keys(now)])].filter((f) => before[f] !== now[f]).sort();
+if (moved.length) {
+  rmSync(PRISTINE, { recursive: true, force: true });
+  console.error(
+    `the build input changed after start, so this patch would undo that change in:\n  ${moved.join("\n  ")}\nundo the change under overlay/ or upstream/ and save again, or make it, run start again, and redo your dist/ edits`,
+  );
+  process.exit(1);
+}
 
 const diff = spawnSync(
   "git",
@@ -74,6 +91,7 @@ const patch = diff.stdout
 
 rmSync(PRISTINE, { recursive: true, force: true });
 rmSync(STARTED, { force: true });
+rmSync(BASELINE, { force: true });
 if (!patch.trim()) {
   rmSync(out, { force: true });
   console.log(`no difference; removed ${rel(ROOT, out)} if it existed`);

@@ -62,7 +62,7 @@ To hand the whole loop to an agent, point it at [docs/maintaining.md](docs/maint
 
 1. Run `node scripts/mkpatch.mjs start <nnn-name>`. It builds `dist/` with every patch that sorts before `<nnn-name>`, then applies `<nnn-name>` itself if it exists.
 2. Edit the files under `dist/`. This partial build skips the `claudeCode` rewrite, so the files still show Cursor names such as `Task`. Edit them as they are.
-3. Run `node scripts/mkpatch.mjs save <nnn-name>`. It refuses unless the last `start` named the same patch, because a `dist/` built with later patches would leak them into this one. It writes `overlay/patches/<nnn-name>.patch` and rebuilds with every patch.
+3. Run `node scripts/mkpatch.mjs save <nnn-name>`. It refuses unless the last `start` named the same patch, because a `dist/` built with later patches would leak them into this one. It also refuses when anything the partial build reads changed after `start`, because the patch would undo that change. It writes `overlay/patches/<nnn-name>.patch` and rebuilds with every patch.
 
 Keep one concern per patch, so a sync failure names the concern that broke. To repair a patch that no longer applies, run the same two commands. `start` applies what it can and leaves `.rej` files for the hunks that failed. Finish those by hand and delete the `.rej` files before `save`.
 
