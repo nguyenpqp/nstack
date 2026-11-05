@@ -102,7 +102,7 @@ The per-decision intent files that came before this page are in git history, und
 - **`how` and `why` name the table's values as their defaults.** (user) Rows put explorers and investigators at `sonnet medium` and the explainer at `opus high`, and the skills now say the same, so a run with no rule file gets those values even outside n-mode. Tabletops followed the old value in 2 of 2 runs until the row existed, and the new value in 2 of 2 after. A row still replaces any default a routed skill names. Patch `100`.
 - **The Orchestrate verifier stays on a different family from its worker.** (user) `opus high` for a Sonnet worker and `fable high` for an Opus worker, because "sonnet high hơi thấp". `references/model-table.md`.
 - **Comment review runs at `sonnet medium`, and a `recall` slice on `haiku` in its own role.** (user) Patch `100`.
-- **A `show-me-your-work` review reads the chat's model,** since the trail records the chat's decisions. A chat on Sonnet or Fable gets `opus high`. (user) A chat on Opus gets `sonnet xhigh`, and `automate-me` has no row for now. `references/model-table.md`.
+- **A `show-me-your-work` review reads the chat's model,** since the trail records the chat's decisions. A chat on Sonnet or Fable gets `opus high`. (user) A chat on Opus gets `sonnet xhigh`, because that reviewer reads the whole trail and transcript and `sonnet high` gave that read too little effort, and `automate-me` has no row for now. The chat's reason for staying on Sonnet where an Orchestrate verifier on Opus work gets `fable high`: this review only flags and gates no merge, and Sonnet costs a fifth of Fable per token. An Autopilot owner keeps its own trail, so "the chat" does not fit it, but the row gets no new text: with a Sonnet owner under an Opus root and an Opus owner under a Fable root, 4 of 4 tabletops read "the chat" as the owner, from the skill's "different model family from the one that did the work", and picked a reviewer on another model. All 4 named that reading as their own. On an Opus chat that kept the trail while Sonnet delegates wrote most of the code, 2 of 2 took `sonnet xhigh` and named the overlap with the delegates. `references/model-table.md`.
 - **Spec build names its model and effort.** (user) It does so through a Tier per ticket. A ticket's first spawn, retry, and replay run on its Tier. The fix implementer runs on the highest Tier its findings touch, and the rebase agent on the hard implementation row, because it resolves conflicts across tickets. Before this, a bare `effort: "high"` left the model to inference. `overlay/files/.../spec-build.md`.
 - **The budget moves every effort by the same steps.** (user) `unlimited` one up, `large` none, `medium` one down, `small` two down. An old budget that flattened every role to one effort erased the gap between implementation and review. A role line whose effort differs from what the budget gives was set by hand and wins for that role. Patch `180`.
 - **The code role has no Haiku option.** (user) A seemingly mechanical edit can still need judgment.
@@ -129,7 +129,7 @@ Each one names what would settle it.
 - Does `opus high` explain as well as `opus xhigh`? A `how` answer that misses a seam.
 - Does `sonnet medium` catch the comments `opus high` caught? A comment that survives review.
 - Does Haiku find the relevant chats in `recall`? A missed chat that a later search finds.
-- Does `sonnet high` stay independent and thorough on an Opus chat's trail, when Sonnet delegates did most of the code? A flag a later review catches.
+- Does `sonnet xhigh` stay independent and thorough on an Opus chat's trail, when Sonnet delegates did most of the code? A flag a later review catches.
 - Does a mechanical edit stay at `sonnet medium` in real runs, and is that enough? A fix round on one.
 
 **Do real runs behave like the tabletops?**
@@ -137,6 +137,7 @@ Each one names what would settle it.
 - Do real delegates limit `interrogate` as tabletop agents did? Spawn labels from runs that open a PR through a delegate.
 - Do real runs follow the `how` and `why` rows? Spawn labels from the next runs.
 - Does the chat sort changes between `hard tasks` and `hardest tasks` as the user expects? The next runs with a hard change.
+- Does a real Autopilot owner read "the chat" in the trail review rows as itself? The spawn label on an owner's trail review when the owner and the root run on different models.
 
 **Worktrees and run files**
 
