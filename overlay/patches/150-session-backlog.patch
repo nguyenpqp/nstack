@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index c6b60ef..c4e8653 100644
+index c6b60ef..13246ad 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -16,6 +16,10 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
@@ -8,7 +8,7 @@ index c6b60ef..c4e8653 100644
  
 +## Session backlog
 +
-+A sticky session collects asks one turn at a time, and an ask that lives only in the chat gets dropped. The chat that runs n-mode, never a delegate, keeps a backlog of the user's mid-session messages in `<root>/.nstack/backlog.md`. The opening request goes through Interview instead. Read `references/session-backlog.md` before you act on a message after the opening request, and when a new run, Session pickup, or Pause safely meets a backlog with open rows, unless that file is already in your context.
++A sticky session collects asks one turn at a time, and an ask that lives only in the chat gets dropped. The chat that runs n-mode, never a delegate, keeps a backlog of the user's mid-session messages in `<root>/.nstack/backlog/<slug>.md`, one file per run. The opening request goes through Interview instead. Read `references/session-backlog.md` before you act on a message after the opening request, and when a new run, Session pickup, or Pause safely meets open rows in `<root>/.nstack/backlog/` or in an old `<root>/.nstack/backlog.md`, unless that file is already in your context.
 +
  ## Non-negotiables
  
