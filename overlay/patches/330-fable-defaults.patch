@@ -1,0 +1,35 @@
+diff --git a/skills/arena/SKILL.md b/skills/arena/SKILL.md
+index 605b1a4..626c9db 100644
+--- a/skills/arena/SKILL.md
++++ b/skills/arena/SKILL.md
+@@ -16,7 +16,7 @@ Every candidate gets the same prompt, so the prompt is the contract.
+ 
+ 1. State the artifact each candidate is producing.
+ 2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
+-3. Pick the runners. Use the `arena runners` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, default to one each on `opus xhigh` and `sonnet xhigh`. An `auto` or `inherit-parent` entry in this line means the parent model, so omit `model` for it. An entry such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`, and an entry with no effort omits `effort`. If the Task tool rejects a configured entry, run that seat on the default at the same position and say so. `model` takes only `opus`, `sonnet`, `haiku`, or `fable`, so an entry that names another vendor's model counts as rejected. If it rejects a default, omit `model` so that seat runs on the parent model, and say so. Every seat runs a Claude model, so say in the writeup that the spread of views is narrower than a mixed-vendor arena gives. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
++3. Pick the runners. Use the `arena runners` line in `~/.cursor/rules/nstack-models.mdc`. If the rule or that line is missing, default to one each on `opus high` and `sonnet xhigh`. An `auto` or `inherit-parent` entry in this line means the parent model, so omit `model` for it. An entry such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`, and an entry with no effort omits `effort`. If the Task tool rejects a configured entry, run that seat on the default at the same position and say so. `model` takes only `opus`, `sonnet`, `haiku`, or `fable`, so an entry that names another vendor's model counts as rejected. If it rejects a default, omit `model` so that seat runs on the parent model, and say so. Every seat runs a Claude model, so say in the writeup that the spread of views is narrower than a mixed-vendor arena gives. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **n-mode** skill.
+ 4. Give each candidate its own output location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
+ 
+ ## Phase B: Fan out
+diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
+index 62fa99d..4038547 100644
+--- a/skills/setup-nstack/SKILL.md
++++ b/skills/setup-nstack/SKILL.md
+@@ -30,7 +30,7 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
+ 
+ **(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by model, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` move the effort of every value that has one, panel entries included, one step up, not at all, one step down, or two steps down from its default. The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`, and a move past either end stops there. Moving every value by the same steps keeps the gap between jobs, until a value stops at an end of the ladder, which can bring two tiers level at `small`. A bare model keeps no effort. If the resulting effort is not a detected effort, use the highest detected effort below it. `inherit-parent` and `auto` do not change. So `unlimited` turns `opus xhigh` into `opus max` and `sonnet high` into `sonnet xhigh`, `large` keeps the defaults, and `small` turns them into `opus medium` and `sonnet low`.
+ 
+-**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values on a model other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for a worker whose job has no row in n-mode's table, unless a race or comparison assigns another model per arm. It also drives helpers, Verify, comment review, and one trail review row, so changing it moves those jobs too.
++**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values on a model other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for a worker whose job has no row in n-mode's table, unless a race or comparison assigns another model per arm. It also drives helpers, Verify, and comment review, so changing it moves those jobs too.
+ 
+ ### 4. Validate
+ 
+@@ -60,7 +60,7 @@ why investigators: sonnet medium
+ why synthesizer: opus xhigh
+ reflect tooling: sonnet high
+ reflect judgment, divergent, synthesizer: opus xhigh
+-arena runners: opus xhigh, sonnet xhigh
++arena runners: opus high, sonnet xhigh
+ arena cross-judge pool: fable high, opus xhigh
+ swarm workers: sonnet high
+ recall workers: haiku

@@ -22,28 +22,30 @@ A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus
 | Clean chain rebase or merge with no conflict | the code playbook's line | `sonnet medium` |
 | Bug investigation that runs or instruments code | the code playbook's line | `sonnet high` |
 | Orchestrate sub-coordinator | `judgment and prose` | `opus high` |
-| Independent verdict that gates a landing, such as a Shipping verifier's or a swarm verifier lane | `judgment and prose` | `opus high` |
+| Independent verdict that gates a landing, such as a Shipping verifier's or a swarm verifier lane, when Sonnet wrote all the code | `judgment and prose` | `opus high` |
+| Independent verdict that gates a landing, when Opus wrote any of the code | `deep review` | `fable high` |
 | Orchestrate verifier when the worker runs on Sonnet | `judgment and prose` | `opus high` |
 | Orchestrate verifier when the worker runs on Opus | `deep review` | `fable high` |
 | Cross-model review of a `show-me-your-work` trail when the chat runs on Sonnet or Fable | `judgment and prose` | `opus high` |
-| Cross-model review of a `show-me-your-work` trail when the chat runs on Opus | `swarm workers` | `sonnet xhigh` |
+| Cross-model review of a `show-me-your-work` trail when the chat runs on Opus | `deep review` | `fable medium` |
 | Comment review in `no-comments` | `swarm workers` | `sonnet medium` |
 | Transcript slice in `recall` | `recall workers` | `haiku` |
 | Read-only review lane that audits existing code against a question, in an investigation or an audit, rather than a diff a delegate just wrote, and writes only its report | `judgment and prose` | `opus medium` |
 | Check of a review lane's claims, by re-reading or re-running the evidence for each claim before anyone acts on it, unless the check gates a landing | `judgment and prose` | `opus medium` |
 | Per-task diff review | `judgment and prose` | `opus high` |
-| Per-task diff review of hardest implementation | `deep review` | `fable xhigh` |
-| Plan writing that you delegate, finding the cause of a bug that a first investigation did not explain, testing a premise under **Attack the Premise**, design decisions | `judgment and prose` | `opus xhigh` |
-| Final branch review | `judgment and prose` | `opus xhigh` |
-| Arena runners | `arena runners` | `opus xhigh` and `sonnet xhigh` |
+| Per-task diff review of hardest implementation | `deep review` | `fable high` |
+| Plan writing that you delegate, design decisions | `deep review` | `fable high` |
+| Finding the cause of a bug that a first investigation did not explain, testing a premise under **Attack the Premise** | `judgment and prose` | `opus xhigh` |
+| Final branch review | `deep review` | `fable high` |
+| Arena runners | `arena runners` | `opus high` and `sonnet xhigh` |
 | Arena or eval judge | `arena cross-judge pool` | `fable high`, or `opus xhigh` when the chat runs on Fable |
 | Panel runners and reviewers (architect, interrogate) | `architect runners` or `interrogate reviewers` | `opus xhigh` and `fable high` |
 
 ## Picking a row
 
-Pick an implementation tier from the change, not to save cost, and name it in the spawn label. The implementation rows name the only models that implement, so never pick another one between them. Moderate and Hard split on one question: does the delegate still have a design decision to make? Code on Opus starts at Moderate. Take Hard only when you can name the design decision the brief leaves open, or when the work is a migration of saved data, and write that reason in the label. A brief that calls its design decided, or that gives a precedent to copy, leaves no open decision, however much it stresses risk. A costly mistake alone never lifts a job above Moderate, because the review rows carry that risk. Payment code whose brief or plan settles the approach takes Moderate even when the change is small or mechanical, unless a higher row names the work. Otherwise, when two rows fit a job, take the higher one, with the implementation rows running lowest to highest. A helper that also writes code, such as a babysitter that pushes fixes, takes the tier of the code it writes. A playbook's "configured model (default `sonnet high`)" is the Implementation row, so a change at another tier takes that tier's row.
+Pick an implementation tier from the change, not to save cost, and name it in the spawn label. The implementation rows name the only models that implement, so never pick another one between them. Moderate and Hard split on one question: does the delegate still have a design decision to make? Code on Opus starts at Moderate. Take Hard only when you can name the design decision the brief leaves open, or when the work is a migration of saved data, and write that reason in the label. A brief that calls its design decided, or that gives a precedent to copy, leaves no open decision, however much it stresses risk. A costly mistake alone never lifts a job above Moderate, because the review rows carry that risk. Payment code whose brief or plan settles the approach takes Moderate even when the change is small or mechanical, unless a higher row names the work. Otherwise, when two rows fit a job, a row that names the job, such as Final branch review or an Orchestrate verifier, wins over a general row. Among the implementation rows, take the higher one, since they run lowest to highest. A helper that also writes code, such as a babysitter that pushes fixes, takes the tier of the code it writes. A playbook's "configured model (default `sonnet high`)" is the Implementation row, so a change at another tier takes that tier's row.
 
-Fable reviews and evaluates and never writes code, so no implementation or fix row names it. A `swarm` worker that writes code takes that change's tier, unless a race assigns a model per arm. An Orchestrate retry on a different model after a tool error takes `opus high` for a worker on Sonnet and `sonnet high` for a worker on Opus.
+Fable reviews, evaluates, plans, and decides designs, and never writes code, so no implementation or fix row names it. A `swarm` worker that writes code takes that change's tier, unless a race assigns a model per arm. An Orchestrate retry on a different model after a tool error takes `opus high` for a worker on Sonnet and `sonnet high` for a worker on Opus.
 
 ## Fix of a bug that review found
 
@@ -59,7 +61,7 @@ Take the fix from the tier the code ran on. A Sonnet value reads the code playbo
 
 ## Budgets and role lines
 
-These pairs hold at the `large` budget. The code playbook's line is `feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role, and a role with no line keeps the row's value. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. Never raise or lower an effort the table and the role lines give.
+These pairs hold at the `large` budget, which also applies when no rule file exists. The code playbook's line is `feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role, and a role with no line keeps the row's value. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. A `deep review` line that names a model other than `fable` raises the effort of each `deep review` row one step, since `fable high` does the work of `opus xhigh`. The default line is `deep review: fable high`, so `deep review: opus high` runs a `fable high` row on `opus xhigh` and a `fable medium` row on `opus high`. An effort set by hand, such as `deep review: opus max`, still wins. Never raise or lower an effort the table and the role lines give.
 
 ## Label every spawn
 

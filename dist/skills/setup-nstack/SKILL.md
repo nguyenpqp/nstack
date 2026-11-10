@@ -30,7 +30,7 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
 
 **(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by model, list, or alias (`inherit-parent`, `auto`). `unlimited`, `large`, `medium`, and `small` move the effort of every value that has one, panel entries included, one step up, not at all, one step down, or two steps down from its default. The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`, and a move past either end stops there. Moving every value by the same steps keeps the gap between jobs, until a value stops at an end of the ladder, which can bring two tiers level at `small`. A bare model keeps no effort. If the resulting effort is not a detected effort, use the highest detected effort below it. `inherit-parent` and `auto` do not change. So `unlimited` turns `opus xhigh` into `opus max` and `sonnet high` into `sonnet xhigh`, `large` keeps the defaults, and `small` turns them into `opus medium` and `sonnet low`.
 
-**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskUserQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values on a model other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for a worker whose job has no row in n-mode's table, unless a race or comparison assigns another model per arm. It also drives helpers, Verify, comment review, and one trail review row, so changing it moves those jobs too.
+**(c) Show the roles and confirm.** Show every role with its value, marking any model not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model) as the options. Prefer AskUserQuestion over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values on a model other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for a worker whose job has no row in n-mode's table, unless a race or comparison assigns another model per arm. It also drives helpers, Verify, and comment review, so changing it moves those jobs too.
 
 ### 4. Validate
 
@@ -60,7 +60,7 @@ why investigators: sonnet medium
 why synthesizer: opus xhigh
 reflect tooling: sonnet high
 reflect judgment, divergent, synthesizer: opus xhigh
-arena runners: opus xhigh, sonnet xhigh
+arena runners: opus high, sonnet xhigh
 arena cross-judge pool: fable high, opus xhigh
 swarm workers: sonnet high
 recall workers: haiku
