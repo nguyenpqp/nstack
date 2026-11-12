@@ -1,8 +1,12 @@
 # Model table
 
-The model and effort of every spawn. Read this before your first Agent spawn, and again when it is no longer in your context. A delegate that spawns nothing never needs it, so it sits outside `SKILL.md`, which every delegate reads.
+The model and effort of every spawn. Read all of it before your first Agent spawn, and again when it is no longer in your context. A delegate that spawns nothing never needs it, so it sits outside `SKILL.md`, which every delegate reads.
 
 A role value `<model> <effort>`, such as `opus xhigh`, means Agent `model: "opus"` and `effort: "xhigh"`. A value with no effort, such as `haiku`, omits `effort`. With no `effort`, the agent runs at the session's effort.
+
+## Label every spawn
+
+The CLI line shows only the type and the `description`, and a `general-purpose` type reads `Agent`. So open the description with the model and effort joined by a colon, then a space and two or three words for the task, as in `opus:xhigh review diff`. A job on one of the five implementation rows adds its tier in parentheses before the task, as in `opus:medium (moderate) add channel`. The tier words are `mechanical`, `implementation`, `moderate`, `hard`, and `hardest`. A Hard job adds its reason after the tier, as in `opus:high (hard: refund ledger shape) add refunds` or `opus:high (hard: migration) settings v2`. Write the `model` you pass, or `inherit` when you omit it. Write the `effort` you pass, else the session's, so a `haiku` spawn at a `high` session reads `haiku:high`. Spawns that routed skills make carry the label too.
 
 ## Jobs
 
@@ -62,7 +66,3 @@ Take the fix from the tier the code ran on. A Sonnet value reads the code playbo
 ## Budgets and role lines
 
 These pairs hold at the `large` budget, which also applies when no rule file exists. The code playbook's line is `feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`. Another budget moves every effort in the table by the steps it moves the role lines. A row replaces the default that a routed skill names for the same role. A role line replaces the model in every row of its role, and a role with no line keeps the row's value. A role line whose effort differs from what the rule's budget gives its default was set by hand, and its effort replaces the effort in those rows too. A rule whose `# budget` line names one effort, as in `large (xhigh)`, predates budgets that move efforts, so none of its role lines counts as set by hand. A `deep review` line that names a model other than `fable` raises the effort of each `deep review` row one step, since `fable high` does the work of `opus xhigh`. The default line is `deep review: fable high`, so `deep review: opus high` runs a `fable high` row on `opus xhigh` and a `fable medium` row on `opus high`. An effort set by hand, such as `deep review: opus max`, still wins. Never raise or lower an effort the table and the role lines give.
-
-## Label every spawn
-
-The CLI line shows only the type and the `description`, and a `general-purpose` type reads `Agent`. So open the description with the model and effort joined by a colon, then a space and two or three words for the task, as in `opus:xhigh review diff`. A job on one of the five implementation rows adds its tier in parentheses before the task, as in `opus:medium (moderate) add channel`. The tier words are `mechanical`, `implementation`, `moderate`, `hard`, and `hardest`. A Hard job adds its reason after the tier, as in `opus:high (hard: refund ledger shape) add refunds` or `opus:high (hard: migration) settings v2`. Write the `model` you pass, or `inherit` when you omit it. Write the `effort` you pass, else the session's, so a `haiku` spawn at a `high` session reads `haiku:high`. Spawns that routed skills make carry the label too.
