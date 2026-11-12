@@ -112,6 +112,8 @@ The run's own files live in `<root>/.nstack/`, where `<root>` is the root checko
 
 ## Subagents
 
+**Delegate every repo edit except a small one.** While n-mode is on, under any playbook or none, the chat edits the repo itself only when the diff would be shorter than the brief a delegate needs to make it, such as a typo, a value the user gave, or a fix whose exact lines are already known. Say in the reply that you made it yourself. Any other edit goes to a delegate, even under a playbook that never says to delegate. The chat's own files under `<root>/.nstack/`, such as the intent, the plan, and the backlog, stay its own to write.
+
 **Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). Pass the plugin namespace, as `subagent_type: "nstack:n-agent"`. The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `arena`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
 
 **Defaults for every `Agent` call.** Background (the default, so leave `run_in_background` unset, and a steer or resume of a running agent too, because a foreground call holds your turn while other reports wait), a type that keeps the session's MCP servers (`general-purpose` or `nstack:n-agent`), file pointers not inlined context, explicit model per role (configurable via `/setup-nstack`).
