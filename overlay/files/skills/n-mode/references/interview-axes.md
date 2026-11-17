@@ -4,10 +4,10 @@ One row per execution playbook, read one row at a time by `../playbooks/intervie
 
 *Build and change*
 
-| Playbook | Frontier must cover | Dispatch, never ask | Confirmation must name |
+| Playbook | Frontier must cover | Dispatch, never ask | Design must name |
 |---|---|---|---|
 | Feature | User-visible behavior and its edges (empty, max, concurrent, offline). Which flow it extends, replaces, or sits beside. The data shape per **principle-model-the-domain**. The interface and its callers. Failure modes. Migration of existing data and callers. | Call sites of the flow. How the repo does this already. Existing coverage. | The behavior, the data shape, what is out of scope. |
-| Spec build | The spec's outcome. Tickets as vertical slices, each demoable and sized to one fresh context. Blocking edges that are real gates. Files two tickets both touch. Each ticket's verify command, and checks a worktree cannot run. | How the repo splits similar work. Shared hot spots. Test and typecheck commands. | The ticket graph with blocking edges and write scopes, which step 1 writes to `<root>/.nstack/intents/<slug>-tickets.md` and the intent names by path, and what is out of scope. |
+| Spec build | The spec's outcome. Tickets as vertical slices, each demoable and sized to one fresh context. Blocking edges that are real gates. Files two tickets both touch. Each ticket's verify command, and checks a worktree cannot run. | How the repo splits similar work. Shared hot spots. Test and typecheck commands. | The ticket graph with blocking edges and write scopes, and what is out of scope. |
 | Bug fix | The reproduction: input, environment, expected, observed. Blast radius. Root cause versus symptom, and the fix site. Sibling call sites with the same defect. Urgency. | `git log` over the implicated files. Existing coverage. Prior reports. | The reproduction, the fix site, the regression test. |
 | Refactoring | The behavior held invariant, checkably. Call sites including tests, docs, and dynamic references. One sweep or safe incremental steps. Public API breakage. What is left alone. | Every call site, string-based and reflective included. Coverage. Exported or internal. | The invariant, the evidence it holds, what is left alone. |
 | Perf issue | Metric, surface, workload. What is fast enough. Whether the slow work can be deleted. Acceptable regressions elsewhere. | The baseline trace and numbers. The hot path. Whether a control skill captures the surface. | The metric, the target, the trace's surface. |
@@ -18,7 +18,7 @@ One row per execution playbook, read one row at a time by `../playbooks/intervie
 
 *Read-only and diagnosis*
 
-| Playbook | Frontier must cover | Dispatch, never ask | Confirmation must name |
+| Playbook | Frontier must cover | Dispatch, never ask | Design must name |
 |---|---|---|---|
 | Investigation | The decision the answer feeds, and who makes it. What evidence settles it. The confidence bar. Recommendation or findings only. | Nearly everything: code, history, docs, issues, runtime. | The question, the evidence bar, whether you owe a judgment. |
 | Runtime forensics | The symptom, observably. Surface and process. The trigger. Whether a fix follows. | How to launch and instrument the surface. Prior reports. | The symptom, the capture plan, that the deliverable is a diagnosis. |
@@ -27,7 +27,7 @@ One row per execution playbook, read one row at a time by `../playbooks/intervie
 
 *Plans and long-running programs*
 
-| Playbook | Frontier must cover | Dispatch, never ask | Confirmation must name |
+| Playbook | Frontier must cover | Dispatch, never ask | Design must name |
 |---|---|---|---|
 | Multi-phase plan | Phase boundaries and what each proves. Which phases block. Who runs it after. What stays out. | The architecture. Prior plans. Whether a plan is warranted at all. | The phases in order, each closing gate, what is out of scope. |
 | Autonomous run | A checkable exit predicate. Authority while the user is away. What it stops for anyway. Budget and wake mechanism. | The state of the work. Whether an event can be watched. | The predicate, the stop lines, the wake mechanism. |
@@ -37,7 +37,7 @@ One row per execution playbook, read one row at a time by `../playbooks/intervie
 
 *Operations*, settled by one question or none.
 
-| Playbook | Frontier must cover | Dispatch, never ask | Confirmation must name |
+| Playbook | Frontier must cover | Dispatch, never ask | Design must name |
 |---|---|---|---|
 | Babysit | Which mode, per its first rule. Which PR or stack. Where the human's line begins. | PR and CI state. Open threads. | The mode, the target, the stop line. |
 | Shipping | Which stack. What counts as verified. The ceiling. | Per-PR state. Recorded verdicts. | The stack root, the verification surface, the ceiling. |

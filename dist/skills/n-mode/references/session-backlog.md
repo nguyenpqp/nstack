@@ -74,7 +74,7 @@ Right after the turn's grep, write each new ask as a row tagged `draft`, plus an
 
 ## Sort each row against the intent
 
-When the run keeps no intent file, sort against the design its reply confirmed.
+When the run keeps no intent file, sort against the design its reply stated.
 
 - An ask inside the intent's **Outcome** folds into the current run, and every later delegate brief carries it.
 - A confirmed ask that contradicts the design amends the intent in the next commit, stops the delegate on the affected step, and hands that step to a fresh delegate with consolidated scope per **Subagents** in `SKILL.md`.

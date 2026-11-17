@@ -1,9 +1,9 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index f656857..e704d01 100644
+index a35fd76..61def88 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -26,7 +26,7 @@ The remaining triggers live only here:
- - **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `<root>/.nstack/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
+ - **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It settles the decisions that change the diff before any code exists, saved as `<root>/.nstack/intents/<slug>.md`, and the playbook says when the user confirms the design first. The user opts out per request by saying so. Never opt out for them.
  - Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent`, the intent file's absolute path when the run has one, and the worktree path and branch that **Worktree** below asks each brief to name.
  - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
 -- Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.

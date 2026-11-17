@@ -1,13 +1,13 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index ec4e514..f7c3023 100644
+index a4933fb..42e5979 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -118,6 +118,6 @@ Write short declarative sentences with no long dash and no colon as a connector.
  
  ## Playbooks
  
--Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool when the Interview ends, at its step 9. The order before step 1 is fixed: the Interview round, then the todo list, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill.
-+Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool when the Interview ends, at its step 9. The order before step 1 is fixed: the Interview round, then the todo list, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill. A spec that splits into several tickets, some able to build in parallel, routes to **Spec build** instead, whose Interview row drafts the ticket graph when the request has none.
+-Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool when the Interview ends. The order before step 1 is fixed: the Interview round, then the todo list, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill.
++Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool when the Interview ends. The order before step 1 is fixed: the Interview round, then the todo list, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill. A spec that splits into several tickets, some able to build in parallel, routes to **Spec build** instead, whose Interview row drafts the ticket graph when the request has none.
  
 -Investigation, Bug fix, Perf issue, Hillclimb, Runtime forensics, Trace forensics, Feature, Refactoring, Prototype, Visual parity, Authoring a skill, Eval, Babysit, Shipping, Autonomous run, Autopilot-full, Autopilot-stack, Session pickup, Pause safely, Multi-phase plan, Worktree cleanup, Opening a PR.
 +Investigation, Bug fix, Perf issue, Hillclimb, Runtime forensics, Trace forensics, Feature, Spec build, Refactoring, Prototype, Visual parity, Authoring a skill, Eval, Babysit, Shipping, Autonomous run, Autopilot-full, Autopilot-stack, Session pickup, Pause safely, Multi-phase plan, Worktree cleanup, Opening a PR.
