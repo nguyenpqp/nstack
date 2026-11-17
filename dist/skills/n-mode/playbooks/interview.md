@@ -14,7 +14,7 @@
 
 **Before step 1.** No code exists until the design is confirmed, so this playbook opens no worktree per the **Worktree** section of `SKILL.md`. Run every round from the main session. An `AskUserQuestion` raised inside a subagent never reaches the user, so a delegated interview is a silent no-op.
 
-1. Read the project context first. Trace the affected subsystem yourself before the first round, so your questions rest on what the repo already does. Hand bulk reading to an `Explore` subagent whose brief says not to edit, and keep only its summary.
+1. Read the project context first. Trace the affected subsystem yourself before the first round, so your questions rest on what the repo already does. Hand bulk reading to one `nstack:n-agent` whose brief says not to edit, on the Explore and search row per the **Subagents** section of `SKILL.md`, and keep only its summary.
 2. Name the execution playbook this task will land in, and pull its row per **Axes by execution playbook** below. Every playbook has one. Two fit? Pick the primary, name the second out loud, and fold its axes in with a stated reason.
 3. Build the design tree. Every decision branches into the decisions that hang off it. The **frontier** is every decision whose prerequisites are already settled.
 4. Ask the whole frontier in one round, then stop and wait. A question whose answer depends on another question still open belongs to a later round. Each round of answers pushes the frontier outward. Recompute and ask again.

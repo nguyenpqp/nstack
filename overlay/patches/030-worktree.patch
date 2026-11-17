@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index afbe7be..400699c 100644
+index 04e4ac9..417d339 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -24,7 +24,7 @@ The remaining triggers live only here:
@@ -7,7 +7,7 @@ index afbe7be..400699c 100644
  - First message → restate the user's goal and the smallest change that meets it, then proceed. Open each subagent brief, PR `## Why`, and final report with the goal.
  - **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `<root>/.nstack/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
 -- Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent`.
-+- Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent` and the worktree path and branch that **Worktree** below asks each brief to name.
++- Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent`, the intent file's absolute path when the run has one, and the worktree path and branch that **Worktree** below asks each brief to name.
  - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
  - Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.

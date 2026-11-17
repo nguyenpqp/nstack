@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 5f4cd3e..afbe7be 100644
+index 5f4cd3e..04e4ac9 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -23,6 +23,7 @@ The Principles section below grounds every trigger. In your reply, name each pri
@@ -15,6 +15,6 @@ index 5f4cd3e..afbe7be 100644
  ## Playbooks
  
 -Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool first. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill.
-+Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool first. The order before step 1 is fixed: the Interview round, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill.
++Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool when the Interview ends, at its step 9. The order before step 1 is fixed: the Interview round, then the todo list, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill.
  
  Investigation, Bug fix, Perf issue, Hillclimb, Runtime forensics, Trace forensics, Feature, Refactoring, Prototype, Visual parity, Authoring a skill, Eval, Babysit, Shipping, Autonomous run, Autopilot-full, Autopilot-stack, Session pickup, Pause safely, Multi-phase plan, Worktree cleanup, Opening a PR.

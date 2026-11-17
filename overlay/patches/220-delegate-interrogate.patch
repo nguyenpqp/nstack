@@ -1,9 +1,9 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 6edcebd..60c924c 100644
+index 22e30b4..618bf3f 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -31,6 +31,7 @@ The remaining triggers live only here:
- - Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent` and the worktree path and branch that **Worktree** below asks each brief to name.
+ - Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent`, the intent file's absolute path when the run has one, and the worktree path and branch that **Worktree** below asks each brief to name.
  - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
  - Code → name the data shape first. Across a function boundary → **architect**. A change crosses one when it adds or changes a signature, a type, or a module seam that a caller sees. An edit inside one function body does not, and neither does a branch added to an existing case. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
 +- A subagent that opens a PR → **interrogate** only for a contested design or a branch that touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm. Otherwise it skips `interrogate` and says so. Either way, it runs Claude Code's built-in `/code-review` over the branch before it opens the PR.
