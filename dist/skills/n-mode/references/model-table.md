@@ -18,9 +18,7 @@ The CLI line shows only the type and the `description`, and a `general-purpose` 
 | Hard implementation: the delegate still has a design decision to make, or the change is a migration of the user's saved config or data | `hard tasks` | `opus high` |
 | Hardest implementation: cross-cutting design, gnarly concurrency, a subtle algorithm, whether the intent is vague or the steps are exact | `hardest tasks` | `opus xhigh` |
 | Explore and search, and any helper that only reads, parses, or watches, unless its skill names a role line | `swarm workers` | `sonnet medium` |
-| Explorer in `how` | `how explorer` | `sonnet medium` |
-| Explainer in `how` | `how explainer` | `opus high` |
-| Investigator in `why` | `why investigators` | `sonnet medium` |
+| The one subagent in `how`, which explores and explains in one pass | `judgment and prose` | `opus high` |
 | Verify: run the checks and report the results | `swarm workers` | `sonnet high` |
 | Conflicted merge or rebase, except a Spec build replay, which stays on the ticket's **Tier** | `hard tasks` | `opus high` |
 | Clean chain rebase or merge with no conflict | the code playbook's line | `sonnet medium` |
@@ -40,7 +38,7 @@ The CLI line shows only the type and the `description`, and a `general-purpose` 
 | Final branch review | `deep review` | `fable high` |
 | Arena runners | `arena runners` | `opus high` and `sonnet xhigh` |
 | Arena or eval judge | `arena cross-judge pool` | `fable high`, or `opus xhigh` when the chat runs on Fable |
-| Panel runners and reviewers (architect, interrogate) | `architect runners` or `interrogate reviewers` | `opus xhigh` and `fable high` |
+| Reviewers in `interrogate` | `interrogate reviewers` | `opus xhigh` and `fable high` |
 
 ## Picking a row
 
