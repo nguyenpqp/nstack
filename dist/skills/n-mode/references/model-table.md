@@ -25,11 +25,8 @@ The CLI line shows only the type and the `description`, and a `general-purpose` 
 | Conflicted merge or rebase, except a Spec build replay, which stays on the ticket's **Tier** | `hard tasks` | `opus high` |
 | Clean chain rebase or merge with no conflict | the code playbook's line | `sonnet medium` |
 | Bug investigation that runs or instruments code | the code playbook's line | `sonnet high` |
-| Orchestrate sub-coordinator | `judgment and prose` | `opus high` |
 | Independent verdict that gates a landing, such as a Shipping verifier's or a swarm verifier lane, when Sonnet wrote all the code | `judgment and prose` | `opus high` |
 | Independent verdict that gates a landing, when Opus wrote any of the code | `deep review` | `fable high` |
-| Orchestrate verifier when the worker runs on Sonnet | `judgment and prose` | `opus high` |
-| Orchestrate verifier when the worker runs on Opus | `deep review` | `fable high` |
 | Cross-model review of a `show-me-your-work` trail when the chat runs on Sonnet or Fable | `judgment and prose` | `opus high` |
 | Cross-model review of a `show-me-your-work` trail when the chat runs on Opus | `deep review` | `fable medium` |
 | Comment review in `no-comments` | `swarm workers` | `sonnet medium` |
@@ -47,9 +44,9 @@ The CLI line shows only the type and the `description`, and a `general-purpose` 
 
 ## Picking a row
 
-Pick an implementation tier from the change, not to save cost, and name it in the spawn label. The implementation rows name the only models that implement, so never pick another one between them. Moderate and Hard split on one question: does the delegate still have a design decision to make? Code delegated to Opus starts at Moderate, whatever model the chat runs on. Take Hard only when you can name the design decision the brief leaves open, or when the work is a migration of saved data, and write that reason in the label. A brief that calls its design decided, or that gives a precedent to copy, leaves no open decision, however much it stresses risk. A costly mistake alone never lifts a job above Moderate, because the review rows carry that risk. Payment code whose brief or plan settles the approach takes Moderate even when the change is small or mechanical, unless a higher row names the work. Otherwise, when two rows fit a job, a row that names the job, such as Final branch review or an Orchestrate verifier, wins over a general row. Among the implementation rows, take the higher one, since they run lowest to highest. A helper that also writes code, such as a babysitter that pushes fixes, takes the tier of the code it writes. A playbook's "configured model (default `sonnet high`)" is the Implementation row, so a change at another tier takes that tier's row.
+Pick an implementation tier from the change, not to save cost, and name it in the spawn label. The implementation rows name the only models that implement, so never pick another one between them. Moderate and Hard split on one question: does the delegate still have a design decision to make? Code delegated to Opus starts at Moderate, whatever model the chat runs on. Take Hard only when you can name the design decision the brief leaves open, or when the work is a migration of saved data, and write that reason in the label. A brief that calls its design decided, or that gives a precedent to copy, leaves no open decision, however much it stresses risk. A costly mistake alone never lifts a job above Moderate, because the review rows carry that risk. Payment code whose brief or plan settles the approach takes Moderate even when the change is small or mechanical, unless a higher row names the work. Otherwise, when two rows fit a job, a row that names the job, such as Final branch review, wins over a general row. Among the implementation rows, take the higher one, since they run lowest to highest. A helper that also writes code, such as a babysitter that pushes fixes, takes the tier of the code it writes. A playbook's "configured model (default `sonnet high`)" is the Implementation row, so a change at another tier takes that tier's row.
 
-Fable reviews, evaluates, plans, and decides designs, and never writes code, so no implementation or fix row names it. A `swarm` worker that writes code takes that change's tier, unless a race assigns a model per arm. An Orchestrate retry on a different model after a tool error takes `opus high` for a worker on Sonnet and `sonnet high` for a worker on Opus.
+Fable reviews, evaluates, plans, and decides designs, and never writes code, so no implementation or fix row names it. A `swarm` worker that writes code takes that change's tier, unless a race assigns a model per arm.
 
 ## Fix of a bug that review found
 
