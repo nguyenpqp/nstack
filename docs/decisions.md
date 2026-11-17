@@ -42,6 +42,7 @@ The per-decision intent files that came before this page are in git history, und
 - **Sticky mode is a rule in the skill, not a hook.** Claude Code has no frontmatter flag for it, and a session-start hook was ruled out. Patch `010`.
 - **There is no Orchestrate playbook.** (user) Upstream deleted it, so nstack removed its interview row, its run files, and its model table rows. Program-scale work routes to `figure-it-out`, as upstream routes it. `nstack-help` keeps upstream's note that a `/orchestrate` in the slash menu comes from another plugin.
 - **Spec build is self-contained.** (user) No issue tracker, tickets land fast-forward or by cherry-pick after their verify command passes, one review at the end, and nothing asks the user mid-run. A shape shared across a process boundary lands as its own blocking ticket. Patch `050`, `overlay/files/.../spec-build.md`.
+- **Spec build runs only when the work splits into at least two tickets that build without blocking each other.** A PRD or spec in hand does not pick it by itself, and one coupled change goes to Feature. `spec-build.md` says the same, where it used to ask for "tickets with blocking edges". On the old text, 2 of 2 tabletops already sent a one-component settings PRD to Feature and a PRD for three independent CLI subcommands to Spec build, by their own reading, and both named "with blocking edges" as a line a stricter reader could take to send the CLI PRD to Feature. On the new text, 2 of 2 gave the same answers, cited the new line, and named no conflict, and 2 of 2 did again after review reworded the Feature clause to "one coupled change". Patch `160` was repaired for the moved context. Patch `050`, `overlay/files/.../spec-build.md`.
 - **Crossing a function boundary means a change a caller sees:** a signature, type, or module seam. An edit inside one function body does not count. Patch `085`.
 - **A project with no control skill is driven through its own runner.** Upstream names `control-ui` and `control-cli` from a Cursor plugin, so n-mode names the project's control skill, or else its CLI, dev server, or test command. Upstream no longer asks for one to be built, so the line that said to offer one went too. Patch `090`.
 - **Review runs the built-in `/code-review`**, then the lead checks the diff against the intent's **Outcome** and **Out of scope**. (user) `interrogate` stays for contested designs. Patch `060`.
@@ -171,7 +172,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `010-sticky-mode` | n-mode stays on for the conversation |
 | `020-interview-gate` | Every task opens with a sized Interview |
 | `030-worktree` | Points n-mode at `references/worktree.md`, states the rules a delegate needs, and adds the worktree, branch, and intent path to each kickoff |
-| `050-spec-build` | Routes parallel-ticket work to Spec build |
+| `050-spec-build` | Routes work with two tickets that build without blocking each other to Spec build, and the rest to Feature |
 | `060-pocock-routing` | Routes to `diagnosing-bugs` and to the built-in `/code-review`, and adds the final reviewer of a sensitive Feature |
 | `065-diagnosis-loop` | Bug fix runs `diagnosing-bugs` phases 1 to 4 |
 | `066-hitl-terminal` | The user runs the HITL script |

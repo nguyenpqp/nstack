@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 801eaa8..8c80eaf 100644
+index c6be780..c027d4a 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -123,6 +123,8 @@ You own every subagent's work. Review the diff and write your own summary. A sec
@@ -10,4 +10,4 @@ index 801eaa8..8c80eaf 100644
 +
  ## Playbooks
  
- Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool when the Interview ends. The order before step 1 is fixed: the Interview round, then the todo list, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill. A spec that splits into several tickets, some able to build in parallel, routes to **Spec build** instead, whose Interview row drafts the ticket graph when the request has none.
+ Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool when the Interview ends. The order before step 1 is fixed: the Interview round, then the todo list, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill. Work that splits into at least two tickets that build without blocking each other routes to **Spec build** instead, whose Interview row drafts the ticket graph when the request has none. A PRD or spec in hand does not pick Spec build by itself, so one coupled change goes to Feature.
