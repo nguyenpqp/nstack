@@ -1,5 +1,5 @@
 diff --git a/docs/guide/01-setup.md b/docs/guide/01-setup.md
-index f229392..e0847b3 100644
+index ffcdcbe..3c8aeaf 100644
 --- a/docs/guide/01-setup.md
 +++ b/docs/guide/01-setup.md
 @@ -4,15 +4,14 @@ In this page you install the plugin, pick which models pstack uses, and run your
@@ -24,14 +24,14 @@ index f229392..e0847b3 100644
  
 @@ -61,6 +60,6 @@ Pick something real but small, and describe it the way you'd describe it to a co
  
- Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/n-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
+ Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt.
  
 -From here you can type normal follow-ups. To keep `/n-mode` on for the whole chat, pick it from the `/` menu with Option+Enter (Mac) or Alt+Enter (Windows) instead of Enter. That makes it a [Custom Mode](https://cursor.com/docs/skills#using-a-skill-as-a-custom-mode), which stays in context on every turn until you exit it. Custom Modes are available in the Agents Window and the CLI. Plain Enter attaches the skill to one message, and it fades as the chat moves on.
 +From here you can type normal follow-ups. Once started, `/n-mode` stays on for the rest of the conversation and stays out of casual turns. Tell it to stop when you want it off.
  
  Next: [Route work through `/n-mode`](./02-n-mode.md).
 diff --git a/docs/guide/02-n-mode.md b/docs/guide/02-n-mode.md
-index e65939e..1f59dbe 100644
+index de805bb..f0bf29d 100644
 --- a/docs/guide/02-n-mode.md
 +++ b/docs/guide/02-n-mode.md
 @@ -90,7 +90,7 @@ continue
@@ -56,15 +56,15 @@ index e65939e..1f59dbe 100644
  ```text
  /n-mode new task. branch off <base> in a fresh worktree, then port the parser change there.
 diff --git a/docs/guide/05-build-and-clean.md b/docs/guide/05-build-and-clean.md
-index 96755ee..89e1a06 100644
+index bde9565..ec68776 100644
 --- a/docs/guide/05-build-and-clean.md
 +++ b/docs/guide/05-build-and-clean.md
 @@ -56,7 +56,7 @@ In context, that's enough. [`/tdd`](../../skills/tdd/SKILL.md) writes the smalle
  
  ## Clean before you commit
  
--The [Opening a PR playbook](../../skills/n-mode/playbooks/opening-a-pr.md) runs `/deslop` on the diff before each commit and applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. `/deslop` ships in the `cursor-team-kit` plugin, not in pstack. If you don't have it, ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
-+The [Opening a PR playbook](../../skills/n-mode/playbooks/opening-a-pr.md) runs Claude Code's built-in `/simplify` on the diff before each commit and applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. After `/simplify`, it removes what is left of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
+-The [Opening a PR playbook](../../skills/n-mode/playbooks/opening-a-pr.md) runs `/deslop` on the diff before each commit, and n-mode applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. `/deslop` ships in the `cursor-team-kit` plugin, not in pstack. If you don't have it, ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
++The [Opening a PR playbook](../../skills/n-mode/playbooks/opening-a-pr.md) runs Claude Code's built-in `/simplify` on the diff before each commit, and n-mode applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. After `/simplify`, it removes what is left of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
  
  For prose, `/unslop` takes a target and any extra rules you have:
  
@@ -80,7 +80,7 @@ index 96755ee..89e1a06 100644
  
  Next: [Verify and ship](./06-verify-and-ship.md).
 diff --git a/docs/guide/07-overnight.md b/docs/guide/07-overnight.md
-index 3b377ff..f6ab757 100644
+index cefa002..4656341 100644
 --- a/docs/guide/07-overnight.md
 +++ b/docs/guide/07-overnight.md
 @@ -1,6 +1,6 @@
@@ -106,12 +106,12 @@ index 3b377ff..f6ab757 100644
  
  ## What the loop does all night
  
-@@ -93,16 +93,16 @@ The contract above drives one task to one finish condition. Some nights hold mor
+@@ -93,16 +93,16 @@ A whole program, such as a migration across many packages, has no playbook of it
  
  ## Run many projects in parallel
  
--A [Cursor Project](https://cursor.com/blog/projects) gives one coordinator agent a persistent thread. The coordinator doesn't write code. It directs subagents, which run in the cloud by default, so the work continues when your laptop is closed. That's the shape the Orchestrate playbook expects. Start your prompts to the coordinator with `/n-mode`, and the subagents it spawns follow the playbooks.
-+Give one coordinator chat the whole body of work. The coordinator doesn't write code. It directs subagents, each in its own worktree. Subagents stop when the session ends, so keep the machine awake for a long run. That's the shape the Orchestrate playbook expects. Start your prompts to the coordinator with `/n-mode`, and the subagents it spawns follow the playbooks.
+-A [Cursor Project](https://cursor.com/blog/projects) gives one coordinator agent a persistent thread. The coordinator doesn't write code. It directs subagents, which run in the cloud by default, so the work continues when your laptop is closed. Start your prompts to the coordinator with `/n-mode`, and the subagents it spawns follow the playbooks. Each agent it starts reads [`worker.md`](../../skills/n-mode/worker.md) first, so workers hold to the kickoff's bar, decide reversible calls instead of asking you, and open PRs ready for review.
++Give one coordinator chat the whole body of work. The coordinator doesn't write code. It directs subagents, each in its own worktree. Subagents stop when the session ends, so keep the machine awake for a long run. Start your prompts to the coordinator with `/n-mode`, and the subagents it spawns follow the playbooks. Each agent it starts reads [`worker.md`](../../skills/n-mode/worker.md) first, so workers hold to the kickoff's bar, decide reversible calls instead of asking you, and open PRs ready for review.
  
  A few habits help:
  
@@ -137,7 +137,7 @@ index 3b377ff..f6ab757 100644
  **Pitfall:** a duration is not a finish condition. "work on this for 4 hours" gives the agent nothing to check, and you'll wake up to four hours of motion instead of a result. Give `/loop` a predicate that can pass or fail.
  
 diff --git a/docs/guide/10-recipes-and-pitfalls.md b/docs/guide/10-recipes-and-pitfalls.md
-index 5fd6ea6..ba9d0ab 100644
+index 56ed56a..dd0fc6f 100644
 --- a/docs/guide/10-recipes-and-pitfalls.md
 +++ b/docs/guide/10-recipes-and-pitfalls.md
 @@ -165,7 +165,7 @@ That's the whole prompt. [`/bro`](../../skills/bro/SKILL.md) restates the last m
@@ -150,7 +150,7 @@ index 5fd6ea6..ba9d0ab 100644
  - **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Run `/benchmark-checklist` before the number goes anywhere.
  - **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.
 diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
-index c2a745c..455af83 100644
+index fac06d2..bb00af5 100644
 --- a/skills/nstack-help/SKILL.md
 +++ b/skills/nstack-help/SKILL.md
 @@ -10,9 +10,9 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
@@ -175,12 +175,12 @@ index c2a745c..455af83 100644
 -pstack is built for Cursor, and it also installs in Claude Code with `/plugin marketplace add cursor/plugins`, then `/plugin install pstack@cursor-plugins`. There, each command takes a `nstack:` prefix, such as `/nstack:n-mode`. The [Claude Code adapter](../../docs/harness/claude-code.md) maps the Cursor names, and a step that needs a Cursor-only feature, such as Bugbot or Automations, is skipped with a one-line note.
 +nstack is the Claude Code build of pstack. It installs with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`. There, each command takes a `nstack:` prefix, such as `/nstack:n-mode`.
  
--Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, `/why`, and `/teach`, spawn Cursor subagents with per-role models, and Custom Modes and `/loop` are Cursor features, so those parts may not work there.
-+Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, `/why`, and `/teach`, spawn Claude Code subagents with per-role models, so those parts may not work there.
+-Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, and `/teach`, spawn Cursor subagents, some with per-role models, and Custom Modes and `/loop` are Cursor features, so those parts may not work there.
++Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, and `/teach`, spawn Claude Code subagents, some with per-role models, so those parts may not work there.
  
  ## Start a task with `/n-mode`
  
- `/n-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-n-mode.md) has examples.
+ `/n-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-n-mode.md) has examples.
  
 -Whether `/n-mode` stays on depends on how the user starts it:
 +Once started, `/n-mode` stays on for the rest of the conversation, per its Sticky mode section, and stays out of casual turns. The user turns it off by saying so. A new conversation needs `/nstack:n-mode` again.
@@ -203,7 +203,7 @@ index c2a745c..455af83 100644
  | Have different models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
  | Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |
  | Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
-@@ -113,8 +109,8 @@ Close calls:
+@@ -112,8 +108,8 @@ Close calls:
  
  Not in nstack:
  
@@ -211,22 +211,22 @@ index c2a745c..455af83 100644
 -- `/loop` and `/create-skill` are Cursor built-ins.
 +- `/deslop`, `control-cli`, and `control-ui` belong to another plugin. nstack runs Claude Code's built-in `/simplify` in place of `/deslop`, and the project's own control skill under `.claude/skills/` in place of `control-ui` and `control-cli`.
 +- `/loop` and `/simplify` are Claude Code built-ins. `skill-creator` is Anthropic's, not nstack's.
- - pstack has no `/orchestrate` skill. Orchestrate is a `/n-mode` playbook. If the slash menu shows `/orchestrate`, another plugin provides it.
+ - pstack has no `/orchestrate` skill. If the slash menu shows `/orchestrate`, another plugin provides it.
  
  ## Playbooks and principles
-@@ -128,9 +124,9 @@ Playbooks are step lists inside `/n-mode`, not skills, so they have no slash com
+@@ -127,9 +123,9 @@ Playbooks are step lists inside `/n-mode`, not skills, so they have no slash com
  - "full autopilot on this queue" runs Autopilot-full. "autopilot, don't merge" runs Autopilot-stack.
  - "run the eval playbook" runs Eval.
  
--Without `/n-mode`, a phrase such as "babysit this pr" can start Cursor's own skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
-+Without `/n-mode`, a phrase such as "babysit this pr" can start another plugin's skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
+-Without `/n-mode`, a phrase such as "babysit this pr" can start Cursor's own skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
++Without `/n-mode`, a phrase such as "babysit this pr" can start another plugin's skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
  
 -pstack has no planning skill. Cursor's Plan Mode works alongside it. For work that spans phases or stacked PRs, asking `/n-mode` for a plan runs the [Multi-phase plan playbook](../n-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
 +pstack has no planning skill. Claude Code's plan mode works alongside it. For work that spans phases or stacked PRs, asking `/n-mode` for a plan runs the [Multi-phase plan playbook](../n-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
  
  Principles are one-rule skills that `/n-mode` reads and cites in its replies. The user rarely invokes one. They steer with the names instead, as in "apply prove it works. show me the real output." Typing `/principle-<name>` still loads one on demand. [Guide page 8](../../docs/guide/08-principles.md) lists them.
  
-@@ -138,12 +134,12 @@ Principles are one-rule skills that `/n-mode` reads and cites in its replies. Th
+@@ -137,12 +133,12 @@ Principles are one-rule skills that `/n-mode` reads and cites in its replies. Th
  
  | Symptom | Fix |
  |---|---|

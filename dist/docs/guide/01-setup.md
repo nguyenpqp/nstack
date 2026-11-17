@@ -27,7 +27,7 @@ Run:
 
 You only override what you care about. A role with no line in the rule keeps the skill's default. To restore a default, delete that role's line. A rerun of `/setup-nstack` keeps any role whose model differs from the default. When a default changes, a rule written before the change still pins the old default, so delete those role lines, or delete the file, then run `/setup-nstack` again.
 
-You might be wondering what happens if you use Auto. Set a role to `inherit-parent` or `auto` and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for a `/swarm` worker whose job has no row in n-mode's table, unless a race names a model for each arm. It also drives helpers, Verify, comment review, and one trail review row, so changing it moves those jobs too.
+You might be wondering what happens if you use Auto. Set a role to `inherit-parent` or `auto` and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for a `/swarm` worker whose job has no row in n-mode's table, unless a race names a model for each arm. It also drives helpers, Verify, and comment review, so changing it moves those jobs too.
 
 ## Accept the verification offers, or don't
 
@@ -58,7 +58,7 @@ Pick something real but small, and describe it the way you'd describe it to a co
 /n-mode add a --json flag to this command. text output stays byte-identical. verify both.
 ```
 
-Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/n-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
+Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt.
 
 From here you can type normal follow-ups. Once started, `/n-mode` stays on for the rest of the conversation and stays out of casual turns. Tell it to stop when you want it off.
 

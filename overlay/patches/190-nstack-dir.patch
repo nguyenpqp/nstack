@@ -1,8 +1,8 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 2acd6cb..e80aafd 100644
+index d79768b..6edcebd 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -102,6 +102,10 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
+@@ -95,6 +95,10 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
  
  **No is an acceptable answer.** Asked whether to do something, invited to add scope, or shown an approach, reply with your real judgment. Decline, push back, or say "this doesn't earn its place" when true. A recommendation is a judgment, not a validation. Agreement is not the default, candor over sycophancy.
  
@@ -14,7 +14,7 @@ index 2acd6cb..e80aafd 100644
  
  **Every playbook that writes files to the repo opens a worktree before its first edit.** Read `references/worktree.md` before you open one and before **Merging back**. It also names the playbooks that skip this. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
 diff --git a/skills/n-mode/playbooks/autopilot-full.md b/skills/n-mode/playbooks/autopilot-full.md
-index 10f34b3..3754b8e 100644
+index 40fbb92..8de02f9 100644
 --- a/skills/n-mode/playbooks/autopilot-full.md
 +++ b/skills/n-mode/playbooks/autopilot-full.md
 @@ -9,7 +9,7 @@ A verdict covers one patch and green CI covers one head. Step 4 runs a full swar
@@ -27,50 +27,49 @@ index 10f34b3..3754b8e 100644
  4. **Swarm-verify once.** A full swarm runs once, at the code-ready head. Another full swarm runs only for new behavior, a redesign, or a large new diff. A rebase, a merge-conflict resolution, or a minor fix gets a single verifier at the new head, and a wording-only change gets none. Fan out independent verifiers at the code-ready SHA per the **swarm** skill. They re-run the gates, prove the load-bearing behavior live on the real surface through its control skill (the project's own skill under `.claude/skills/` that drives the app the way a user does) or a named driver, and audit the diff. The verdict is not clean without the live lane, or before you audit the merge-ready report's receipts, because no lane trusts a claim it has not checked.
  
 diff --git a/skills/n-mode/playbooks/multi-phase-plan.md b/skills/n-mode/playbooks/multi-phase-plan.md
-index 798fd3c..d99a67e 100644
+index 8ddcfc7..0c031c2 100644
 --- a/skills/n-mode/playbooks/multi-phase-plan.md
 +++ b/skills/n-mode/playbooks/multi-phase-plan.md
-@@ -5,7 +5,7 @@
+@@ -4,7 +4,7 @@
+ 
  1. When the change is one or two files with an obvious approach, skip the plan. Say so and stop.
- 2. Settle open questions by prototype before you write. Run `playbooks/prototype.md` for each. Keep the branch, the SHA, and the screenshots for Appendix A. Ask the operator only about a product or preference call that no run can settle. Give options (the **never-block-on-the-human** principle skill).
- 3. Explore in subagents with `subagent_type: "n-agent"` and an explicit model per the Subagents section (the **guard-the-context-window** principle skill). Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section. Each returns file pointers, conventions, test commands, and entry points. No inlined dumps.
--4. Copy the skeleton below into the plan file and fill every placeholder. Unless the operator names a path, write the file under the agent store's `docs/`. Keep every heading and every sub-block in the order shown. One section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Name the execution playbook in **How to read this**. Pick `playbooks/autopilot-full.md` when the run may merge. Pick `playbooks/autopilot-stack.md` when the operator lands the PRs. A standing program takes `playbooks/orchestrate.md`.
-+4. Copy the skeleton below into the plan file and fill every placeholder. Unless the operator names a path, write the file to `<root>/.nstack/plans/<slug>.md`, per the **nstack folder** section of `../references/worktree.md`. Keep every heading and every sub-block in the order shown. One section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Name the execution playbook in **How to read this**. Pick `playbooks/autopilot-full.md` when the run may merge. Pick `playbooks/autopilot-stack.md` when the operator lands the PRs. A standing program takes `playbooks/orchestrate.md`.
- 5. Write under `/technical-writing` in full, then `/unslop`. The body is one Diátaxis mode, how-to. Appendices hold explanation and reference. Each heading states the task or the finding. No long dashes. No mid-sentence colons.
- 6. Run `node <n-mode dir>/scripts/check-plan.mjs <plan.md>`, where `<n-mode dir>` is the folder that holds n-mode's `SKILL.md`, and fix every line it prints (the **encode-lessons-in-structure** principle skill).
- 7. Hand back. Post the plan path and the script's output, then stop. Execution starts on the operator's explicit go, under the execution playbook the plan names.
+ 2. Settle open questions by prototype before you write, per `playbooks/prototype.md`. Ask the operator only about a product or preference call that no run can settle.
+-3. Write the plan file. Open with what changes, the PR ids in landing order, and the dependency graph, which says which PRs are independent and branch from trunk, which wait for which, and the files each may touch. Then one section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Each section has checkboxes for what it depends on, the files it edits, the one change it builds, the result you see, and its verification.
++3. Write the plan file to `<root>/.nstack/plans/<slug>.md` unless the operator names a path, per the **nstack folder** section of `../references/worktree.md`. Open with what changes, the PR ids in landing order, and the dependency graph, which says which PRs are independent and branch from trunk, which wait for which, and the files each may touch. Then one section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Each section has checkboxes for what it depends on, the files it edits, the one change it builds, the result you see, and its verification.
+ 4. Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Each live box drives the real surface with a concrete scenario and a pass predicate. The perf box names the metric, the probe, the trunk baseline measured first, and the number that fails. A PR that changes an interaction waits for the operator's review before merge.
+ 5. Hand back the plan path and stop. Execution starts on the operator's explicit go.
+ 
 diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
-index 6868715..e4b6918 100644
+index 5988f63..71fdcdc 100644
 --- a/skills/n-mode/playbooks/opening-a-pr.md
 +++ b/skills/n-mode/playbooks/opening-a-pr.md
-@@ -10,7 +10,7 @@ Invoked at the end of every other playbook.
+@@ -4,6 +4,6 @@ Invoked at the end of every other playbook.
  
- **Titles.** Conventional Commits `type(scope): subject`, no trailing period. Type such as `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, or `perf`. Scope is the area, such as `pstack` or `n-mode`. Subject is short, imperative, and names a real symbol when one carries the change, for example `fix(pstack): retarget opening-a-pr babysit trigger`.
+ Work from a git worktree off trunk, and keep unrelated work out of it. Rebase into small, landable commits. Commits and PR descriptions credit no AI agent, so add no `Co-Authored-By` trailer that names an agent and no "Generated with" or "Authored by" line. Before commit, run Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
  
--**Descriptions.** The PR body is a one-minute briefing, not a lab notebook, for a reviewer who has the diff. It says why the change exists, what it leaves out, what it could break, and how you proved it works. Write short, simple sentences with few identifiers, no walls of text. The body becomes the squash commit body, so keep that commit under about 40 lines. Use `##` headings, not bold lead-ins, in this order, and drop a section with nothing to say:
-+**Descriptions.** The PR body is a one-minute briefing, not a lab notebook, for a reviewer who has the diff. It says why the change exists, what it leaves out, what it could break, and how you proved it works. Write short, simple sentences with few identifiers, no walls of text. The body becomes the squash commit body, so keep that commit under about 40 lines. When the run has an intent at `<root>/.nstack/intents/<slug>.md`, the PR body is where it outlives the run, because the file never reaches a commit and the merge-back deletes it. `## Why` carries its **Problem**, `## Scope` its **Out of scope**, and `## Tradeoffs` the **Decisions** a reviewer would ask about. Use `##` headings, not bold lead-ins, in this order, and drop a section with nothing to say:
+-Title: `type(scope): subject`, naming a real symbol when one carries the change. Body: a one-minute briefing under 40 lines with these `##` headings in order, dropping empty ones: `## Why`, `## What changed`, `## Scope`, `## Tradeoffs` (only rejected alternatives a reviewer would otherwise ask about), `## Blast Radius`, `## Verification`.
++Title: `type(scope): subject`, naming a real symbol when one carries the change. Body: a one-minute briefing under 40 lines with these `##` headings in order, dropping empty ones: `## Why`, `## What changed`, `## Scope`, `## Tradeoffs` (only rejected alternatives a reviewer would otherwise ask about), `## Blast Radius`, `## Verification`. When the run has an intent at `<root>/.nstack/intents/<slug>.md`, the PR body is where it outlives the run, because the file never reaches a commit and the merge-back deletes it. `## Why` carries its **Problem**, `## Scope` its **Out of scope**, and `## Tradeoffs` the **Decisions** a reviewer would ask about.
  
- - `## Why`: the problem and approach, 1–3 short sentences. No SHAs, rebase genealogy, or "based on main" preamble.
- - `## What changed`: 1–3 short bullets. Name a real symbol or path only when it carries the change. Name both sides of a rename or retarget.
+ Stack follow-ups by base branch. Open PRs ready, through the run's PR tool with `draft: false`. Without one, use `gh pr create` without `--draft`, or `origin pr create --status open` when Origin's CLI resolves the repository. Opening a PR does not start a babysit.
 diff --git a/skills/n-mode/playbooks/shipping.md b/skills/n-mode/playbooks/shipping.md
-index 2990c70..f190b03 100644
+index 040d7f8..d6a4e9d 100644
 --- a/skills/n-mode/playbooks/shipping.md
 +++ b/skills/n-mode/playbooks/shipping.md
 @@ -7,6 +7,6 @@
  3. **Re-check that the verdicts still describe the code.** A verdict covers a patch, and a chain rebase moves every PR above it to a new SHA without failing any check. Compare `git patch-id` at the verdict SHA with the current head before trusting an older verdict. When the patches differ only in tests, docs, or lint config, a lane's result stands if what it ran builds the same at both SHAs apart from noise. Noise is a difference that also shows up between two builds of the verdict SHA, or an embedded commit SHA. Report each kind of noise with its files, so a reader can check the call. The change itself still gets fresh checks and a review, because the old verdict never saw it. A lane with no build output, such as a dev server, cannot show this, so rerun it, and re-verify anything else that drifted.
  4. **Land bottom-up, one PR at a time.** Always merge the run's lowest unmerged PR, with `origin pr merge <pr>` or `gh pr merge <pr> --squash`. On Origin the plain command also merges every PR below the one you name, and on GitHub a PR whose base is still its parent's branch merges into that branch, not trunk. Read the PR back for the result (`origin pr view <pr>` or `gh pr view <pr> --json state,mergedAt,baseRefName`), because a merge command can report success when a merge queue only queued the PR, and a requested auto-merge is not a merge. A landed PR reads merged with trunk as its base, not its parent's branch. Arm `--auto` (Origin merge-when-ready or GitHub auto-merge) only on a PR whose verdict covers its current head, because it lands whatever head is ready. After a merge lands, retarget the PR whose base was the merged branch to trunk (`origin pr edit <pr> --base <trunk>` or `gh pr edit <pr> --base <trunk>`), move its patch onto the merge result, and push with `--force-with-lease`. The verdict covers the patch, not its commits, so step 3's patch-id rule decides whether the verdict survives. Merge it once its checks pass and its verdict survives.
- 5. **Leave the stack alone while it lands.** Step 4's move of the next PR is the only change to a branch or base, because a merge lands whatever its branch and base hold at that moment, verdict or not. On GitHub, watch the run with the queued watcher from `playbooks/babysit.md` (`scripts/watch-pr/watch-pr --queued-stack --stack-prs <bottom-to-top>`) under `/loop` until it reports `COMPLETE` at the ceiling. On Origin, re-read the current PR with `origin pr view <pr> --checks` each time `origin pr checks <pr> --watch` returns, until the ceiling reads merged. A base that moves to trunk when its parent merges is expected, not damage to repair. If a merge stalls, find out why before you change anything.
+ 5. **Leave the stack alone while it lands.** Step 4's move of the next PR is the only change to a branch or base, because a merge lands whatever its branch and base hold at that moment, verdict or not. On GitHub, watch the run with `scripts/watch-pr/watch-pr --queued-stack` under `/loop` until it reports `COMPLETE` at the ceiling. Pass the run's PR numbers, bottom-to-top, in `--stack-prs`, and pass the same list each time you restart the watcher. On Origin, re-read the current PR with `origin pr view <pr> --checks` each time `origin pr checks <pr> --watch` returns, until the ceiling reads merged. A base that moves to trunk when its parent merges is expected, not damage to repair. If a merge stalls, find out why before you change anything.
 -6. **Stop at the ceiling.** Extending the run takes new verdicts, so it is a new pass through step 1.
 +6. **Stop at the ceiling.** Extending the run takes new verdicts, so it is a new pass through step 1. Delete the intent files of each landed PR per the **nstack folder** section of `../references/worktree.md`, since its PR body now holds what outlives the run.
  
  **Reply:** the verified run and its ceiling, each PR's verdict and who produced it, what landed and how you confirmed it, and what the next gap needs.
 diff --git a/skills/n-mode/playbooks/worktree-cleanup.md b/skills/n-mode/playbooks/worktree-cleanup.md
-index 09bb028..095c090 100644
+index a22df42..74979f7 100644
 --- a/skills/n-mode/playbooks/worktree-cleanup.md
 +++ b/skills/n-mode/playbooks/worktree-cleanup.md
 @@ -4,7 +4,7 @@
  2. The bucket is advice, not permission. The pinned and active chats are the real artifact (principle-prove-it-works). Get that set from the user or sidebar and cross-check every candidate. The lever has marked `safe` a worktree the user had pinned, so the pinned set wins.
- 3. Verify usage before deleting. For every `verify-recent-chat` row, or anything you doubt, fan subagents out to read the transcripts and report whether the chat is pinned or ongoing and which worktrees it touches (principle-guard-the-context-window, transcripts are bulk). A pinned chat spawns arena and repro trees into sibling worktrees via background subagents, and those are in use even when their names never hit the sidebar. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section.
+ 3. Verify usage before deleting. For every `verify-recent-chat` row, or anything you doubt, fan subagents out to read the transcripts and report whether the chat is pinned or ongoing and which worktrees it touches (principle-guard-the-context-window, transcripts are bulk). A pinned chat spawns arena and repro trees into sibling worktrees via background subagents, and those are in use even when their names never hit the sidebar. Pick each subagent's reasoning level for the job, per the Subagents section.
  4. Pause on irreversible loss. `wip:N` is N tracked uncommitted edits. Show the diff and get a decision first, since removing a clean worktree is recoverable from its branch but uncommitted work is gone. `scratch:N` is untracked throwaway, safe to drop, but name the files. Per Autonomy, clean and merged and not-in-use proceeds. `wip` and in-use pause.
 -5. Prune the confirmed set. Per path, `git worktree remove --force <path>`. If the dir survives on ignored build artifacts, `rm -rf` it, then `git worktree prune`. Branch refs survive, so no commits are lost. Confirm with `df -h /` and re-list.
 +5. Prune the confirmed set. Per path, `git worktree remove --force <path>`. If the dir survives on ignored build artifacts, `rm -rf` it, then `git worktree prune`. Branch refs survive, so no commits are lost. For a merged branch, also delete its intent files per the **nstack folder** section of `../references/worktree.md`. Confirm with `df -h /` and re-list.

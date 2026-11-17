@@ -8,31 +8,16 @@ disable-model-invocation: true
 
 To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`.
 
-Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
-
-Every spawn is an Agent subagent with `subagent_type: "Explore"`. It keeps `Bash`, so each brief also says not to edit files, and you check `git status` afterward. Explorers use the `how explorer` line in the `nstack-models.md` rule (default `sonnet medium`), and every explainer uses the `how explainer` line (default `opus high`). Set `model` and `effort` from that line's value, or from the default if the rule or the line is missing. A value such as `opus xhigh` means `model: "opus"` and `effort: "xhigh"`. Leave `model` unset when the value is `auto` or `inherit-parent`. If the Agent tool rejects a slug, use the default and say so. If it rejects the default, omit `model` so the agent runs on the parent model, and say so. Pick each subagent's reasoning level (`effort`) for the job, per the Subagents section of the **n-mode** skill.
-
-## 1. Assess complexity
+Explore the codebase to answer "how does X work?" questions.
 
 If the scope is ambiguous, state your interpretation and explore. The user can redirect.
 
-- **Simple** (a single module, a small utility, a narrow question such as "how does function X work"): no explorers. Spawn one explainer that explores and explains in one pass, built from `references/explainer-prompt.md` without the explorer-findings section. Go to step 4.
-- **Complex** (a subsystem spanning multiple files or services, a cross-cutting feature, a full architectural overview): go to step 2.
+## 1. Explain
 
-When in doubt, take the simple path.
+Spawn one Task subagent with `subagent_type: "Explore"` that explores and explains in one pass. It keeps `Bash`, so the brief also says not to edit files, and you check `git status` afterward. Give it the user's question and this brief:
 
-## 2. Explore (complex only)
+> You are writing an architectural explanation for a senior engineer. Explore the codebase and write an explanation that a senior engineer unfamiliar with this area could read and walk away with a solid mental model. They should understand the architecture well enough to start working in it confidently. You have read-only access to the codebase.
 
-Decompose the question into 2 to 4 angles, each a distinct slice of the subsystem. Spawn all explorers in a single message, each with `references/explorer-prompt.md` and its angle filled in.
+## 2. Present
 
-## 3. Synthesize (complex only)
-
-Once all explorers have returned, spawn one explainer with `references/explainer-prompt.md` and every explorer's findings filled in.
-
-## 4. Present
-
-Present the explainer's output. Light edits for clarity or context from the conversation are fine. Do not substantially rewrite it.
-
-## Output format
-
-The explanation uses the sections defined in `references/explainer-prompt.md`, dropping any that do not apply: Overview, Key Concepts, How It Works, Where Things Live, Gotchas.
+Present the subagent's output. Light edits for clarity or context from the conversation are fine. Do not substantially rewrite it.

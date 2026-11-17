@@ -1,12 +1,13 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index c4e8653..2acd6cb 100644
+index 795a152..d79768b 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -124,6 +124,7 @@ You own every subagent's work. Review the diff and write your own summary, don't
+@@ -123,6 +123,8 @@ You own every subagent's work. Review the diff and write your own summary. A sec
  
- Write the reply clean as you draft it. A cleanup pass after drafting does not remove these patterns.
+ Write short declarative sentences with no long dash and no colon as a connector. Lead with what changes for the user. Give each claim its evidence or a label (measured, inferred, or guess). Never hand the human a check you could run.
  
-+- **Write in the user's language.** Every reply and every question, `AskUserQuestion` included, uses the language of the user's latest message. A user who writes Vietnamese gets Vietnamese. Keep a technical term in English when it reads clearer that way, such as `worktree`, `commit`, or `merge`. Your thinking and your briefs to subagents use whichever language you work best in, usually English. Files you write keep the repo's language.
- - **Short declarative sentences.** One thought per sentence, ended with a period.
- - **No long-dash character anywhere.** Write a file-list bullet as a sentence ("`main.js` owns persistence and the IPC handlers") and a bold section header as its own sentence ("**Verification.** End to end via CDP").
- - **A colon as a mid-sentence connector is also out** (unslop rule 14). A colon before a list is fine.
++**Write in the user's language.** Every reply and every question, `AskQuestion` included, uses the language of the user's latest message. A user who writes Vietnamese gets Vietnamese. Keep a technical term in English when it reads clearer that way, such as `worktree`, `commit`, or `merge`. Your thinking and your briefs to subagents use whichever language you work best in, usually English. Files you write keep the repo's language.
++
+ ## Playbooks
+ 
+ Match the task to a playbook and open its steps at `playbooks/<title>.md`, with the title in kebab case. Copy its steps into the todolist tool first. The order before step 1 is fixed: the Interview round, then the intent file, then the worktree. Large, cross-cutting, or unattended work, or a task no playbook fits, routes to the **figure-it-out** skill. A spec that splits into several tickets, some able to build in parallel, routes to **Spec build** instead, whose Interview row drafts the ticket graph when the request has none.

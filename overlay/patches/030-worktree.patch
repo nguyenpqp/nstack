@@ -1,8 +1,17 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 74cbeba..fcd8494 100644
+index afbe7be..400699c 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -96,6 +96,12 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
+@@ -24,7 +24,7 @@ The remaining triggers live only here:
+ 
+ - First message → restate the user's goal and the smallest change that meets it, then proceed. Open each subagent brief, PR `## Why`, and final report with the goal.
+ - **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `<root>/.nstack/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
+-- Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent`.
++- Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent` and the worktree path and branch that **Worktree** below asks each brief to name.
+ - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
+ - Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
+ - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
+@@ -88,6 +88,12 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
  
  **No is an acceptable answer.** Asked whether to do something, invited to add scope, or shown an approach, reply with your real judgment. Decline, push back, or say "this doesn't earn its place" when true. A recommendation is a judgment, not a validation. Agreement is not the default, candor over sycophancy.
  
@@ -14,17 +23,4 @@ index 74cbeba..fcd8494 100644
 +
  ## Subagents
  
- **Use `subagent_type: "n-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/n-mode` runs the playbook. Never spawn a `n-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `n-agent`.
-diff --git a/skills/n-mode/playbooks/opening-a-pr.md b/skills/n-mode/playbooks/opening-a-pr.md
-index 38306cc..18a7d44 100644
---- a/skills/n-mode/playbooks/opening-a-pr.md
-+++ b/skills/n-mode/playbooks/opening-a-pr.md
-@@ -2,7 +2,7 @@
- 
- Invoked at the end of every other playbook.
- 
--**Worktree.** Work from a git worktree off main. Subagents inherit it. Multiple `Task` calls on the same branch each get their own worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
-+**Worktree.** Work from a git worktree off main. A subagent works in the worktree its brief names, or in its own with `isolation: "worktree"`. Multiple `Task` calls on the same branch each get their own worktree, or `git fetch && git reset --hard origin/<branch>` between them. Dirty branch with unrelated work: patch out, fresh worktree, apply. Snarled worktree: reset from main, redo minimally.
- 
- **Commits.** Commit liberally. Rebase into small, ordered commits before opening PRs. Each commit is a future PR: landable, ordered to tell the story. Amend when the fix belongs in a just-made commit. New commit when separable. Commit bodies don't restate the subject.
- 
+ **Use `subagent_type: "n-agent"` for any subagent you spawn directly inside a playbook step.** The chat that receives `/n-mode` runs the playbook itself. Routed workflow skills (`interrogate`, `swarm`) set their own `subagent_type`. Respect it.

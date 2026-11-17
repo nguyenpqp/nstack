@@ -1,5 +1,5 @@
 diff --git a/docs/guide/10-recipes-and-pitfalls.md b/docs/guide/10-recipes-and-pitfalls.md
-index f4a64a5..5fd6ea6 100644
+index cae94da..56ed56a 100644
 --- a/docs/guide/10-recipes-and-pitfalls.md
 +++ b/docs/guide/10-recipes-and-pitfalls.md
 @@ -158,8 +158,6 @@ That's the whole prompt. [`/bro`](../../skills/bro/SKILL.md) restates the last m
@@ -10,9 +10,9 @@ index f4a64a5..5fd6ea6 100644
 -
  ## The pitfalls
  
- - **Enumerating skills in the prompt.** "use /how then /architect then /arena" reorders steps the playbook already sequences. State the goal and constraints. Name a skill only to override a default.
+ - **Enumerating skills in the prompt.** "use /architect then /arena then /interrogate" reorders steps the playbook already sequences. State the goal and constraints. Name a skill only to override a default.
 diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
-index 5236d67..c2a745c 100644
+index 0e2e045..fac06d2 100644
 --- a/skills/nstack-help/SKILL.md
 +++ b/skills/nstack-help/SKILL.md
 @@ -75,7 +75,6 @@ The default answer is `/n-mode`, which runs most of the others when its steps ne

@@ -2,11 +2,11 @@
   "pstack": {
     "repo": "https://github.com/cursor/plugins",
     "path": "harness/pstack/claude-code",
-    "sha": "ae5650febf4320793844c12c4adaa937f417f8da"
+    "sha": "e1cc03121a0e71129a4fb730d7c5528a0a3e43c8"
   },
   "mattpocock": {
     "repo": "https://github.com/mattpocock/skills",
     "path": ".",
-    "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d"
+    "sha": "5863806dd4e15c63174bee4e7515a4256792ecfa"
   }
 }

@@ -1,13 +1,13 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index a40ac19..1b3c104 100644
+index 6e19309..d3ef819 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
-@@ -27,7 +27,7 @@ Remaining triggers:
- - Nontrivial change, architecture decision, or "are we sure?" → the **how** skill.
- - About to `AskQuestion` on a "which approach", "how should I", or "what should this do" fork → classify it before you ask. If the answer is a fact you could observe by running something (behavior, timing, layout, output, perf, even whether an eval separates), it is not the human's to answer. Sketch it via the Prototype playbook (`playbooks/prototype.md`) and let the result decide. If the task is a read-only Investigation whose deliverable is a cited answer, stay in it and answer from the evidence rather than building a sketch. Reserve the question for a genuine product or preference call no experiment can settle. Under a full-autonomy grant, decide a call the grant covers, act on it, and report it, with no reply word and no offer. Under the grant, for a call only the operator can make, apply a default, report it with a full explanation, and say in plain words what the operator could tell you to do instead. The operator answers in their own words. Never give a shorthand token to type back. Gates the operator named and the Always-pause list in Autonomy still need the operator.
- - Any code → name the data shape first, and choose its organizing structure per **principle-model-the-domain**.
--- Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing.
-+- Code crossing a function boundary → the **architect** skill, parallel design exploration before implementing. A change crosses one when it adds or changes a signature, a type, or a module seam that a caller sees. An edit inside one function body does not, and neither does a branch added to an existing case.
+@@ -26,7 +26,7 @@ The remaining triggers live only here:
+ - **Every task opens with the Interview playbook** (`playbooks/interview.md`), sized by the matched playbook. It ends in a design the user confirms before any code exists, saved as `<root>/.nstack/intents/<slug>.md`. The user opts out per request by saying so. Never opt out for them.
+ - Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent` and the worktree path and branch that **Worktree** below asks each brief to name.
+ - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
+-- Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
++- Code → name the data shape first. Across a function boundary → **architect**. A change crosses one when it adds or changes a signature, a type, or a module seam that a caller sees. An edit inside one function body does not, and neither does a branch added to an existing case. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
  - A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook. A slowness goes to the Perf issue playbook instead, not to the skill's perf branch.
- - Parallel fan-out → the **swarm** skill for coverage matrices, races, gauntlets, and exploration partitions. Use **arena** for design or code bakeoffs with base selection and grafting.
- - Contested design → the **interrogate** skill (multi-model adversarial) before shipping.
+ - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
+ - Before commit → `/deslop` from the `cursor-team-kit` plugin.

@@ -47,11 +47,11 @@ If cost is the worry, say where the tokens go and how to spend fewer. pstack spe
 
 nstack is the Claude Code build of pstack. It installs with `/plugin marketplace add nguyenpqp/nstack`, then `/plugin install nstack@nstack`. There, each command takes a `nstack:` prefix, such as `/nstack:n-mode`.
 
-Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, `/why`, and `/teach`, spawn Claude Code subagents with per-role models, so those parts may not work there.
+Other tools can read the skills, because they use the Agent Skills format. But most workflow skills, including `/n-mode`, `/how`, and `/teach`, spawn Claude Code subagents, some with per-role models, so those parts may not work there.
 
 ## Start a task with `/n-mode`
 
-`/n-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-n-mode.md) has examples.
+`/n-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-n-mode.md) has examples.
 
 Once started, `/n-mode` stays on for the rest of the conversation, per its Sticky mode section, and stays out of casual turns. The user turns it off by saying so. A new conversation needs `/nstack:n-mode` again.
 
@@ -102,16 +102,15 @@ Close calls:
 
 - `/how` explains what the code does. `/why` explains the reasons. `/teach` runs one or both and explains the result plainly.
 - `/arena` gives every worker the same brief and merges the best parts. `/swarm` splits work into slices or a race and returns one report.
-- `/architect` implements right after it settles the design. Add "with checkpoint" to review the design before it writes code.
 - `/interrogate` reviews the diff. `/blast-radius` looks for breakage outside the diff and proves the one fact that makes the change safe.
 - `/recall` rebuilds context across recent chats. `/ketchup` covers only this chat since the user's last message. Resuming one specific chat or branch is the Session pickup playbook.
-- `/figure-it-out` designs one rigorous run. The Orchestrate playbook runs a program that spans days and many PRs. The Autonomous run playbook drives one task to a finish condition.
+- `/figure-it-out` designs one rigorous run. The Autonomous run playbook drives one task to a finish condition.
 
 Not in nstack:
 
 - `/deslop`, `control-cli`, and `control-ui` belong to another plugin. nstack runs Claude Code's built-in `/simplify` in place of `/deslop`, and the project's own control skill under `.claude/skills/` in place of `control-ui` and `control-cli`.
 - `/loop` and `/simplify` are Claude Code built-ins. `skill-creator` is Anthropic's, not nstack's.
-- pstack has no `/orchestrate` skill. Orchestrate is a `/n-mode` playbook. If the slash menu shows `/orchestrate`, another plugin provides it.
+- pstack has no `/orchestrate` skill. If the slash menu shows `/orchestrate`, another plugin provides it.
 
 ## Playbooks and principles
 
@@ -124,7 +123,7 @@ Playbooks are step lists inside `/n-mode`, not skills, so they have no slash com
 - "full autopilot on this queue" runs Autopilot-full. "autopilot, don't merge" runs Autopilot-stack.
 - "run the eval playbook" runs Eval.
 
-Without `/n-mode`, a phrase such as "babysit this pr" can start another plugin's skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
+Without `/n-mode`, a phrase such as "babysit this pr" can start another plugin's skill for the same job instead. The Playbooks section of [`n-mode`](../n-mode/SKILL.md) lists every playbook. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
 
 pstack has no planning skill. Claude Code's plan mode works alongside it. For work that spans phases or stacked PRs, asking `/n-mode` for a plan runs the [Multi-phase plan playbook](../n-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
 
