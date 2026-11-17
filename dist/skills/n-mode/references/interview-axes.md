@@ -43,7 +43,7 @@ These four are usually settled by one question or none. Ask what the row names a
 
 | Playbook | Frontier must cover | Dispatch, never ask | Confirmation must name |
 |---|---|---|---|
-| Babysit | Which mode, per that playbook's step 1. Which PR or stack. Where the human's line begins. | PR and CI state. Open review threads. | The mode, the target, and the stop line. |
+| Babysit | Which mode, per that playbook's first rule. Which PR or stack. Where the human's line begins. | PR and CI state. Open review threads. | The mode, the target, and the stop line. |
 | Shipping | Which stack. What evidence counts as verified. The ceiling above which nothing lands. | Per-PR state. Any verdicts already recorded. | The stack root, the verification surface, and the ceiling. |
 | Pause safely | Almost nothing. Whether anything in flight must finish before the stop. | What is uncommitted, and what is mid-flight. | The resume point. |
 | Worktree cleanup | How aggressive to be. Whether worktrees holding uncommitted work may go. Which repos are in scope. | The audit script's output. Merge state, age, and which chats still touch each worktree. | The buckets to delete, and what is spared. |
