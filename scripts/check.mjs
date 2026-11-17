@@ -52,7 +52,7 @@ const CURSORISMS = [
   /\bAskQuestion\b/,
   /\.mdc\b/,
   /\bclaude-[a-z]+-\d/,
-  /\b(grok|composer|gpt)-/,
+  /\b(grok|composer|gpt|gemini)-/,
   /\bcloud (agent|VM|subagent)s?\b/i,
   /\btodolist\b/,
   /\bCustom Modes?\b/,
