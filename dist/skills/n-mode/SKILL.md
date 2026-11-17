@@ -102,7 +102,7 @@ The run's own files live in `<root>/.nstack/`, where `<root>` is the root checko
 
 **Every playbook that writes files to the repo opens a worktree before its first edit.** Read `references/worktree.md` before you open one and before **Merging back**. It also names the playbooks that skip this. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
 
-**The chat that runs n-mode stays at the root.** Nobody in the run calls `EnterWorktree`. This chat and each delegate it briefs read and edit files by absolute path under the worktree, run git as `git -C <worktree>`, and run a command that needs the worktree as its working directory in one Bash call that starts with `cd <worktree> &&`. Each delegate brief names its worktree path and branch.
+**The chat that runs n-mode stays at the root.** Nobody in the run calls `EnterWorktree`. This chat and each delegate it briefs read and edit files by absolute path under the worktree, run git as `git -C <worktree>`, and run a command that needs the worktree as its working directory in one Bash call that starts with `cd <worktree> &&`. Each delegate brief names its worktree path and branch when there is one.
 
 ## Subagents
 
