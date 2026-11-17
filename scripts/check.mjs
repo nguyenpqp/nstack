@@ -54,6 +54,7 @@ const CURSORISMS = [
   /\bclaude-[a-z]+-\d/,
   /\b(grok|composer|gpt|gemini)-/,
   /\bcloud (agent|VM|subagent)s?\b/i,
+  /\bTask (subagent|tool|call|spawn)s?\b/,
   /\btodolist\b/,
   /\bCustom Modes?\b/,
   /\bAutomations?\b/,

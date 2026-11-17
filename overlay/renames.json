@@ -34,6 +34,7 @@
     ["A read-only judge from a different model vendor", "A read-only judge on a different model from the coordinator's"],
     ["When no model from another vendor can run", "When no other model can run"],
     [" a Task subagent", " an Agent subagent"],
+    [" one Task subagent", " one Agent subagent"],
     [" a `Task`", " an `Agent`"],
     ["`Task`", "`Agent`"],
     ["the Task tool", "the Agent tool"],
