@@ -60,7 +60,7 @@ Only a message the user types after the run's opening request, and only one that
 
 Right after the turn's grep, write each new ask as a row tagged `draft`, plus any tag the message implies, such as `after R3`, with its **Ask**. Work in flight keeps going.
 
-1. **Check it.** Find where the work lands and fill **Touches**. Search the code yourself for a narrow ask, and send a broad one to an `Explore` subagent that returns only the files and the finding (the **principle-guard-the-context-window** skill). Then check it against:
+1. **Check it.** Find where the work lands and fill **Touches**. Search the code yourself for a narrow ask, and send a broad one to one `nstack:n-agent` told not to edit, on the Explore and search row, that returns only the files and the finding (the **principle-guard-the-context-window** skill). Then check it against:
    - the open rows: grep the **Touches** lines of every `<root>/.nstack/backlog/*.md`, and of a leftover `backlog.md`, for each path, and read only the rows that match;
    - the archive: grep `backlog/*-done.md`, a leftover `backlog-done.md`, and `backlog-archive/` for the ask's key terms, since a dropped ask asked again meets a decision already made;
    - the intent: its **Outcome**, **Out of scope**, and the user's **Decisions**;
