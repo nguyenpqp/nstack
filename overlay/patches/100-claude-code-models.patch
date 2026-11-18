@@ -34,10 +34,17 @@ index 3e70013..d5a9166 100644
  > Break this change. Prove each finding with a run against the real code, such as a failing test, a repro script, or command output that shows the wrong behavior. For a design or plan, run a prototype or probe the current tree. Keep repros in your own worktree. Report each finding with a title, the exact command, the output it printed, and the output the intent requires. Leave out anything you did not run. That covers style, naming, structure, and risks that need a future change to matter. No findings is a valid result.
  
 diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
-index f8ca347..6228469 100644
+index f8ca347..fb94725 100644
 --- a/skills/setup-nstack/SKILL.md
 +++ b/skills/setup-nstack/SKILL.md
-@@ -7,25 +7,17 @@ description: Configure which models nstack uses per role and at what reasoning b
+@@ -1,31 +1,23 @@
+ ---
+ name: setup-nstack
+-description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes an always-applied rule that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
++description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes a rule in ~/.claude/rules/, which Claude Code loads into every session, that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
+ ---
+ 
+ # Setup nstack
  
  In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.
  
