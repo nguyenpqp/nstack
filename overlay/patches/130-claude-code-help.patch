@@ -1,5 +1,5 @@
 diff --git a/docs/guide/01-setup.md b/docs/guide/01-setup.md
-index ffcdcbe..39cecfd 100644
+index ffcdcbe..b68bd66 100644
 --- a/docs/guide/01-setup.md
 +++ b/docs/guide/01-setup.md
 @@ -4,22 +4,21 @@ In this page you install the plugin, pick which models pstack uses, and run your
@@ -18,7 +18,7 @@ index ffcdcbe..39cecfd 100644
 -Cursor confirms the plugin is installed.
 -
 -In Claude Code, run `/plugin marketplace add cursor/plugins`, then `/plugin install pstack@cursor-plugins`. Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix there, such as `/nstack:setup-nstack`, which writes its model rule to `~/.claude/rules/nstack-models.md`. The [Claude Code adapter](../harness/claude-code.md) covers the other differences.
-+Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`, which writes the `nstack-models` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`).
++Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`.
  
  ## Pick your models
  

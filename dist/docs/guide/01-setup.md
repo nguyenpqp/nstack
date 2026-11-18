@@ -11,7 +11,7 @@ In Claude Code, run:
 /plugin install nstack@nstack
 ```
 
-Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`, which writes the `nstack-models` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`).
+Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`.
 
 ## Pick your models
 

@@ -6,7 +6,7 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
-import { ROOT, isText, listPatches, outsideUrls, readJson, rel, walk } from "./lib.mjs";
+import { ROOT, isCursorScanned, isText, listPatches, outsideUrls, readJson, rel, walk } from "./lib.mjs";
 
 const args = process.argv.slice(2);
 const flag = (name) => {
@@ -123,7 +123,7 @@ for (const patch of patches) {
 // this so mkpatch diffs the same text it applies to.
 if (!until) {
   for (const file of walk(OUT)) {
-    if (!file.endsWith(".md")) continue;
+    if (!isCursorScanned(file)) continue;
     const before = readFileSync(file, "utf8");
     const after = outsideUrls(before, (part) => renames.claudeCode.reduce((s, [from, to]) => s.split(from).join(to), part));
     if (after !== before) retrying(`write ${rel(OUT, file)}`, () => writeFileSync(file, after));

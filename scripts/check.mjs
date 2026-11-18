@@ -5,7 +5,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { ROOT, isText, readJson, rel, stripUrls, walk } from "./lib.mjs";
+import { ROOT, isCursorScanned, isText, readJson, rel, stripUrls, walk } from "./lib.mjs";
 
 const DIST = resolve(process.argv[2] ?? join(ROOT, "dist"));
 const plugin = readJson(join(DIST, ".claude-plugin", "plugin.json")).name;
@@ -82,8 +82,7 @@ for (const file of walk(DIST)) {
   for (const [from] of renames.text) {
     if (prose.includes(from)) report(file, `still says ${from}`);
   }
-  // TypeScript sources are left out, because `readonly` is a keyword there.
-  if (!/\.(md|json|lock|sh)$/.test(file)) continue;
+  if (!isCursorScanned(file)) continue;
   for (const [from] of renames.claudeCode) {
     if (prose.includes(from)) report(file, `still says ${from}`);
   }
