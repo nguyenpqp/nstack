@@ -15,7 +15,8 @@
     ["# Poteto mode", "# N mode"],
     ["# Poteto subagent", "# N subagent"],
     ["poteto-help", "nstack-help"],
-    ["# Poteto help", "# nstack help"]
+    ["# Poteto help", "# nstack help"],
+    ["@cursor-skill/", "@nstack/"]
   ],
   "claudeCode": [
     ["`~/.cursor/rules/nstack-models.mdc`", "the `nstack-models.md` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`)"],
@@ -60,7 +61,6 @@
     ["I can generate one with /create-verification-skill.", "I can generate one with /nstack:create-verification-skill."],
     ["I can generate one with /create-formal-verification-skill.", "I can generate one with /nstack:create-formal-verification-skill."],
     ["generate one with [`/create-verification-skill`]", "generate one with [`/nstack:create-verification-skill`]"],
-    ["cloud-agent URL", "session URL"],
-    ["@cursor-skill/", "@nstack/"]
+    ["cloud-agent URL", "session URL"]
   ]
 }

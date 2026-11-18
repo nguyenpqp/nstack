@@ -4,8 +4,8 @@
 
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
-import { ROOT, isCursorScanned, isText, readJson, rel, stripUrls, walk } from "./lib.mjs";
+import { basename, dirname, join, resolve } from "node:path";
+import { ROOT, isText, readJson, rel, stripUrls, walk } from "./lib.mjs";
 
 const DIST = resolve(process.argv[2] ?? join(ROOT, "dist"));
 const plugin = readJson(join(DIST, ".claude-plugin", "plugin.json")).name;
@@ -82,7 +82,8 @@ for (const file of walk(DIST)) {
   for (const [from] of renames.text) {
     if (prose.includes(from)) report(file, `still says ${from}`);
   }
-  if (!isCursorScanned(file)) continue;
+  // TypeScript stays out, because its `readonly` keyword and the Bugbot login `cursor` belong there.
+  if (!/\.(md|json|lock|sh|mjs)$/.test(file) && basename(file).includes(".")) continue;
   for (const [from] of renames.claudeCode) {
     if (prose.includes(from)) report(file, `still says ${from}`);
   }
