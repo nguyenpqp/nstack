@@ -1,18 +1,3 @@
-diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index d79768b..6edcebd 100644
---- a/skills/n-mode/SKILL.md
-+++ b/skills/n-mode/SKILL.md
-@@ -95,6 +95,10 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
- 
- **No is an acceptable answer.** Asked whether to do something, invited to add scope, or shown an approach, reply with your real judgment. Decline, push back, or say "this doesn't earn its place" when true. A recommendation is a judgment, not a validation. Agreement is not the default, candor over sycophancy.
- 
-+## nstack folder
-+
-+The run's own files live in `<root>/.nstack/`, where `<root>` is the root checkout, and none of them reaches a commit. Read `references/worktree.md` before the first write there.
-+
- ## Worktree
- 
- **Every playbook that writes files to the repo opens a worktree before its first edit.** Read `references/worktree.md` before you open one and before **Merging back**. It also names the playbooks that skip this. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
 diff --git a/skills/n-mode/playbooks/autopilot-full.md b/skills/n-mode/playbooks/autopilot-full.md
 index 40fbb92..8de02f9 100644
 --- a/skills/n-mode/playbooks/autopilot-full.md

@@ -94,13 +94,9 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **No is an acceptable answer.** Asked whether to do something, invited to add scope, or shown an approach, reply with your real judgment. Decline, push back, or say "this doesn't earn its place" when true. A recommendation is a judgment, not a validation. Agreement is not the default, candor over sycophancy.
 
-## nstack folder
-
-The run's own files live in `<root>/.nstack/`, where `<root>` is the root checkout, and none of them reaches a commit. Read `references/worktree.md` before the first write there.
-
 ## Worktree
 
-**Every playbook that writes files to the repo opens a worktree before its first edit.** Read `references/worktree.md` before you open one and before **Merging back**. It also names the playbooks that skip this. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
+**Every playbook that writes files to the repo opens a worktree before its first edit.** The run's own files live in `<root>/.nstack/`, where `<root>` is the root checkout, and none of them reaches a commit. Read `references/worktree.md` before you open a worktree, before **Merging back**, and before the first write under `<root>/.nstack/`. It also names the playbooks that skip a worktree. One writer per worktree or branch, per **Separate Before Serializing Shared State**.
 
 **The chat that runs n-mode stays at the root.** Nobody in the run calls `EnterWorktree`. This chat and each delegate it briefs read and edit files by absolute path under the worktree, run git as `git -C <worktree>`, and run a command that needs the worktree as its working directory in one Bash call that starts with `cd <worktree> &&`. Each delegate brief names its worktree path and branch when there is one.
 
