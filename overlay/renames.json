@@ -59,6 +59,7 @@
     ["On yes, invoke `/create-formal-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).", "On yes, read `../create-formal-verification-skill/SKILL.md` and follow it."],
     ["I can generate one with /create-verification-skill.", "I can generate one with /nstack:create-verification-skill."],
     ["I can generate one with /create-formal-verification-skill.", "I can generate one with /nstack:create-formal-verification-skill."],
+    ["generate one with [`/create-verification-skill`]", "generate one with [`/nstack:create-verification-skill`]"],
     ["cloud-agent URL", "session URL"]
   ]
 }
