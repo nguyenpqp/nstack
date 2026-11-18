@@ -60,6 +60,9 @@ const CURSORISMS = [
   /\bAutomations?\b/,
   /\bfast or standard speed\b/,
   /\bharness\/claude-code\.md\b/,
+  /\bdeslop\b/,
+  /\bgeneralPurpose\b/,
+  /\bis_background\b/,
 ];
 
 // Skills that other plugins ship, which nstack names in place of a Cursor built-in.
@@ -79,7 +82,8 @@ for (const file of walk(DIST)) {
   for (const [from] of renames.text) {
     if (prose.includes(from)) report(file, `still says ${from}`);
   }
-  if (!file.endsWith(".md")) continue;
+  // TypeScript sources are left out, because `readonly` is a keyword there.
+  if (!/\.(md|json|lock|sh)$/.test(file)) continue;
   for (const [from] of renames.claudeCode) {
     if (prose.includes(from)) report(file, `still says ${from}`);
   }
@@ -91,6 +95,7 @@ for (const file of walk(DIST)) {
       const hit = CURSORISMS.find((re) => re.test(line));
       if (hit) report(file, `line ${i + 1} matches ${hit}: ${line.trim().slice(0, 120)}`);
     });
+  if (!file.endsWith(".md")) continue;
 
   for (const [, target] of text.matchAll(LINK)) {
     if (/^(https?:|mailto:|#|<|\$\{)/.test(target)) continue;

@@ -15,7 +15,8 @@
     ["# Poteto mode", "# N mode"],
     ["# Poteto subagent", "# N subagent"],
     ["poteto-help", "nstack-help"],
-    ["# Poteto help", "# nstack help"]
+    ["# Poteto help", "# nstack help"],
+    ["@cursor-skill/", "@nstack/"]
   ],
   "claudeCode": [
     ["`~/.cursor/rules/nstack-models.mdc`", "the `nstack-models` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`)"],
