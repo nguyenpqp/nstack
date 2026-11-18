@@ -69,6 +69,7 @@ const LINK = /\]\(([^)\s]+)\)/g;
 const PROSE_SKILL = /(?:\*\*|`)([a-z0-9][a-z0-9-]*)(?:\*\*|`)( principle)? skill\b/g;
 const SIBLING = /\.\.\/([a-z0-9-]+)\/SKILL\.md/g;
 const AGENT = new RegExp(`\\b${plugin}:([a-z0-9-]+)`, "g");
+const BARE_AGENT_TYPE = /subagent_type: "([a-z0-9-]+)"/g;
 
 for (const file of walk(DIST)) {
   if (!isText(file) || file.startsWith(join(DIST, "licenses"))) continue;
@@ -107,6 +108,9 @@ for (const file of walk(DIST)) {
   }
   for (const [, name] of text.matchAll(AGENT)) {
     if (!skills.has(name) && !agents.has(name)) report(file, `references missing ${plugin}:${name}`);
+  }
+  for (const [, name] of text.matchAll(BARE_AGENT_TYPE)) {
+    if (agents.has(name)) report(file, `subagent_type "${name}" needs the ${plugin}: prefix`);
   }
 }
 
