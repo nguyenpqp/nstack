@@ -20,8 +20,8 @@ export function* walk(dir) {
 const BINARY = /\.(png|jpe?g|gif|webp|ico|pdf|mp4|mov|woff2?|ttf|zip)$/i;
 export const isText = (path) => !BINARY.test(path);
 
-// TypeScript stays out, because `readonly` is a keyword there.
-export const isCursorScanned = (path) => /\.(md|json|lock|sh)$/.test(path);
+// TypeScript stays out, because its `readonly` keyword and the Bugbot login `cursor` belong there.
+export const isCursorScanned = (path) => /\.(md|json|lock|sh|mjs)$/.test(path) || !basename(path).includes(".");
 
 export const rel = (from, path) => relative(from, path).split("\\").join("/");
 

@@ -21,7 +21,7 @@ Run:
 /nstack:setup-nstack
 ```
 
-[`/setup-nstack`](../../skills/setup-nstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes the `nstack-models` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`), a small rule every pstack skill reads.
+[`/setup-nstack`](../../skills/setup-nstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes the `nstack-models.md` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`), a small rule every pstack skill reads.
 
 `large` keeps the skill's defaults, which give each job its own effort, such as `sonnet high` for implementation and `fable high` for planning. `unlimited` moves every effort one step above its default, `medium` one step below, and `small` two steps below, so ordinary implementation stays below planning and review at every budget. `medium` and `small` spend fewer tokens.
 
