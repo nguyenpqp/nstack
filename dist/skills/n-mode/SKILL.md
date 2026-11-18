@@ -102,7 +102,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Delegate every repo edit except a small one.** While n-mode is on, under any playbook or none, the chat edits the repo itself only when the diff would be shorter than the brief a delegate needs to make it. Read `references/small-edit.md` before it makes such an edit. That file wins over any line here or in a playbook that says to delegate, even one marked mandatory, or to run `/simplify`, `no-comments`, or `/code-review high`. The chat's own files under `<root>/.nstack/`, such as the intent, the plan, and the backlog, stay its own to write.
+**Delegate every repo edit except a small one.** While n-mode is on, under any playbook or none, the chat edits the repo itself only when the diff would be shorter than the brief a delegate needs to make it. Read `references/small-edit.md` before it makes such an edit, unless that file is already in your context. That file wins over any line here or in a playbook that says to delegate, even one marked mandatory, or to run `/simplify`, `no-comments`, or `/code-review high`. The chat's own files under `<root>/.nstack/`, such as the intent, the plan, and the backlog, stay its own to write.
 
 **Use `subagent_type: "nstack:n-agent"` for any subagent you spawn directly inside a playbook step.** The chat that receives `/n-mode` runs the playbook itself. Routed workflow skills (`arena`, `interrogate`, `swarm`) set their own `subagent_type`. Respect it.
 
