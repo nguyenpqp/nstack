@@ -67,7 +67,7 @@ The per-decision intent files that came before this page are in git history, und
 - **Babysit and Shipping work in the PR branch's worktree.** Babysit commits and pushes its fixes, and Shipping pushes with `--force-with-lease`, so the skip list that held both sent that work to the root checkout, which holds no feature work. Each opens a worktree on the existing branch when there is none. No tabletop ran on this text. `references/worktree.md`.
 - **The merge lock is released whether or not the merge landed, and taken again to retry.** On the old text, 1 of 2 tabletops held it through the rebase, which blocks other sessions for as long as the rebase runs. On the new text, 2 of 2 released it first. A lock already held or left stale gets no text, because 2 of 2 waited on one and cleared the other with a report. `references/worktree.md`.
 - **A landing with no PR adds no text to Opening a PR.** That playbook has no no-PR path, but 2 of 2 tabletops kept its commit rules and landed through **Merging back**, so there was nothing to fix.
-- **A run's own files live in `<root>/.nstack/`,** which holds its own `.gitignore`. (user) That covers the backlog and its archive, intents, tickets files, plans, and Autopilot's trail. A trail that the stakes call for committing is copied out first, because 2 of 2 tabletops saw that rule collide with "none of these files reaches a commit". `SKILL.md` names the folder in its **Worktree** section, beside the one pointer to `references/worktree.md`, rather than in a section of its own. Patches `030`, `190`.
+- **A run's own files live in `<root>/.nstack/`,** which holds its own `.gitignore`. (user) That covers the backlog and its archive, intents, tickets files, plans, Pause safely's resume note, which upstream wrote to `/tmp`, and Autopilot's trail. Pause safely makes its `wip:` commit in each of the run's worktrees, since the root holds no feature work. A trail that the stakes call for committing is copied out first, because 2 of 2 tabletops saw that rule collide with "none of these files reaches a commit". `SKILL.md` names the folder in its **Worktree** section, beside the one pointer to `references/worktree.md`, rather than in a section of its own. Patches `030`, `190`.
 - **Intents are never committed and are deleted once nothing open reads them.** (user) A committed intent grows the repo per task and goes stale. Opening a PR or merging back carries **Problem**, **Decisions**, and **Out of scope** into the PR body or last commit. A dropped row or an abandoned run keeps its intent for a pickup. Every *Build and change* row but Prototype writes one. So does Autonomous run, whose exit predicate is its **Outcome**, and each Autopilot coordinator, once for the whole run, with its path in every owner's brief. A multi-phase plan's plan file is its intent. `interview.md` used to name these rows under the wrong axes group. No tabletop ran on this text. Patch `190`. This covers target repos, and this repo records its own decisions on this page.
 
 ## Session backlog
@@ -174,7 +174,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `009-drop-ketchup-video` | Removes the links to the excluded skill |
 | `010-sticky-mode` | n-mode stays on for the conversation |
 | `020-interview-gate` | Every task opens with a sized Interview |
-| `030-worktree` | Points n-mode at `references/worktree.md` for worktrees and the `.nstack/` folder, states the rules a delegate needs, and adds the worktree, branch, and intent path to each kickoff |
+| `030-worktree` | Points n-mode at `references/worktree.md` for worktrees and the `.nstack/` folder, states the rules a delegate needs, adds the worktree, branch, and intent path to each kickoff, and puts Pause safely's `wip:` commit in each worktree |
 | `050-spec-build` | Routes work with two tickets that build without blocking each other to Spec build, and the rest to Feature |
 | `060-pocock-routing` | Sends a slowness to Perf issue rather than the perf branch of `diagnosing-bugs`, routes to the built-in `/code-review` and then the intent check, names the sensitive list, and has the chat spawn the final reviewer of a sensitive Feature before landing |
 | `065-diagnosis-loop` | Bug fix runs `diagnosing-bugs` phases 1 to 4 |
@@ -190,7 +190,7 @@ Every file in `overlay/patches/`, and the concern it holds. Sync names a patch w
 | `150-session-backlog` | Points n-mode at the backlog rules |
 | `160-match-user-language` | Replies use the user's language |
 | `180-effort-by-model` | A budget that moves every effort by the same steps, and where an effort the account lacks lands |
-| `190-nstack-dir` | Points n-mode's playbooks at the `.nstack/` rules, including the plan file and Autopilot's trail |
+| `190-nstack-dir` | Points n-mode's playbooks at the `.nstack/` rules, including the plan file, Pause safely's resume note, and Autopilot's trail |
 | `220-interrogate-review-timing` | Moves the sensitive list to the Code bullet and runs `interrogate` on it or a contested design, first among the review passes, which run before the PR opens unless the playbook times them |
 | `270-setup-guide-budget` | The setup guide describes the relative budget and what `swarm workers` drives |
 | `290-model-table` | Takes the model values out of the Subagents section and points it at `references/model-table.md` |
