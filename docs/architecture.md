@@ -61,6 +61,7 @@ The index in [decisions.md](decisions.md#patch-index) names each patch's concern
 | `overlay/files/skills/n-mode/references/interview-axes.md` | What each playbook's round must cover, read one row at a time |
 | `overlay/files/skills/n-mode/playbooks/spec-build.md` | The Spec build playbook |
 | `overlay/files/skills/n-mode/references/session-backlog.md` | The backlog rules, read only by the chat that runs n-mode, so delegates do not pay for them |
+| `overlay/files/skills/n-mode/references/small-edit.md` | Which edit the chat makes itself and which passes it skips, read only by the chat |
 | `overlay/files/skills/n-mode/references/model-table.md` | The model and effort of every job, read only by an agent that spawns |
 | `overlay/files/skills/n-mode/references/worktree.md` | Run files, opening a worktree, and merging back, read only by the agent that does those |
 | Patches to `skills/n-mode/SKILL.md` | Routing, sticky mode, the worktree rules a delegate needs, and pointers to the reference files |
