@@ -76,6 +76,7 @@ now=$(date +%s)
 
 echo "# base: $base"
 [ -d "$transcripts" ] || echo "# no transcripts at $transcripts, so LAST_CHAT is -"
+command -v rg >/dev/null || echo "# rg is not on PATH, so LAST_CHAT is -"
 printf "SIZE\tAGE\tMERGED\tDIRTY\tREMOTE\tPR\tLAST_CHAT\tBUCKET\tWORKTREE\n"
 
 git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt; do
