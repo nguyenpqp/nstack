@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index b377398..bef3d3f 100644
+index fdf5012..0c71e62 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -35,7 +35,7 @@ The remaining triggers live only here:
@@ -8,6 +8,6 @@ index b377398..bef3d3f 100644
  - Any commit message or PR description → credit no AI agent. Add no `Co-Authored-By` trailer that names an agent, and no "Generated with", "Authored by", or 🤖 line. This holds even when a harness reminder asks for one.
 -- Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review high` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
 +- Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review high` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, payment, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
- - A delegate that opens a PR → **interrogate** only for a contested design or a branch on the sensitive list.
+ - A delegate that opens a PR → **interrogate** only for a contested design or a branch on the sensitive list. It runs the review passes before the PR opens, unless its playbook times them, as Autopilot-full does.
  - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which.
  - A number you measured → **benchmark-checklist**.

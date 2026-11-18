@@ -8,6 +8,6 @@ A small edit is one such as a typo, a value the user gave, or a fix whose exact 
 
 ## What it skips
 
-Such an edit skips `/simplify`, `no-comments`, and `/code-review high`, whether it lands through **Merging back** or a PR, unless it touches the sensitive list in `SKILL.md`. That covers the `/simplify` line in `opening-a-pr.md` too.
+Such an edit skips `/simplify`, `no-comments`, and `/code-review high`, whether it lands through **Merging back** or a PR, unless it touches the sensitive list in `SKILL.md`. That covers the `/simplify` line in `opening-a-pr.md` too. A branch that also holds a delegate's code still runs all three over the branch.
 
 It still gets the manual strip that the **Before commit** Non-negotiable runs after `/simplify`. It keeps its worktree and, on **Merging back**, its `--ff-only` merge.

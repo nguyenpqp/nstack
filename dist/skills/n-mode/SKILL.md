@@ -34,7 +34,7 @@ The remaining triggers live only here:
 - Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
 - Any commit message or PR description → credit no AI agent. Add no `Co-Authored-By` trailer that names an agent, and no "Generated with", "Authored by", or 🤖 line. This holds even when a harness reminder asks for one.
 - Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review high` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, payment, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
-- A delegate that opens a PR → **interrogate** only for a contested design or a branch on the sensitive list.
+- A delegate that opens a PR → **interrogate** only for a contested design or a branch on the sensitive list. It runs the review passes before the PR opens, unless its playbook times them, as Autopilot-full does.
 - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which.
 - A number you measured → **benchmark-checklist**.
 - PR status → the **Babysit** playbook, not any other babysit skill. Landing a green stack → the **Shipping** playbook.
@@ -102,7 +102,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-**Delegate every repo edit except a small one.** While n-mode is on, under any playbook or none, the chat edits the repo itself only when the diff would be shorter than the brief a delegate needs to make it. Read `references/small-edit.md` before it makes such an edit, unless that file is already in your context. That file wins over any line here or in a playbook that says to delegate, even one marked mandatory, or to run `/simplify`, `no-comments`, or `/code-review high`. The chat's own files under `<root>/.nstack/`, such as the intent, the plan, and the backlog, stay its own to write.
+**Delegate every repo edit except a small one.** While n-mode is on, under any playbook or none, the chat edits the repo itself only when the diff would be shorter than the brief a delegate needs to make it. Read `references/small-edit.md` before you decide to make such an edit, unless that file is already in your context. For the chat's own edit, that file wins over any line here or in a playbook that says to delegate, even one marked mandatory, or to run `/simplify`, `no-comments`, or `/code-review high`. The chat's own files under `<root>/.nstack/`, such as the intent, the plan, and the backlog, stay its own to write.
 
 **Use `subagent_type: "nstack:n-agent"` for any subagent you spawn directly inside a playbook step.** The chat that receives `/n-mode` runs the playbook itself. Routed workflow skills (`arena`, `interrogate`, `swarm`) set their own `subagent_type`. Respect it.
 
