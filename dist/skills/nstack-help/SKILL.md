@@ -26,7 +26,7 @@ Infer the need from the message and the conversation. A named situation, such as
 
 Check the state that changes the answer, and mention it only when it does:
 
-- No `~/.claude/rules/nstack-models.md` means `/setup-nstack` hasn't run for this user, so every role uses its default model.
+- No `<config>/rules/nstack-models.md`, where `<config>` is `$CLAUDE_CONFIG_DIR` when it is set and `~/.claude` otherwise, means `/setup-nstack` hasn't run for this user, so every role uses its default model.
 - No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app. Mention `/create-verification-skill` when the question is about proving a change works.
 - No formal verification skill in the project means no property is checked past what tests reach. Mention `/create-formal-verification-skill` when the question is about a race, an invariant, or another case tests rarely hit. When one exists and the code it covers changed after the commit it records as last in sync, mention `/maintain-formal-verification-skill` if the question touches that code.
 

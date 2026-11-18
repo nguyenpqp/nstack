@@ -158,7 +158,7 @@ index 56ed56a..dd0fc6f 100644
  - **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Run `/benchmark-checklist` before the number goes anywhere.
  - **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.
 diff --git a/skills/nstack-help/SKILL.md b/skills/nstack-help/SKILL.md
-index fac06d2..bb00af5 100644
+index fac06d2..241a32f 100644
 --- a/skills/nstack-help/SKILL.md
 +++ b/skills/nstack-help/SKILL.md
 @@ -10,9 +10,9 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
@@ -172,6 +172,15 @@ index fac06d2..bb00af5 100644
 +This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, which the user may not be able to open, so give the user the file's public copy: `https://github.com/nguyenpqp/nstack/blob/main/dist/` followed by its path.
  
  ## Find out what they need
+ 
+@@ -26,7 +26,7 @@ Infer the need from the message and the conversation. A named situation, such as
+ 
+ Check the state that changes the answer, and mention it only when it does:
+ 
+-- No `~/.cursor/rules/nstack-models.mdc` means `/setup-nstack` hasn't run for this user, so every role uses its default model.
++- No `<config>/rules/nstack-models.md`, where `<config>` is `$CLAUDE_CONFIG_DIR` when it is set and `~/.claude` otherwise, means `/setup-nstack` hasn't run for this user, so every role uses its default model.
+ - No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app. Mention `/create-verification-skill` when the question is about proving a change works.
+ - No formal verification skill in the project means no property is checked past what tests reach. Mention `/create-formal-verification-skill` when the question is about a race, an invariant, or another case tests rarely hit. When one exists and the code it covers changed after the commit it records as last in sync, mention `/maintain-formal-verification-skill` if the question touches that code.
  
 @@ -43,23 +43,19 @@ When the model rule is missing and it matters, ask whether the user wants to pic
  

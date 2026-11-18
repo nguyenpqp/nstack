@@ -1,8 +1,8 @@
 diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
-index 6228469..9aba804 100644
+index fddc8d0..292cf8d 100644
 --- a/skills/setup-nstack/SKILL.md
 +++ b/skills/setup-nstack/SKILL.md
-@@ -21,30 +21,31 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
+@@ -21,30 +21,31 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `<
  
  ### 3. Budget, map, and confirm
  
@@ -31,7 +31,7 @@ index 6228469..9aba804 100644
  ### 5. Write the rule
  
 -Write `~/.claude/rules/nstack-models.md` with no frontmatter: the comment lines, a `# budget` line with the chosen label and the effort that label names, and one line per role, using the same labels n-mode uses. Overwrite the whole file so re-runs stay idempotent. Never put the role lines in `CLAUDE.md` or `AGENTS.md`. Shape:
-+Write `~/.claude/rules/nstack-models.md` with no frontmatter: the comment lines, a `# budget` line with the chosen label and its move, and one line per role, using the same labels n-mode uses. Overwrite the whole file so re-runs stay idempotent. Never put the role lines in `CLAUDE.md` or `AGENTS.md`. Shape:
++Write `<config>/rules/nstack-models.md` with no frontmatter: the comment lines, a `# budget` line with the chosen label and its move, and one line per role, using the same labels n-mode uses. Overwrite the whole file so re-runs stay idempotent. Never put the role lines in `CLAUDE.md` or `AGENTS.md`. Shape:
  
  ```
  # nstack model configuration. One line per role. Delete a line to fall back to the skill default.

@@ -1,5 +1,5 @@
 diff --git a/agents/n-agent.md b/agents/n-agent.md
-index c8f2ce1..76ba5d1 100644
+index c8f2ce1..d14656c 100644
 --- a/agents/n-agent.md
 +++ b/agents/n-agent.md
 @@ -2,9 +2,8 @@
@@ -12,7 +12,7 @@ index c8f2ce1..76ba5d1 100644
  # N subagent
  
 -You are operating as n-mode's full agent style. The chat that receives `/n-mode` owns the playbook, the todo list, and every Task spawn. You are one of its delegates. Read the `n-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Use the absolute path your parent gave you. With no path, before any other work, search `~/.cursor/plugins/` for a file whose path ends in `skills/n-mode/SKILL.md`. If more than one file matches, use the copy whose `.cursor-plugin/plugin.json` has the highest `version`. Your skill catalog hides this skill, so a missing catalog entry does not mean pstack is absent. If no such file exists, stop and tell your parent. Navigate to a leaf `principle-*` skill whenever you apply that principle.
-+You are operating as n-mode's full agent style. The chat that receives `/n-mode` owns the playbook, the todo list, and every Task spawn. You are one of its delegates. Read the `n-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Use the absolute path your parent gave you. With no path, before any other work, search `~/.claude/plugins/` for a file whose path ends in `skills/n-mode/SKILL.md` under an `nstack` folder. If more than one file matches, prefer a copy under `~/.claude/plugins/cache/`, and among those use the most recently modified. Your skill catalog hides this skill, so a missing catalog entry does not mean pstack is absent. If no such file exists, stop and tell your parent. Navigate to a leaf `principle-*` skill whenever you apply that principle.
++You are operating as n-mode's full agent style. The chat that receives `/n-mode` owns the playbook, the todo list, and every Task spawn. You are one of its delegates. Read the `n-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Use the absolute path your parent gave you. With no path, before any other work, search `<config>/plugins/` for a file, where `<config>` is `$CLAUDE_CONFIG_DIR` when it is set and `~/.claude` otherwise, whose path ends in `skills/n-mode/SKILL.md` under an `nstack` folder. If more than one file matches, prefer a copy under `<config>/plugins/cache/`, and among those use the most recently modified. Your skill catalog hides this skill, so a missing catalog entry does not mean pstack is absent. If no such file exists, stop and tell your parent. Navigate to a leaf `principle-*` skill whenever you apply that principle.
 diff --git a/skills/arena/SKILL.md b/skills/arena/SKILL.md
 index f771cdd..40a4b31 100644
 --- a/skills/arena/SKILL.md
@@ -73,7 +73,7 @@ index d5a9166..3f5248b 100644
  Skip arena Phases C, D, and E. Adversaries find different failures, so the verdict keeps every verified finding, not one adversary's list.
  
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 3fa0539..dcf25ca 100644
+index 9bf5e7e..80db0c7 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -98,9 +98,9 @@ Read the leaf skill in full for any principle you apply. Each entry names when i

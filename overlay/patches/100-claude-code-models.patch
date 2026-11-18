@@ -34,14 +34,14 @@ index 3e70013..d5a9166 100644
  > Break this change. Prove each finding with a run against the real code, such as a failing test, a repro script, or command output that shows the wrong behavior. For a design or plan, run a prototype or probe the current tree. Keep repros in your own worktree. Report each finding with a title, the exact command, the output it printed, and the output the intent requires. Leave out anything you did not run. That covers style, naming, structure, and risks that need a future change to matter. No findings is a valid result.
  
 diff --git a/skills/setup-nstack/SKILL.md b/skills/setup-nstack/SKILL.md
-index f8ca347..c79f620 100644
+index f8ca347..fddc8d0 100644
 --- a/skills/setup-nstack/SKILL.md
 +++ b/skills/setup-nstack/SKILL.md
 @@ -1,31 +1,23 @@
  ---
  name: setup-nstack
 -description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes an always-applied rule that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
-+description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes a rule in ~/.claude/rules/, which Claude Code loads into every session, that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
++description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes a rule in the `rules/` folder of the Claude Code config dir, which Claude Code loads into every session, that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
  ---
  
  # Setup nstack
@@ -49,7 +49,7 @@ index f8ca347..c79f620 100644
  In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md) once per session before you follow this skill. It maps the Cursor names in pstack skills to Claude Code.
  
 -Write `~/.cursor/rules/nstack-models.mdc`, an always-applied rule that sets pstack's model per role.
-+Write `~/.claude/rules/nstack-models.md`, the rule that sets nstack's model and effort per role. Claude Code loads every `.md` file in `~/.claude/rules/` into each new session, so the role lines are in context wherever a skill reads them.
++Write `<config>/rules/nstack-models.md`, the rule that sets nstack's model and effort per role, where `<config>` is `$CLAUDE_CONFIG_DIR` when it is set and `~/.claude` otherwise. Claude Code loads every `.md` file in `<config>/rules/` into each new session, so the role lines are in context wherever a skill reads them.
  
  ## Steps
  
@@ -69,7 +69,7 @@ index f8ca347..c79f620 100644
 -- If the rule has no `# defaults: 2` line either, an old slug is one that matches `grok-*`. An old slug in `feature, refactoring`, `bug-fix`, `perf-issue`, `hillclimb`, or `swarm workers` takes the role's step 5 default. In a panel role (`arena runners`, `arena cross-judge pool`, `interrogate reviewers`), a list of exactly one `claude-opus-*` entry and one old slug, in either order, takes the role's step 5 list. In any other list, each old slug becomes `claude-opus-5-5-high-fast`.
 -
 -Every other value is the user's choice and stays, including an old slug in any other role and every `inherit-parent` or `auto` value. Tell the user which values you replaced.
-+The default role-to-model mapping is the rule shape shown in step 5 below. If `~/.claude/rules/nstack-models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5, such as `how explorer`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it. A line whose value names a model that is not one of the detected `model` values, such as one left from an older install, needs a choice in step 3.
++The default role-to-model mapping is the rule shape shown in step 5 below. If `<config>/rules/nstack-models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5, such as `how explorer`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it. A line whose value names a model that is not one of the detected `model` values, such as one left from an older install, needs a choice in step 3.
  
  ### 3. Budget, map, and confirm
  

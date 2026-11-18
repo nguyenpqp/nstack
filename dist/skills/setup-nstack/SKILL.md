@@ -1,13 +1,13 @@
 ---
 name: setup-nstack
-description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes a rule in ~/.claude/rules/, which Claude Code loads into every session, that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
+description: Configure which models nstack uses per role and at what reasoning budget. Detects your available models and writes a rule in the `rules/` folder of the Claude Code config dir, which Claude Code loads into every session, that overrides the skill defaults. Use for /setup-nstack, "configure nstack models", "nstack budget", or changing nstack's model choices.
 ---
 
 # Setup nstack
 
 To run another nstack skill that this file names, read `../<name>/SKILL.md` next to this skill's folder and follow it. The Skill tool refuses nstack skills. When you tell the user to type one, write `/nstack:<name>`.
 
-Write `~/.claude/rules/nstack-models.md`, the rule that sets nstack's model and effort per role. Claude Code loads every `.md` file in `~/.claude/rules/` into each new session, so the role lines are in context wherever a skill reads them.
+Write `<config>/rules/nstack-models.md`, the rule that sets nstack's model and effort per role, where `<config>` is `$CLAUDE_CONFIG_DIR` when it is set and `~/.claude` otherwise. Claude Code loads every `.md` file in `<config>/rules/` into each new session, so the role lines are in context wherever a skill reads them.
 
 ## Steps
 
@@ -17,7 +17,7 @@ The detected models are the `model` values that the Agent tool schema lists, and
 
 ### 2. Load current state
 
-The default role-to-model mapping is the rule shape shown in step 5 below. If `~/.claude/rules/nstack-models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5, such as `how explorer`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it. A line whose value names a model that is not one of the detected `model` values, such as one left from an older install, needs a choice in step 3.
+The default role-to-model mapping is the rule shape shown in step 5 below. If `<config>/rules/nstack-models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5, such as `how explorer`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it. A line whose value names a model that is not one of the detected `model` values, such as one left from an older install, needs a choice in step 3.
 
 ### 3. Budget, map, and confirm
 
@@ -38,7 +38,7 @@ Every model written must be a detected `model` value, and every effort a detecte
 
 ### 5. Write the rule
 
-Write `~/.claude/rules/nstack-models.md` with no frontmatter: the comment lines, a `# budget` line with the chosen label and its move, and one line per role, using the same labels n-mode uses. Overwrite the whole file so re-runs stay idempotent. Never put the role lines in `CLAUDE.md` or `AGENTS.md`. Shape:
+Write `<config>/rules/nstack-models.md` with no frontmatter: the comment lines, a `# budget` line with the chosen label and its move, and one line per role, using the same labels n-mode uses. Overwrite the whole file so re-runs stay idempotent. Never put the role lines in `CLAUDE.md` or `AGENTS.md`. Shape:
 
 ```
 # nstack model configuration. One line per role. Delete a line to fall back to the skill default.
