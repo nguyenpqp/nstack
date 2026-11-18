@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 0d1b323..7078d26 100644
+index d081c3e..5c39a61 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -12,6 +12,10 @@ In Claude Code, read [the Claude Code adapter](../../docs/harness/claude-code.md
@@ -8,7 +8,7 @@ index 0d1b323..7078d26 100644
  
 +## Sticky mode
 +
-+Once invoked, n-mode stays on for the rest of the conversation. Claude Code has no frontmatter flag for this, so the rule lives here. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
++Once invoked, n-mode stays on for the rest of the conversation. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
 +
  ## Non-negotiables
  

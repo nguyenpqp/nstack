@@ -12,7 +12,7 @@ Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's a
 
 ## Sticky mode
 
-Once invoked, n-mode stays on for the rest of the conversation. Claude Code has no frontmatter flag for this, so the rule lives here. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
+Once invoked, n-mode stays on for the rest of the conversation. On every new turn, ask whether the task matches a playbook or needs rigor. If it does, apply n-mode. If the turn is casual, stay out of the way. The user turns it off by saying so.
 
 ## Session backlog
 
