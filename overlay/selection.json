@@ -70,7 +70,7 @@
       "winner": "both",
       "pstack": "skills/poteto-mode/playbooks/bug-fix.md",
       "mattpocock": "skills/engineering/diagnosing-bugs/",
-      "reason": "The bug-fix playbook owns the flow and runs diagnosing-bugs phases 1 to 4 in its step 2."
+      "reason": "The bug-fix playbook owns the flow and runs diagnosing-bugs phases 1 to 4 across its steps 1 and 2."
     },
     {
       "skill": "improve-codebase-architecture",
