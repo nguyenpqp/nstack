@@ -104,7 +104,7 @@ index 5ea9079..a22df42 100644
  This is the one playbook that deletes user state with no code review to catch a slip, so the gates above are the review.
  
 diff --git a/skills/n-mode/scripts/worktree-audit.sh b/skills/n-mode/scripts/worktree-audit.sh
-index 47e0891..92e075a 100644
+index 47e0891..f49c115 100644
 --- a/skills/n-mode/scripts/worktree-audit.sh
 +++ b/skills/n-mode/scripts/worktree-audit.sh
 @@ -69,12 +69,13 @@ elif raw=$(gh pr list --author "@me" --state all --limit 1000 \
@@ -124,6 +124,22 @@ index 47e0891..92e075a 100644
  printf "SIZE\tAGE\tMERGED\tDIRTY\tREMOTE\tPR\tLAST_CHAT\tBUCKET\tWORKTREE\n"
  
  git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt; do
+@@ -110,10 +111,13 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
+ 
+ 	# Most recent chat whose transcript operated in this worktree. Match path
+ 	# followed by "/" or a quote so glint-482 does not match glint-482-r37.
++	# Windows transcripts store the path JSON-escaped, as E:\\repo\\wt, and rg
++	# prints backslash paths there, which xargs unescapes without -0.
+ 	last="-"; last_ts=0
+ 	if [ -d "$transcripts" ]; then
+-		f=$(rg -l -e "${wt}/" -e "${wt}\"" "$transcripts" 2>/dev/null \
+-			| xargs stat "${stat_fmt[@]}" 2>/dev/null | sort -rn | head -1)
++		wt_json=$(printf '%s' "$wt" | sed 's#/#\\\\#g')
++		f=$(rg -l -0 -F -e "${wt}/" -e "${wt}\"" -e "${wt_json}\\\\" -e "${wt_json}\"" "$transcripts" 2>/dev/null \
++			| xargs -0 stat "${stat_fmt[@]}" 2>/dev/null | sort -rn | head -1)
+ 		if [ -n "$f" ]; then last_ts=$(echo "$f" | awk '{print $1}')
+ 			last=$(fmt_day "$last_ts" 2>/dev/null); fi
+ 	fi
 diff --git a/skills/recall/SKILL.md b/skills/recall/SKILL.md
 index 167b6b4..6958636 100644
 --- a/skills/recall/SKILL.md
