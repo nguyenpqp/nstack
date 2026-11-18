@@ -18,7 +18,7 @@
     ["# Poteto help", "# nstack help"]
   ],
   "claudeCode": [
-    ["~/.cursor/rules/nstack-models.mdc", "~/.claude/rules/nstack-models.md"],
+    ["`~/.cursor/rules/nstack-models.mdc`", "the `nstack-models` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`)"],
     ["nstack-models.mdc", "nstack-models.md"],
     [".cursor/skills/", ".claude/skills/"],
     ["AskQuestion", "AskUserQuestion"],

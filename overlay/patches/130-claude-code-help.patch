@@ -1,8 +1,8 @@
 diff --git a/docs/guide/01-setup.md b/docs/guide/01-setup.md
-index ffcdcbe..3c8aeaf 100644
+index ffcdcbe..39cecfd 100644
 --- a/docs/guide/01-setup.md
 +++ b/docs/guide/01-setup.md
-@@ -4,15 +4,14 @@ In this page you install the plugin, pick which models pstack uses, and run your
+@@ -4,22 +4,21 @@ In this page you install the plugin, pick which models pstack uses, and run your
  
  ## Install the plugin
  
@@ -18,11 +18,25 @@ index ffcdcbe..3c8aeaf 100644
 -Cursor confirms the plugin is installed.
 -
 -In Claude Code, run `/plugin marketplace add cursor/plugins`, then `/plugin install pstack@cursor-plugins`. Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix there, such as `/nstack:setup-nstack`, which writes its model rule to `~/.claude/rules/nstack-models.md`. The [Claude Code adapter](../harness/claude-code.md) covers the other differences.
-+Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`, which writes its model rule to `~/.claude/rules/nstack-models.md`.
++Claude Code prefixes plugin commands, so each command in this guide takes a `nstack:` prefix, such as `/nstack:setup-nstack`, which writes the `nstack-models` rule in the config dir (`$CLAUDE_CONFIG_DIR/rules/` when set, else `~/.claude/rules/`).
  
  ## Pick your models
  
-@@ -61,6 +60,6 @@ Pick something real but small, and describe it the way you'd describe it to a co
+ Run:
+ 
+ ```text
+-/setup-nstack
++/nstack:setup-nstack
+ ```
+ 
+ [`/setup-nstack`](../../skills/setup-nstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `~/.cursor/rules/nstack-models.mdc`, a small rule every pstack skill reads.
+@@ -56,11 +55,11 @@ pstack spends extra tokens on subagents and review panels. That's the price of t
+ Pick something real but small, and describe it the way you'd describe it to a colleague:
+ 
+ ```text
+-/n-mode add a --json flag to this command. text output stays byte-identical. verify both.
++/nstack:n-mode add a --json flag to this command. text output stays byte-identical. verify both.
+ ```
  
  Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt.
  
