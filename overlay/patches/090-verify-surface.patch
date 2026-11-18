@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 8dffa83..ff62bb0 100644
+index 3ff8eeb..9bf5e7e 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -29,9 +29,9 @@ The remaining triggers live only here:
@@ -8,7 +8,7 @@ index 8dffa83..ff62bb0 100644
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
 -- Before commit → `/deslop` from the `cursor-team-kit` plugin.
 +- Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
- - Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review` over the branch. A Feature run on a branch that touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
+ - Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
 -- Shipping UI / IDE / CLI → `control-ui` or `control-cli` from `cursor-team-kit`.
 +- Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which.
  - A number you measured → **benchmark-checklist**.
