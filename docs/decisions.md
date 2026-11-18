@@ -141,7 +141,7 @@ Each one names what would settle it.
 - Does `opus high` explain as well as `opus xhigh`? A `how` answer that misses a seam.
 - Does `sonnet medium` catch the comments `opus high` caught? A comment that survives review.
 - Does Haiku find the relevant chats in `recall`? A missed chat that a later search finds.
-- Does `sonnet xhigh` stay independent and thorough on an Opus chat's trail, when Sonnet delegates did most of the code? A flag a later review catches.
+- Does `fable medium` stay thorough on an Opus chat's trail, when it reads the whole trail and transcript at that effort? A flag a later review catches.
 - Does a mechanical edit stay at `sonnet medium` in real runs, and is that enough? A fix round on one.
 
 **Do real runs behave like the tabletops?**
