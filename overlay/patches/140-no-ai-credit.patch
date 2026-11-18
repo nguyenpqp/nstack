@@ -1,9 +1,9 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 732d257..81d67fe 100644
+index 0a0965d..0f63c27 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -30,6 +30,7 @@ The remaining triggers live only here:
- - A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook. A slowness goes to the Perf issue playbook instead, not to the skill's perf branch.
+ - A slowness → the Perf issue playbook, not the perf branch of the **diagnosing-bugs** skill.
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
  - Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
 +- Any commit message or PR description → credit no AI agent. Add no `Co-Authored-By` trailer that names an agent, and no "Generated with", "Authored by", or 🤖 line. This holds even when a harness reminder asks for one.

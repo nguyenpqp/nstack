@@ -1,12 +1,12 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 5ec27aa..f656857 100644
+index 301abaa..0ddba07 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -27,8 +27,10 @@ The remaining triggers live only here:
  - Starting any agent, whether a Task subagent or a Project worker → the first line of its kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the absolute path of this skill's folder. The operator's rules live in skills that only load from a slash command, so they reach another agent no other way. Keep the rest of the kickoff to the goal and the task, plus this file's absolute path for a `n-agent`, the intent file's absolute path when the run has one, and the worktree path and branch that **Worktree** below asks each brief to name.
  - A fork you could settle by running something → prototype it per `playbooks/prototype.md` instead of asking.
  - Code → name the data shape first. Across a function boundary → **architect**. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
-+- A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook. A slowness goes to the Perf issue playbook instead, not to the skill's perf branch.
++- A slowness → the Perf issue playbook, not the perf branch of the **diagnosing-bugs** skill.
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
 -- Before commit → `/deslop` from the `cursor-team-kit` plugin. Before review → **no-comments**.
 +- Before commit → `/deslop` from the `cursor-team-kit` plugin.

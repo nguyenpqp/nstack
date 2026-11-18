@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index f709e96..1b497b0 100644
+index 8e27fc8..f0704af 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -31,12 +31,12 @@ The remaining triggers live only here:
@@ -8,7 +8,7 @@ index f709e96..1b497b0 100644
  - Code → name the data shape first. Across a function boundary → **architect**. A change crosses one when it adds or changes a signature, a type, or a module seam that a caller sees. An edit inside one function body does not, and neither does a branch added to an existing case. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
 -- A subagent that opens a PR → **interrogate** only for a contested design or a branch that touches security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm. Otherwise it skips `interrogate` and says so. Either way, it runs Claude Code's built-in `/code-review high` over the branch before it opens the PR, or, as an Autopilot owner, before its code-ready report.
 +- A subagent that opens a PR → **interrogate** only for a contested design or a branch that touches security, auth, billing, payment, persisted data, migrations, concurrency, or a subtle algorithm. Otherwise it skips `interrogate` and says so. Either way, it runs Claude Code's built-in `/code-review high` over the branch before it opens the PR, or, as an Autopilot owner, before its code-ready report.
- - A bug whose cause is unknown → the **diagnosing-bugs** skill as the diagnosis loop inside the Bug fix playbook. A slowness goes to the Perf issue playbook instead, not to the skill's perf branch.
+ - A slowness → the Perf issue playbook, not the perf branch of the **diagnosing-bugs** skill.
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
  - Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
  - Any commit message or PR description → credit no AI agent. Add no `Co-Authored-By` trailer that names an agent, and no "Generated with", "Authored by", or 🤖 line. This holds even when a harness reminder asks for one.
