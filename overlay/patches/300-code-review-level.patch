@@ -1,13 +1,13 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index f1a6078..fdf5012 100644
+index 74f8af6..6bb7e97 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -35,7 +35,7 @@ The remaining triggers live only here:
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
  - Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
  - Any commit message or PR description → credit no AI agent. Add no `Co-Authored-By` trailer that names an agent, and no "Generated with", "Authored by", or 🤖 line. This holds even when a harness reminder asks for one.
--- Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
-+- Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review high` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
- - A delegate that opens a PR → **interrogate** only for a contested design or a branch on the sensitive list. It runs the review passes before the PR opens, unless its playbook times them, as Autopilot-full does.
- - Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which.
+-- Before review, or before **Merging back** when no PR opens → **interrogate** when it applies, since it can change the diff, then **no-comments**, then Claude Code's built-in `/code-review` over the branch, then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap. These passes run before the PR opens, unless the playbook times them, as Autopilot-full does. On a Feature branch that touches the sensitive list, the chat spawns the final branch reviewer before landing.
++- Before review, or before **Merging back** when no PR opens → **interrogate** when it applies, since it can change the diff, then **no-comments**, then Claude Code's built-in `/code-review high` over the branch, then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap. These passes run before the PR opens, unless the playbook times them, as Autopilot-full does. On a Feature branch that touches the sensitive list, the chat spawns the final branch reviewer before landing.
+ - Shipping anything a user runs → the project-local control skill, which drives the app the way a user does. With none, the project's own runner (CLI, dev server, or test command). Say which.
  - A number you measured → **benchmark-checklist**.
+ - PR status → the **Babysit** playbook, not Cursor's built-in babysit skill. Landing a green stack → the **Shipping** playbook.

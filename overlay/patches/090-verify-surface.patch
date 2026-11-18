@@ -1,16 +1,16 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 3ff8eeb..9bf5e7e 100644
+index 2da285f..d2ee20f 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -29,9 +29,9 @@ The remaining triggers live only here:
- - Code → name the data shape first. Across a function boundary → **architect**. A change crosses one when it adds or changes a signature, a type, or a module seam that a caller sees. An edit inside one function body does not, and neither does a branch added to an existing case. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
+ - Code → name the data shape first. Across a function boundary → **architect**. A change crosses one when a caller sees a new or changed signature, type, or module seam, and a branch added to an existing case does not. Fan-out → **swarm**. Bakeoff → **arena**. Contested design → **interrogate**.
  - A slowness → the Perf issue playbook, not the perf branch of the **diagnosing-bugs** skill.
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
 -- Before commit → `/deslop` from the `cursor-team-kit` plugin.
 +- Before commit → Claude Code's built-in `/simplify` over the diff, then remove what it leaves of narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
- - Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
+ - Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review` over the branch, then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap. On a Feature branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm), the chat spawns the final branch reviewer before landing.
 -- Shipping UI / IDE / CLI → `control-ui` or `control-cli` from `cursor-team-kit`.
-+- Shipping anything a user runs → the project's control skill, a project-local skill that drives the app the way a user does. If the repo has none, drive the surface through the project's own runner (its CLI, dev server, or test command) and say which.
++- Shipping anything a user runs → the project-local control skill, which drives the app the way a user does. With none, the project's own runner (CLI, dev server, or test command). Say which.
  - A number you measured → **benchmark-checklist**.
  - PR status → the **Babysit** playbook, not Cursor's built-in babysit skill. Landing a green stack → the **Shipping** playbook.
  - Bot review comments → judge each on its merits.

@@ -1,5 +1,5 @@
 diff --git a/skills/n-mode/SKILL.md b/skills/n-mode/SKILL.md
-index 301abaa..3ab52e0 100644
+index c3b8e54..8a6f88e 100644
 --- a/skills/n-mode/SKILL.md
 +++ b/skills/n-mode/SKILL.md
 @@ -27,8 +27,10 @@ The remaining triggers live only here:
@@ -10,7 +10,7 @@ index 301abaa..3ab52e0 100644
  - Prose, your reply included → **unslop**. Docs, PR descriptions, commit messages → **technical-writing**.
 -- Before commit → `/deslop` from the `cursor-team-kit` plugin. Before review → **no-comments**.
 +- Before commit → `/deslop` from the `cursor-team-kit` plugin.
-+- Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review` over the branch. A Feature run on a branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm) also spawns its final branch reviewer. Then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap.
++- Before review, or before **Merging back** when no PR opens → **no-comments**, then Claude Code's built-in `/code-review` over the branch, then check the diff against the intent file's **Outcome** and **Out of scope** yourself, and fix or report each gap. On a Feature branch that touches the sensitive list (security, auth, billing, persisted data, migrations, concurrency, or a subtle algorithm), the chat spawns the final branch reviewer before landing.
  - Shipping UI / IDE / CLI → `control-ui` or `control-cli` from `cursor-team-kit`.
  - A number you measured → **benchmark-checklist**.
  - PR status → the **Babysit** playbook, not Cursor's built-in babysit skill. Landing a green stack → the **Shipping** playbook.
