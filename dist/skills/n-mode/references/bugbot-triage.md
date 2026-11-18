@@ -12,6 +12,8 @@ Classify each Bugbot thread before acting:
 
 When in doubt, ask. Skipping a noisy code-quality comment is cheap; skipping a real data or security bug is not.
 
+A delegate never asks. It reports each `ask` item to its parent.
+
 ## Learned pattern format
 
 Add future patterns in this shape:
