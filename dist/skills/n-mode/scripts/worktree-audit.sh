@@ -69,12 +69,13 @@ elif raw=$(gh pr list --author "@me" --state all --limit 1000 \
 fi
 [ -s "$prs" ] || echo "[]" > "$prs"
 
-# Transcripts dir: ~/.claude/projects/<repo path with each / and . as ->.
-slug=$(printf '%s' "$main_wt" | sed 's#[/.]#-#g')
-transcripts="$HOME/.claude/projects/$slug"
+# Transcripts dir: <config dir>/projects/<repo path with each char outside [A-Za-z0-9-] as ->.
+slug=$(printf '%s' "$main_wt" | sed 's#[^A-Za-z0-9-]#-#g')
+transcripts="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/projects/$slug"
 now=$(date +%s)
 
 echo "# base: $base"
+[ -d "$transcripts" ] || echo "# no transcripts at $transcripts, so LAST_CHAT is -"
 printf "SIZE\tAGE\tMERGED\tDIRTY\tREMOTE\tPR\tLAST_CHAT\tBUCKET\tWORKTREE\n"
 
 git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt; do
